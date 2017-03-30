@@ -26,11 +26,11 @@ None.
 
 * Select **Develop →API Proxies** in the side navigation menu
 
-        ![image alt text](./media/Develop-Proxies.gif)
+  ![](./media/Develop-Proxies.gif)
 
-* Click **+ Proxy**. The Build a Proxy wizard is invoked. 
+* Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
-        ![image alt text](./media/image_1.jpg)
+  ![](./media/image_1.jpg)
 
 * Select **Reverse proxy**. Click on **Next**.
 
