@@ -30,11 +30,11 @@ None.
 
 * Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
-  ![](./media/image_1.jpg)
+  ![](./media/Plus-New-Proxy.gif)
 
 * Select **Reverse proxy**. Click on **Next**.
 
-  ![image alt text](./media/image_2.jpg)
+  ![image alt text](./media/Plus-New-Proxy-Next.gif)
 
 * Enter details in the proxy wizard. Replace **{your-initials}** with the initials of your name. 
 
@@ -44,7 +44,7 @@ None.
 
   * Existing API: [http://apigeedemovideos-test.apigee.net/employees-api](http://apigeedemovideos-test.apigee.net/employees-api) 
 
-  ![image alt text](./media/image_3.jpg)        
+  ![image alt text](./media/New-Proxy-Info.png)
 
 * Verify the values and click **Next**.
 
