@@ -1,4 +1,4 @@
-# API Development : Create a Reverse Proxy 
+# API Development : Create a Reverse Proxy with a Nodejs Target
 
 *Duration : 15 mins*
 
@@ -6,15 +6,23 @@
 
 # Use case
 
-You have a requirement to create a reverse proxy for taking requests from the Internet and forward them to an existing service. The reverse proxy should hide the complexity and interface details of the underlying service. Also Clients (mobile apps, Web apps etc.) making requests to the proxy may not be aware of the internal network and service.
+Many existing services have an HTTP interface. REST and SOAP services are good examples here.
+
+However, some systems are not easily accessible via HTTP, though they may be accessible from a program, such as a nodejs program, that relies on a library. Examples of such systems are:
+
+* traditional databases, NoSQL databases
+* LDAP stores
+* message queues
+* FTP servers
+* AWS Lambda functions
+
+In cases where the "target" system does not expose an HTTP interface, you cannot simply define a traditional reverse proxy in Apigee Edge. You need to write some connecting logic.  
 
 # How can Apigee Edge help?
 
-Apigee Edge enables you to quickly expose backend services as APIs. You do this by creating an API proxy that provides a facade for the backend service that you want to expose. You only need to provide the network address for the backend service, along with some information that Edge uses to create the API proxy that is exposed to developers. 
+Apigee Edge enables you to write code to produce an API facade for the non-HTTP backend service that you want to expose. 
 
-The API proxy decouples your backend service implementation from the API that developers consume. This shields developers from future changes to your backend services. As you update backend services, developers, insulated from those changes, can continue to call the API uninterrupted.
-
-In this lab we will see how to create a reverse proxy, that routes inbound requests to existing HTTP backend services. 
+In this lab we will see how to create a reverse proxy, that routes inbound requests to an existing service, via a nodejs intermediary layer.
 
 # Pre-requisites
 
@@ -32,19 +40,19 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![](./media/Plus-New-Proxy.gif)
 
-* Select **Reverse proxy**. Click on **Next**.
+* Select **Node.js App**. Click on **Next**.
 
-  ![image alt text](./media/Plus-New-Proxy-Next.gif)
+  ![image alt text](./media/Plus-New-Nodejs-Proxy-Next.gif)
 
 * Enter details in the proxy wizard. Replace **{your-initials}** with the initials of your name. 
 
-  * Proxy Name: **{your_initials}**_reverse_proxy
+  * Proxy Name: **{your_initials}**_nodejs
 
-  * Proxy Base Path: /v1/**{your_initials}**_reverse_proxy
+  * Proxy Base Path: /v1/**{your_initials}**_nodejs
 
-  * Existing API: [http://apigeedemovideos-test.apigee.net/employees-api](http://apigeedemovideos-test.apigee.net/employees-api) 
+  * Source: "Hello World" Sample
 
-  ![image alt text](./media/New-Proxy-Info.png)
+  ![image alt text](./media/Proxy-Details-Use-your-own-initials.png)
 
 * Verify the values and click **Next**.
 
@@ -58,10 +66,12 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 * Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy.** 
 
-  ![image alt text](./media/image_6.jpg)
+  ![image alt text](./media/Build-and-Deploy.png)
 
-  Apigee Edge will build and deploy an API Proxy. 
-  
+  Apigee Edge will build and deploy the API Proxy. 
+
+* XXX Continue here....
+
 * Once the API proxy has been built and deployed **click** the link to view your proxy in the proxy editor. 
 
   ![image alt text](./media/image_7.jpg)
@@ -70,9 +80,9 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![image alt text](./media/image_8.jpg)
 
-* *Congratulations!*...You have now built a reverse proxy for an existing backend service. This wizard experience gives you a simple "pass-through" proxy. The proxy changes nothing in the request, before invoking the backend (also known as "target") service. We'll get to more complicated scenarios later on. 
+* *Congratulations!*...You have now built a reverse proxy for an existing backend service.
 
-* For now, let's test the newly built API proxy using the [Apigee REST Client](https://apigee-rest-client.appspot.com/).  The Apigee REST Client is a web application that can invoke HTTP APIs.  Right-click the link to open the REST Client in a new browser window.
+* Let us test the newly built API proxy using the [Apigee REST Client](https://apigee-rest-client.appspot.com/).  The Apigee REST Client is a web application that can invoke HTTP APIs.  Right-click the link to open the REST Client in a new browser window.
 
 * Copy the URL for your API proxy. 
 
@@ -116,20 +126,20 @@ This is a relatively simple proxy; all it does is "pass through" requests, and i
 
 If you like to learn by watching, here is a short video on creating a reverse proxy in Apigee Edge [https://www.youtube.com/watch?v=ZtINy7n9QRc](https://www.youtube.com/watch?v=ZtINy7n9QRc) 
 
+# For Extra Credit
 
-# For Consideration and Discussion
+Now that you have created a reverse proxy, apply traffic management policies to protect the API proxy and then save it as a new revision. Then deploy the new revision to Test environment. 
 
-1. Can "wildcards" be used in the base path for an API proxy?
+# Quiz
 
-2. Can you _import_ an API proxy bundle from the Apigee UI?  How? 
+1. Can "wildcards" be used in the API proxy base path?
 
-3. If the API Proxy is a simple pass-through, and it doesn't change anything in the request, _why did we create it_? What good is it? 
+2. Can you "import" an API proxy bundle from the Apigee UI?  How? 
 
 
 # Summary
 
-That completes this hands-on lesson. In this simple lab you learned how to create a pass-through proxy for an existing HTTP backend using the Apigee Edge proxy wizard. You also learned how to export the proxy definition into a proxy bundle ZIP. 
-
+That completes this hands-on lesson. In this simple lab you learned how to create a proxy for an existing backend using Apigee Edge proxy wizard.
 
 # References
 
