@@ -94,19 +94,38 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 ![image alt text](./media/Download-API-Proxy.gif)
 
+  This will save a file in ZIP format on your machine. The zip has a name like `dpc_reverse_proxy_rev1_2017_03_30.zip`, with your initials and today's date appearing in the appropriate places. And the  format of the file is like so:
+
+```
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+      808  03-30-2017 21:58   apiproxy/dpc_reverse_proxy.xml
+      474  03-30-2017 21:58   apiproxy/targets/default.xml
+      630  03-30-2017 21:58   apiproxy/proxies/default.xml
+---------                     -------
+     1912                     3 files
+
+```
+
+All of these files are XML text files. These files can be extracted from the ZIP and checked into a source code management system. Later, we'll see how to do the converse: import a bundle of files as a new proxy, or new revision of a proxy. 
+
+This is a relatively simple proxy; all it does is "pass through" requests, and it requires just 3 configuration files for that purpose. As we work on more complex scenarios, we'll see that any downloaded bundle will include the Apigee Edge policies and resource files (nodejs code, XSLT scripts, Java JARs, and so on) for the proxy. Proxies can become pretty elaborate! 
+
+  
 # Lab Video
 
 If you like to learn by watching, here is a short video on creating a reverse proxy in Apigee Edge [https://www.youtube.com/watch?v=ZtINy7n9QRc](https://www.youtube.com/watch?v=ZtINy7n9QRc) 
 
-# Earn Extra-points
+# For Extra Credit
 
 Now that you have created a reverse proxy, apply traffic management policies to protect the API proxy and then save it as a new revision. Then deploy the new revision to Test environment. 
 
 # Quiz
 
-1. How to download (backup) the proxy you just created? 
+1. Can "wildcards" be used in the API proxy base path?
 
-2. Can "wildcards" be used in the API proxy base path?
+2. Can you "import" an API proxy bundle from the Apigee UI?  How? 
+
 
 # Summary
 
