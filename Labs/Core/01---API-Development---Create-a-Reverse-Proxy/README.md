@@ -26,11 +26,11 @@ None.
 
 * Select **Develop →API Proxies** in the side navigation menu
 
-	![image alt text](./media/image_0.jpg)
+        ![image alt text](./media/Develop-Proxies.gif)
 
 * Click **+ Proxy**. The Build a Proxy wizard is invoked. 
 
-	![image alt text](./media/image_1.jpg)
+        ![image alt text](./media/image_1.jpg)
 
 * Select **Reverse proxy**. Click on **Next**.
 
@@ -44,7 +44,7 @@ None.
 
   * Existing API: [http://apigeedemovideos-test.apigee.net/employees-api](http://apigeedemovideos-test.apigee.net/employees-api) 
 
-  ![image alt text](./media/image_3.jpg)	
+  ![image alt text](./media/image_3.jpg)        
 
 * Verify the values and click **Next**.
 
@@ -74,7 +74,7 @@ None.
 
 * Copy the URL for your API proxy. 
 
-	![image alt text](./media/image_9.jpg)
+        ![image alt text](./media/image_9.jpg)
 
 * Paste the link on the REST Client and make a GET call.
 
