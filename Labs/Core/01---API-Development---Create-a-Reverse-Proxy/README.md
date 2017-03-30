@@ -86,6 +86,24 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![image alt text](./media/image_11.jpg)
 
+* OK, now let's test the deployment and undeployment.  Flip back to the browser tab with Apigee Edge.  Undeploy the API Proxy.
+
+  ![image alt text](./media/Undeploy-the-Proxy.gif)
+
+  You should see a confirmation that the proxy is undeployed.
+
+* Now, switch again to the tab containing the Apigee REST Client. Invoke the request again. (Send the GET request)
+
+  You should see a 400 response.  
+  
+  ![image alt text](./media/No-One-is-home.png)
+
+  If you flip back to the Apigee tab and deploy the proxy again, then try again to send a GET request,
+  you should see a successful response again.
+
+  When you "deploy" a proxy in Apigee Edge, you are telling Apigee Edge to make it available for inbound requests.
+
+  
 # Export the API Proxy
 
 * Let’s now download the API Proxy definition, so that we can use it in other labs.
@@ -125,10 +143,17 @@ If you like to learn by watching, here is a short video on creating a reverse pr
 
 3. If the API Proxy is a simple pass-through, and it doesn't change anything in the request, _why did we create it_? What good is it? 
 
+4. What would happen if you tried to deploy 2 proxies to the same base path?
+
+
 
 # Summary
 
-That completes this hands-on lesson. In this simple lab you learned how to create a pass-through proxy for an existing HTTP backend using the Apigee Edge proxy wizard. You also learned how to export the proxy definition into a proxy bundle ZIP. 
+That completes this hands-on lesson. In this simple lab you learned :
+
+* how to create a pass-through proxy for an existing HTTP backend using the Apigee Edge proxy wizard.
+* how to change the deployment status of an API proxy in Apigee Edge.
+* how to export the proxy definition into a proxy bundle ZIP. 
 
 
 # References
