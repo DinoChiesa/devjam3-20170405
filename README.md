@@ -8,7 +8,7 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 * Product Demo : 35 mins
 
 ### [Core Labs](./Labs/Core)
-1. [API Development - Create a Reverse Proxy](./Labs/Core/01 - API Development - Create a Reverse Proxy)
+1. [API Development - Create a Reverse Proxy](./Labs/Core/01---API-Development---Create-a-Reverse-Proxy)
 2. [API Diagnostics - Trace tool](./Labs/Core/02 - API Diagnostics - Trace tool)
 3. [API Security - Securing APIs with API Keys](./Labs/Core/03 - API Security - Securing APIs with API Keys)
 4. [API Security - Securing APIs with OAuth 2-legged](./Labs/Core/04 - API Security - Securing APIs with OAuth 2-legged)
