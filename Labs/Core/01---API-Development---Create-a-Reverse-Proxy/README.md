@@ -18,7 +18,7 @@ In this lab we will see how to create a reverse proxy, that routes inbound reque
 
 # Pre-requisites
 
-None.
+A web browser (we suggest Google Chrome), and an internet connection. 
 
 # Instructions
 
@@ -60,23 +60,25 @@ None.
 
   ![image alt text](./media/image_6.jpg)
 
-* Once API proxy has built and deployed **click** the link to view your proxy in the proxy editor. 
+  Apigee Edge will build and deploy an API Proxy. 
+  
+* Once the API proxy has been built and deployed **click** the link to view your proxy in the proxy editor. 
 
   ![image alt text](./media/image_7.jpg)
 
-* You should see the proxy **Overview** screen.
+* You should see the proxy **Overview** screen. You should familiarize yourself with the controls available here. Some highlights are shown in this screenshot.  
 
   ![image alt text](./media/image_8.jpg)
 
 * *Congratulations!*...You have now built a reverse proxy for an existing backend service.
 
-* Let us test the newly built API proxy using the [REST Client](https://apigee-rest-client.appspot.com/). Open the REST Client on a new browser window.  
+* Let us test the newly built API proxy using the [Apigee REST Client](https://apigee-rest-client.appspot.com/).  The Apigee REST Client is a web application that can invoke HTTP APIs.  Right-click the link to open the REST Client in a new browser window.
 
 * Copy the URL for your API proxy. 
 
-        ![image alt text](./media/image_9.jpg)
+  ![image alt text](./media/image_9.jpg)
 
-* Paste the link on the REST Client and make a GET call.
+* Now, switch to the tab containing the Apigee REST Client.  Paste the link into the form field on that web page, and **click** to send a GET request.
 
   ![image alt text](./media/image_10.jpg)
 
