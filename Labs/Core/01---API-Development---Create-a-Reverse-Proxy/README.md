@@ -76,11 +76,11 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 * Copy the URL for your API proxy. 
 
-  ![image alt text](./media/image_9.jpg)
+  ![image alt text](./media/Copy-the-URL.png)
 
 * Now, switch to the tab containing the Apigee REST Client.  Paste the link into the form field on that web page, and **click** to send a GET request.
 
-  ![image alt text](./media/image_10.jpg)
+  ![image alt text](./media/Paste-URL-and-SEND.gif)
 
 * You should see a success response similar to this -
 
