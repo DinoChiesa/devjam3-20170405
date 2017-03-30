@@ -78,21 +78,21 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![image alt text](./media/Copy-the-URL.png)
 
-* Now, switch to the tab containing the Apigee REST Client.  Paste the link into the form field on that web page, and **click** to send a GET request.
+* Now, switch to the tab containing the Apigee REST Client.  Paste the link into the form field on that web page, and **click** SEND. This will send a GET request.
 
   ![image alt text](./media/Paste-URL-and-SEND.gif)
 
-* You should see a success response similar to this -
+* In the page for the Apigee REST client, you should see a success response similar to this:
 
   ![image alt text](./media/image_11.jpg)
 
-# Save the API Proxy
+# Export the API Proxy
 
-* Let’s save the API Proxy locally as an API Bundle so that we can reuse it in other labs.
+* Let’s now download the API Proxy definition, so that we can use it in other labs.
 
-* Save the API Proxy by downloading the proxy bundle, See screenshot below for instructions.
+* Flip back to the Apigee.com tab. Click Project...Download revision. 
 
-![image alt text](./media/image_12.png)
+![image alt text](./media/Download-API-Proxy.gif)
 
 # Lab Video
 
