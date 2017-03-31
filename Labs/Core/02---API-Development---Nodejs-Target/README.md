@@ -30,7 +30,9 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 # Instructions
 
-* Go to [https://apigee.com/edge](https://apigee.com/edge) and log in. This is the Edge management UI. 
+* First, download [this zip file](./code/intro-nodejs-proxy-20170330.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
+
+* In a separate browser tab, navigate to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
 * Select **Develop →API Proxies** in the side navigation menu
 
@@ -40,19 +42,15 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![](./media/Plus-New-Proxy.gif)
 
-* Select **Proxy bundle**. Click on **Next**.
+* Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
 
   ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
 
-* Download [this zip file](./code/intro-nodejs-proxy-20170330.zip), by right-clicking.
+* Specify the name for the new proxy, using your initials..., and click **Next**
 
-* Now back in the Apigee "New Proxy" Wizard, choose the zip file that you just downloaded.
+  ![image alt text](./media/use-your-initials-click-next.png)
 
-* Specify the name for the new proxy, using your initials...
-
-  ![image alt text](./media/import-bundle-with-name.png)
-
-* and click **Next**, and then click **Build**
+* then click **Build**
 
   ![image alt text](./media/click-build.png)
 
