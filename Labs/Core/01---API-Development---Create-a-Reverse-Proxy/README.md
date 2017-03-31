@@ -160,11 +160,11 @@ That completes this hands-on lesson. In this simple lab you learned :
 
 * Useful Apigee documentation links on API Proxies - 
 
-    * Build a simple API Proxy - [http://docs.apigee.com/api-services/content/build-simple-api-proxy](http://docs.apigee.com/api-services/content/build-simple-api-proxy) 
+    * [Build a simple API Proxy](http://docs.apigee.com/api-services/content/build-simple-api-proxy) 
 
-    * Best practices for API proxy design and development - [http://docs.apigee.com/api-services/content/best-practices-api-proxy-design-and-development](http://docs.apigee.com/api-services/content/best-practices-api-proxy-design-and-development) 
+    * [Best practices for API proxy design and development](http://docs.apigee.com/api-services/content/best-practices-api-proxy-design-and-development) 
 
-* Watch this 4 minute video on "Anatomy of an API proxy" - [https://youtu.be/O5DJuCXXIRg](https://youtu.be/O5DJuCXXIRg) 
+* Watch this 4 minute video on [Anatomy of an API proxy](https://youtu.be/O5DJuCXXIRg) 
 
 # Rate this lab
 

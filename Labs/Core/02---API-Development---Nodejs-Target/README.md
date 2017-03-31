@@ -144,9 +144,9 @@ That completes this hands-on lesson. In this simple lab you learned:
 
 * Useful Apigee documentation links on API Proxies - 
 
-    * Overview of Node.js on Apigee Edge - [http://docs.apigee.com/api-services/content/overview-nodejs-apigee-edge)
+    * [Overview of Node.js on Apigee Edge](http://docs.apigee.com/api-services/content/overview-nodejs-apigee-edge)
 
-* Watch this one hour webinar on Node.js in Apigee Edge - [https://youtu.be/u8nkdaURFrU](https://youtu.be/u8nkdaURFrU)
+* Watch this one hour [Webinar on Node.js in Apigee Edge](https://youtu.be/u8nkdaURFrU)
 
 
 
