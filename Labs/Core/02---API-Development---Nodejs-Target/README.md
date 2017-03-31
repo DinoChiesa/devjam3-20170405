@@ -64,10 +64,10 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![image alt text](./media/click-the-develop-tab.png)
 
-  This shows you the contents of the API Proxy definition.  On the lower left-hand side you can see
-  the nodejs script that is included in this Proxy.
+  This shows you the contents of the API Proxy definition.  
 
-* Click the **expressServer.js**
+* On the lower left-hand side you can see
+  the nodejs script that is included in this Proxy. Click the **expressServer.js**
 
   ![image alt text](./media/click-express-server.gif)
 
@@ -103,7 +103,7 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 * Now, open a new tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/), or switch to an existing browser tab that has the Apigee REST Client open. 
 
-* Paste the link into the form field on that web page.  Append to the URL a /status.  like so:
+* Paste the link into the form field on that web page.  Append to the URL a /status.  Like so:
 
   ![image alt text](./media/Apigee_Rest_Client-paste-and-click-send.png)
 
@@ -113,13 +113,22 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![image alt text](./media/rest-client-good-response.png)
 
+
+* Now, replace /status with /visit, select the POST verb, and click Send. Like so:
+
+  ![image alt text](./media/make-a-post-request.gif)
+
+* This will run different logic in the nodejs server, which updates Postgres. 
+
+
+
 # For Extra Credit
 
-Can you modify the nodejs logic to connect to a different networked system? 
+Can you replace the nodejs logic with code that connects to a different networked system? 
 
 # For Discussion and Consideration
 
-1. Can a proxy use both Nodejs and HTTP backends?  Would this ever be necessary?
+1. Can a proxy use multiple targets? For example, both Nodejs and HTTP backends?  Can you think of a case where this would be necessary?
 
 2. When is it appropriate to embed nodejs code in Apigee Edge, versus hosting it independently on a public cloud? 
 
