@@ -86,7 +86,7 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![image alt text](./media/image_11.jpg)
 
-* OK, now let's test the deployment and undeployment.  Flip back to the browser tab with Apigee Edge.  Undeploy the API Proxy.
+* OK, now let's test deployment and undeployment.  Flip back to the browser tab with Apigee Edge.  Undeploy the API Proxy.
 
   ![image alt text](./media/Undeploy-the-Proxy.gif)
 
@@ -101,7 +101,7 @@ A web browser (we suggest Google Chrome), and an internet connection.
   If you flip back to the Apigee tab and deploy the proxy again, then try again to send a GET request,
   you should see a successful response again.
 
-  When you "deploy" a proxy in Apigee Edge, you are telling Apigee Edge to make it available for inbound requests.
+  When you "deploy" a proxy in Apigee Edge, you are telling Apigee Edge to make it available for inbound requests. A proxy that is not deployed will not handle requests. 
 
   
 # Export the API Proxy
@@ -164,7 +164,7 @@ That completes this hands-on lesson. In this simple lab you learned :
 
     * Best practices for API proxy design and development - [http://docs.apigee.com/api-services/content/best-practices-api-proxy-design-and-development](http://docs.apigee.com/api-services/content/best-practices-api-proxy-design-and-development) 
 
-* Watch this 4minute video on "Anatomy of an API proxy" - [https://youtu.be/O5DJuCXXIRg](https://youtu.be/O5DJuCXXIRg) 
+* Watch this 4 minute video on "Anatomy of an API proxy" - [https://youtu.be/O5DJuCXXIRg](https://youtu.be/O5DJuCXXIRg) 
 
 # Rate this lab
 
