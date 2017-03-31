@@ -142,7 +142,7 @@ That completes this hands-on lesson. In this simple lab you learned:
 
 # References
 
-* Useful Apigee documentation links on API Proxies - 
+* Useful Apigee documentation links
 
     * [Overview of Node.js on Apigee Edge](http://docs.apigee.com/api-services/content/overview-nodejs-apigee-edge)
 
