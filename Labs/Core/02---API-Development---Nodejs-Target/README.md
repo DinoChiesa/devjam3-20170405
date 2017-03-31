@@ -40,118 +40,106 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
   ![](./media/Plus-New-Proxy.gif)
 
-* Select **Node.js App**. Click on **Next**.
+* Select **Proxy bundle**. Click on **Next**.
 
-  ![image alt text](./media/Plus-New-Nodejs-Proxy-Next.gif)
+  ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
 
-* Enter details in the proxy wizard. Replace **{your-initials}** with the initials of your name. 
+* Download [this zip file](./code/intro-nodejs-proxy-20170330.zip), by right-clicking.
 
-  * Proxy Name: **{your_initials}**_nodejs
+* Now back in the Apigee "New Proxy" Wizard, choose the zip file that you just downloaded.
 
-  * Proxy Base Path: /v1/**{your_initials}**_nodejs
+* Specify the name for the new proxy, using your initials...
 
-  * Source: "Hello World" Sample
+  ![image alt text](./media/import-bundle-with-name.png)
 
-  ![image alt text](./media/Proxy-Details-Use-your-own-initials.png)
+* and click **Next**, and then click **Build**
 
-* Verify the values and click **Next**.
+  ![image alt text](./media/click-build.png)
 
-* Select **Pass through (none)** for the authorization in order to choose not to apply any security policy for the proxy. Click **Next**. 
-  
-  ![image alt text](./media/image_4.jpg)
+* Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
 
-* Go with the **default Virtual Host** configuration.
+  ![image alt text](./media/view-the-imported-proxy.png)
 
-  ![image alt text](./media/image_5.jpg)
+* You should see the proxy **Overview** screen. 
 
-* Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy.** 
+* Click the **Develop** tab.
 
-  ![image alt text](./media/Build-and-Deploy.png)
+  ![image alt text](./media/click-the-develop-tab.png)
 
-  Apigee Edge will build and deploy the API Proxy. 
+  This shows you the contents of the API Proxy definition.  On the lower left-hand side you can see
+  the nodejs script that is included in this Proxy.
 
-* XXX Continue here....
+* Click the **expressServer.js**
 
-* Once the API proxy has been built and deployed **click** the link to view your proxy in the proxy editor. 
+  ![image alt text](./media/click-express-server.gif)
 
-  ![image alt text](./media/image_7.jpg)
+  At this point you can view the nodejs code that is connecting to a Postgres server available
+  on the internet. 
 
-* You should see the proxy **Overview** screen. You should familiarize yourself with the controls available here. Some highlights are shown in this screenshot.  
+* Making sure the left-hand navigator pane is expanded, click the default target.
 
-  ![image alt text](./media/image_8.jpg)
+  ![image alt text](./media/click-default-target.gif)
 
-* *Congratulations!*...You have now built a reverse proxy for an existing backend service.
+  This is where you can set environment variables used by the nodejs server code.
+  In this example, we set the Postgres database URL. 
 
-* Let us test the newly built API proxy using the [Apigee REST Client](https://apigee-rest-client.appspot.com/).  The Apigee REST Client is a web application that can invoke HTTP APIs.  Right-click the link to open the REST Client in a new browser window.
 
-* Copy the URL for your API proxy. 
+* The imported proxy is not yet deployed. We must change the
+  base path in order to deploy it.  The basepath is encoded in the proxy configuration we just imported, which
+  means it is the same for everyone. Let's change it to something unique for each user.  
 
-  ![image alt text](./media/Copy-the-URL.png)
+* On the left-hand-side, select the "default" Proxy endpoint. Then update the Base Path. And click **Save**. 
 
-* Now, switch to the tab containing the Apigee REST Client.  Paste the link into the form field on that web page, and **click** SEND. This will send a GET request.
+  ![image alt text](./media/change-the-basepath.gif)
 
-  ![image alt text](./media/Paste-URL-and-SEND.gif)
+* Deploy the Proxy to the "test" environment. 
+
+  ![image alt text](./media/deploy-the-proxy.gif)
+
+* *Congratulations!*...You have now imported and deployed a proxy for a non-HTTP service.
+
+* Let us test the newly built API proxy. First, let's copy the URL for this proxy.  Click the **Overview** tab and copy the URL. 
+
+  ![image alt text](./media/copy-the-proxy-url.gif)
+
+
+* Now, open a new tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/), or switch to an existing browser tab that has the Apigee REST Client open. 
+
+* Paste the link into the form field on that web page.  Append to the URL a /status.  like so:
+
+  ![image alt text](./media/Apigee_Rest_Client-paste-and-click-send.png)
+
+* **Click** SEND. This will send a GET request.
 
 * In the page for the Apigee REST client, you should see a success response similar to this:
 
-  ![image alt text](./media/image_11.jpg)
-
-# Export the API Proxy
-
-* Let’s now download the API Proxy definition, so that we can use it in other labs.
-
-* Flip back to the Apigee.com tab. Click Project...Download revision. 
-
-![image alt text](./media/Download-API-Proxy.gif)
-
-  This will save a file in ZIP format on your machine. The zip has a name like `dpc_reverse_proxy_rev1_2017_03_30.zip`, with your initials and today's date appearing in the appropriate places. And the  format of the file is like so:
-
-```
-  Length      Date    Time    Name
----------  ---------- -----   ----
-      808  03-30-2017 21:58   apiproxy/dpc_reverse_proxy.xml
-      474  03-30-2017 21:58   apiproxy/targets/default.xml
-      630  03-30-2017 21:58   apiproxy/proxies/default.xml
----------                     -------
-     1912                     3 files
-
-```
-
-All of these files are XML text files. These files can be extracted from the ZIP and checked into a source code management system. Later, we'll see how to do the converse: import a bundle of files as a new proxy, or new revision of a proxy. 
-
-This is a relatively simple proxy; all it does is "pass through" requests, and it requires just 3 configuration files for that purpose. As we work on more complex scenarios, we'll see that any downloaded bundle will include the Apigee Edge policies and resource files (nodejs code, XSLT scripts, Java JARs, and so on) for the proxy. Proxies can become pretty elaborate! 
-
-  
-# Lab Video
-
-If you like to learn by watching, here is a short video on creating a reverse proxy in Apigee Edge [https://www.youtube.com/watch?v=ZtINy7n9QRc](https://www.youtube.com/watch?v=ZtINy7n9QRc) 
+  ![image alt text](./media/rest-client-good-response.png)
 
 # For Extra Credit
 
-Now that you have created a reverse proxy, apply traffic management policies to protect the API proxy and then save it as a new revision. Then deploy the new revision to Test environment. 
+Can you modify the nodejs logic to connect to a different networked system? 
 
-# Quiz
+# For Discussion and Consideration
 
-1. Can "wildcards" be used in the API proxy base path?
+1. Can a proxy use both Nodejs and HTTP backends?  Would this ever be necessary?
 
-2. Can you "import" an API proxy bundle from the Apigee UI?  How? 
+2. When is it appropriate to embed nodejs code in Apigee Edge, versus hosting it independently on a public cloud? 
 
 
 # Summary
 
-That completes this hands-on lesson. In this simple lab you learned how to create a proxy for an existing backend using Apigee Edge proxy wizard.
+That completes this hands-on lesson. In this simple lab you learned:
+
+* how to import an proxy
+* how Apigee Edge can run nodejs logic to handle inbound requests
 
 # References
 
 * Useful Apigee documentation links on API Proxies - 
 
-    * Build a simple API Proxy - [http://docs.apigee.com/api-services/content/build-simple-api-proxy](http://docs.apigee.com/api-services/content/build-simple-api-proxy) 
+    * Overview of Node.js on Apigee Edge - [http://docs.apigee.com/api-services/content/overview-nodejs-apigee-edge)
 
-    * Best practices for API proxy design and development - [http://docs.apigee.com/api-services/content/best-practices-api-proxy-design-and-development](http://docs.apigee.com/api-services/content/best-practices-api-proxy-design-and-development) 
+* Watch this one hour webinar on Node.js in Apigee Edge - [https://youtu.be/u8nkdaURFrU](https://youtu.be/u8nkdaURFrU)
 
-* Watch this 4minute video on "Anatomy of an API proxy" - [https://youtu.be/O5DJuCXXIRg](https://youtu.be/O5DJuCXXIRg) 
 
-# Rate this lab
-
-How did you like this lab? Rate [here](https://goo.gl/forms/ZuI2obFmWIhV0Bym1).
 

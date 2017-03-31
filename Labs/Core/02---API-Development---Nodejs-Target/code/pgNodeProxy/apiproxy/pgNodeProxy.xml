@@ -1,0 +1,12 @@
+<APIProxy revision='1' name='pgNodeProxy'>
+  <ConfigurationVersion minorVersion='0' majorVersion='4'/>
+  <CreatedAt>1490918744865</CreatedAt>
+  <CreatedBy>dchiesa</CreatedBy>
+  <Description></Description>
+  <DisplayName>pgNodeProxy</DisplayName>
+  <LastModifiedAt>1490918744865</LastModifiedAt>
+  <LastModifiedBy>orgAdmin</LastModifiedBy>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
+</APIProxy>

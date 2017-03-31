@@ -1,0 +1,65 @@
+<ProxyEndpoint name='default'>
+  <Description>Default Proxy</Description>
+  <HTTPProxyConnection>
+    <BasePath>/abc_nodejs</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name='PreFlow'>
+      <Request/>
+      <Response/>
+  </PreFlow>
+  <PostFlow name='PostFlow'>
+      <Request/>
+      <Response>
+        <Step><Name>AM-CleanResponseHeaders</Name></Step>
+      </Response>
+  </PostFlow>
+  <PostClientFlow name='PostFlow'>
+      <Request/>
+      <Response>
+        <!-- possibly insert message logging policies here -->
+      </Response>
+  </PostClientFlow>
+
+  <Flows>
+    <Flow name='visit'>
+      <Description>insert description here</Description>
+      <Request>
+        <!-- insert flow-specific policies here -->
+      </Request>
+      <Response>
+        <!-- and others here -->
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/visit") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='status'>
+      <Description>get status of visitors</Description>
+      <Request>
+        <!-- insert flow-specific policies here -->
+      </Request>
+      <Response>
+        <!-- and others here -->
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/status") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <!-- keep this if using a target -->
+  <RouteRule name='InvokeRouteRule'>
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+
+</ProxyEndpoint>

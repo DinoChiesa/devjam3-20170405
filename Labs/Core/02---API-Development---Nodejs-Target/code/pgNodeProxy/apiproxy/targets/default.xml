@@ -1,0 +1,30 @@
+<TargetEndpoint name='default'>
+  <Description>default target endpoint</Description>
+  <FaultRules>
+    <FaultRule name='other-fault'>
+      <!-- This FaultRule always catches all uncaught faults. -->
+      <Step>
+        <Name>JS-MaybeFormatFault</Name>
+      </Step>
+    </FaultRule>
+  </FaultRules>
+
+  <Flows/>
+  <PreFlow name='PreFlow'>
+    <Request>
+    </Request>
+    <Response>
+    </Response>
+  </PreFlow>
+
+  <ScriptTarget>
+    <EnvironmentVariables>
+      <EnvironmentVariable name="DATABASE_URL">postgres://ocfwewwwdwkhwk:526aa54d6f50ee77874d7e909e6ecad79687a4e2eb2e2edd96042ad11ce56e2a@ec2-54-225-236-102.compute-1.amazonaws.com:5432/d6nijgt7l6bevj</EnvironmentVariable>
+    </EnvironmentVariables>
+    <Arguments>
+      <Argument>ARG</Argument>
+    </Arguments>
+    <ResourceURL>node://expressServer.js</ResourceURL>
+  </ScriptTarget>
+
+</TargetEndpoint>
