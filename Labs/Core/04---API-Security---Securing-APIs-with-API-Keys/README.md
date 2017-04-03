@@ -14,27 +14,29 @@ The [Verify API Key Policy](http://docs.apigee.com/api-services/reference/verify
 
 In addition to authenticating requests, the [Verify API Key Policy](http://docs.apigee.com/api-services/reference/verify-api-key-policy) provides context about who is making the call.  This context can be used to apply policies such as Quota management or routing based on the client app.  Upon successful verification of the API Key, the API Context is populated with details about the App, Developer, and API Product associated with the call.  This data can be used for applying business logic as well as gaining business insights through analytics.
 
-In this lab, you will protect an existing API Proxy with the [Verify API Key Policy](http://docs.apigee.com/api-services/reference/verify-api-key-policy) and use the trace tool to see the policy in action.  To accomplish this you will modify an existing API Proxy to add a security policy to handle the authorization.  You will also create several artifacts in your [Organization](http://docs.apigee.com/app-services/content/organization).
+In this lab, you will protect an existing API Proxy with the [Verify API Key Policy](http://docs.apigee.com/api-services/reference/verify-api-key-policy) and use the trace tool to see the policy in action.  To accomplish this you will modify an existing API Proxy to add a security policy to handle the authorization.
 
-* [App Developer](http://docs.apigee.com/developer-services/content/adding-developers-your-api-product)
+To obtain a proper API Key, you will also need to create several artifacts in your [Organization](http://docs.apigee.com/app-services/content/organization): 
 
-* [Developer App](http://docs.apigee.com/developer-services/content/creating-apps-surface-your-api)
+* [API Product](http://docs.apigee.com/developer-services/content/what-api-product) - an item that is consumable by external developers
 
-* [API Product](http://docs.apigee.com/developer-services/content/what-api-product)
+* [App Developer](http://docs.apigee.com/developer-services/content/adding-developers-your-api-product) - a registered person
+
+* [Developer App](http://docs.apigee.com/developer-services/content/creating-apps-surface-your-api) - for our purposes, this is really a "named" API Key. 
 
 # Pre-requisites
 
-For this lab, you will need an API Proxy that is not currently secured.  If you do not have an API Proxy available for this lab, revisit the lab "API Design : Create a Reverse Proxy with OpenAPI Specification" and then return here to complete these steps.
+For this lab, you will need an API Proxy that is not currently secured.  If you do not have an API Proxy available for this lab, revisit [Lab 1](../01---API-Development---Create-a-Reverse-Proxy).  Then return here to complete these steps.
 
 # Instructions
 
 ## Choose (and invoke) an API Proxy to secure
 
-* Go to [https://apigee.com/edge](https://apigee.com/edge) and log in. This is the Edge management UI
+* Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in. 
 
 * Select **Develop → API Proxies**
 
-![image alt text](./media/image_0.jpg)
+![image alt text](./media/Select-apiproxies.gif)
 
 * Find and open the API Proxy you want to secure by clicking on it.
 
@@ -48,25 +50,32 @@ For this lab, you will need an API Proxy that is not currently secured.  If you 
 
 * Click the **Trace** tab near the top of the window.
 
-* The Trace view allows you to initiate tracing for up to 10 minutes, during which time all requests (regardless of whether they are sent from the trace tool or any other client) will be captured and their traces made visible to you.
+  ![image alt text](./media/image_3.png)
+  
+  The Trace view allows you to initiate tracing for up to 10 minutes, during which time all requests (regardless of whether they are sent from the trace tool or any other client) will be captured and their traces made visible to you.
 
-![image alt text](./media/image_3.png)
 
 * Click **Start Trace Session** to begin a trace session.
 
 * Click **Send** to send a request.  If your API Proxy requires query parameters add them here prior to sending.
 
-* You should see a successful 2xx response for your API Call (it may take a few seconds for the trace results to appear)
+* You should see a successful 2xx response for your API Call
 
-* If you are not able to successfully test an API Proxy in the Trace Tool, revisit the lab "API Design : Create a Reverse Proxy with OpenAPI Specification"
+* If you are not able to successfully test an API Proxy in the Trace Tool, revisit [Lab 1](../01---API-Development---Create-a-Reverse-Proxy).
 
 ## Publish API as part of API Product
 
-Once secured, consuming apps will need an API Key to successfully invoke your API.  The way that Developer (consumer) Apps request API Keys is via an API Product.  In short, API Products are the unit of deployment to the Developer Portal, where App Developers can learn about, register for, and consume your APIs.  Read more about API Products [here](http://docs.apigee.com/developer-services/content/what-api-product).
+Once an API Proxy is secured, consuming apps will need an API Key to successfully invoke it.  The unit of consumption - in other words the thing that a Developer App (also known as "client", or "consumer") is authorized for - is an API Product.  API Products are the things that appear in the searchable API catalog in the Developer Portal, where App Developers can learn about and register for APIs.  Read more about API Products [here](http://docs.apigee.com/developer-services/content/what-api-product).
 
-* Select **Publish → API Products** from the side navigation menu
+* In the Apigee UI, select **Publish → API Products** from the side navigation menu
 
-* Click  **+API Product** and populate the following fields
+  ![image alt text](./media/select-publish-apiproducts.gif)
+
+* Click **+API Product**
+
+  ![image alt text](./media/click-plus-apiproduct.png)
+
+* Populate the following fields
 
     * Section: Product Details
 
@@ -81,12 +90,15 @@ Once secured, consuming apps will need an API Key to successfully invoke your AP
         * Section: API Proxies
 
             * Click the **+API Proxy** button
+            
+              ![image alt text](./media/add-a-proxy-to-a-product.png)
 
             * Select your API Proxy
 
-* **Save** the API Product.
+* Click the blue **Save** button on the bottom right corner of the page, to save the API Product.
+  
+  There is now a new, consumable unit of APIs available to external (consuming) developers. 
 
-Note: We are adding the entire API Proxy to the API Product.  We can just as easily select one or more operations from one or more API Proxies and bundle them together in an API Product.
 
 ## Create An App Developer
 
@@ -94,11 +106,12 @@ Next we will create an App Developer who can consume the new API Product.
 
 * Select **Publish → Developers** from the side navigation menu
 
-![image alt text](./media/image_4.png)
+  ![image alt text](./media/select-publish-developers.gif)
 
 * Click **+Developer**
 
-![image alt text](./media/image_5.png)
+  ![image alt text](./media/click-plus-developer.png)
+
 
 * Populate the following fields
 
@@ -114,17 +127,18 @@ Next we will create an App Developer who can consume the new API Product.
 
 ![image alt text](./media/image_6.png)
 
+
 ## Create An App And Retrieve its API Key
 
-An App Developer can create any number of Apps.  Each App can register for any number of products.  We will create an App for our new App Developer, and register it with the API Product we created earlier in the lab.  Read more about Developer Apps [here](http://docs.apigee.com/developer-services/content/creating-apps-surface-your-api).
+There can be  any number of Apps assigned to a single App Developer. Each App can register for any number of products. We will create an App for our new App Developer, and register it with one API Product: the API Product we created earlier in the lab. Read more about Developer Apps [here](http://docs.apigee.com/developer-services/content/creating-apps-surface-your-api).
 
 * Click **Publish → Apps** in the side navigation
 
-![image alt text](./media/image_7.png)
+  ![image alt text](./media/select-publish-apps.gif)
 
 * Click **+App**
 
-![image alt text](./media/image_8.png)
+  ![image alt text](./media/click-plus-apps.png)
 
 * Populate the following fields
 
@@ -134,13 +148,13 @@ An App Developer can create any number of Apps.  Each App can register for any n
 
     * Product: Click **+Product** to add your API Product to this App.
 
-![image alt text](./media/image_9.png)
+  ![image alt text](./media/image_9.png)
 
-* Click **Save**.
+* In the lower right corner, click the blue **Save** button.
 
-* Open the newly created App and click *Show* under *Consumer Key*.  This will reveal the API Key that must be used to invoke the API when API Key verification is in use.  Copy this key into a text document for later use
+* Open the newly created App and click *Show* under *Consumer Key*.  This will reveal the API Key that must be used to invoke the API when API Key verification is in use.  Copy this key into a text document for later use.
 
-![image alt text](./media/image_10.png)
+  ![image alt text](./media/image_10.png)
 
 ## Add a Verify API Key Policy
 
