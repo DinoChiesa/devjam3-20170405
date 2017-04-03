@@ -168,16 +168,14 @@ There can be  any number of Apps assigned to a single App Developer. Each App ca
 
 * The policy will be added after any policies you previously had in the Request flow.  Since we likely want this to occur first, drag the new policy to be the leftmost.
 
-* With the *Verify API Key* policy selected, you can see its configuration (the default policy configuration is below).  Note that the API Key is being retrieved from the context as the variable *request.queryparam.apikey*.  This is the default but the policy can be configured to retrieve the key from any parameter key you prefer.
+* With the *Verify API Key* policy selected, you can see its configuration (the default policy configuration is below). Note that the API Key is being retrieved from the context as the variable *request.queryparam.apikey*.  This is the default but the policy can be configured to retrieve the key from any parameter key you prefer.
 
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-  <VerifyAPIKey async="false" continueOnError="false" enabled="true" name="Verify-API-Key-1">
+  ```
+  <VerifyAPIKey name="Verify-API-Key-1">
     <DisplayName>Verify API Key-1</DisplayName>
-     <Properties/>
     <APIKey ref="request.queryparam.apikey"/>
-</VerifyAPIKey>
-```
+  </VerifyAPIKey>
+  ```
 
 * **Save** the API Proxy.
 
@@ -185,31 +183,34 @@ There can be  any number of Apps assigned to a single App Developer. Each App ca
 
 * Click **Start Trace Session** to begin a trace session.
 
-* Click **Send** to send a request.  If your API Proxy requires query parameters add them dire prior to sending (Do not add the API Key yet)
+* Click **Send** to send a request. If your API Proxy requires query parameters add them dire prior to sending (Do not add the API Key yet)
 
 * You should see a 401 (unauthorized) response for your API Call because the API Proxy was expecting an API Key as a query parameter.  See the trace session below
 
-* Now add the query parameter ```?apikey={your_api_key}``` to the URL in the trace tool and try again.  (Use the API Key you created [here](#bookmark=id.mueb50zfeta3)) and resend the request.
+* Now add the query parameter ```?apikey={your_api_key}``` to the URL in the trace tool and try again. (Use the API Key you created above, and resend the request.
 
 * You should see a 2xx response code and the Trace for that request should show that the Verify API Key policy is now passing.
 
-![image alt text](./media/image_11.png)
+  ![image alt text](./media/image_11.png)
 
 # Lab Video
 
 If you would rather watch a video that covers this topic, point your browser [here](https://youtu.be/3nUFCOgGlS8).
 
-# Earn Extra-points
+# For Extra Credit
 
-Now that you have secured an API Proxy with API Key, you have access to details about the calling App, Developer, and associated API Product in the API flow.  See if you can locate these details for a protected API call.
+1. Now that you have secured an API Proxy with API Key, you have access to details about the calling App, Developer, and associated API Product in the API flow.  See if you can locate these details in the Trace UI for a protected API call.
 
-A few examples of where this might be useful.
+  A few examples of where this might be useful.
 
-* Route to a sandbox backend when a Product has the custom attribute of sandbox=true.
+  * Route to a sandbox backend when a Product has the custom attribute of sandbox=true.
 
-* Implement different quota policies for Apps that have been approved but not yet verified.
+  * Implement different quota policies for Apps that have been approved but not yet verified.
 
-* Analyze traffic by calling App, Developer, or Product
+  * Analyze traffic by calling App, Developer, or Product
+
+2. What happens if you revoke the app or Credential, and retry the requests?  What happens if you re-approve those things? 
+
 
 # Quiz
 
@@ -218,6 +219,7 @@ A few examples of where this might be useful.
 2. Why is the Verify API Key policy typically found as the first policy in the Request PreFlow?  When might it be in a conditional PreFlow instead of the "All" PreFlow?
 
 3. How would you configure the policy to get the API Key from a header called "Api-Key" instead of the default query parameter location?
+
 
 # Summary
 
