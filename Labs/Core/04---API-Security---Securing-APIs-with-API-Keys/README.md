@@ -201,18 +201,18 @@ If you would rather watch a video that covers this topic, point your browser [he
 
 1. Now that you have secured an API Proxy with API Key, you have access to details about the calling App, Developer, and associated API Product in the API flow.  See if you can locate these details in the Trace UI for a protected API call.
 
-  A few examples of where this might be useful.
+   A few examples of where this might be useful.
 
-  * Route to a sandbox backend when a Product has the custom attribute of sandbox=true.
+     * Route to a sandbox backend when a Product has the custom attribute of sandbox=true.
 
-  * Implement different quota policies for Apps that have been approved but not yet verified.
+     * Implement different quota policies for Apps that have been approved but not yet verified.
 
-  * Analyze traffic by calling App, Developer, or Product
+     * Analyze traffic by calling App, Developer, or Product
 
 2. What happens if you revoke the app or Credential, and retry the requests?  What happens if you re-approve those things? 
 
 
-# Quiz
+# For Discussion
 
 1. What would happen if a Quota Policy were placed before the Verify API Key policy?
 
@@ -227,9 +227,7 @@ In this lab you learned how to protect your API Proxy using the Verify API Key p
 
 # References
 
-* Link to Apigee docs page
-
-    * Verify Api Key Policy [http://docs.apigee.com/api-services/reference/verify-api-key-policy](http://docs.apigee.com/api-services/reference/verify-api-key-policy)
+* Link to Apigee docs: [Verify Api Key Policy](http://docs.apigee.com/api-services/reference/verify-api-key-policy)
 
 # Rate this lab
 
