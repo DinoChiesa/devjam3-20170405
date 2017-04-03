@@ -154,7 +154,7 @@ There can be  any number of Apps assigned to a single App Developer. Each App ca
 
 * Open the newly created App and click *Show* under *Consumer Key*.  This will reveal the API Key that must be used to invoke the API when API Key verification is in use.  Copy this key into a text document for later use.
 
-  ![image alt text](./media/image_10.png)
+  ![image alt text](./media/click-to-toggle-visibility.png)
 
 ## Add a Verify API Key Policy
 
