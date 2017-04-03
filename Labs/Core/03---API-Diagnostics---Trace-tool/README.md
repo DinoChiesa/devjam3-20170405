@@ -94,9 +94,9 @@ Consider a scenario where one of your API consumers reports seeing 404 errors in
 
 * Edit your URL field to replace ABCDEFG with  da94d538-d793-11e6-a734-122e0737977d . The full pattern is below: 
 
-```
-/da94d538-d793-11e6-a734-122e0737977d?initials={your initials}
-```
+  ```
+  /da94d538-d793-11e6-a734-122e0737977d?initials={your initials}
+  ```
 
 * Again, click the **Send** button. This time, your request returns a valid JSON response.
 
@@ -119,7 +119,7 @@ Now, imagine troubleshooting this issue - except with hundreds or thousands of r
 
 * Again click the **Send** button. 
 
-  No new trace entry is captured.  This is expected behavior, as our filter is configured to only trace requests with your initials in the query.
+  No new trace entry is captured.  This is expected behavior, as the filter is configured to only trace requests with your initials in the query.
 
 * One more thing -- with your trace session still active, click the **Download Trace Session** button to export a record of the trace results.  
 
@@ -128,15 +128,16 @@ Now, imagine troubleshooting this issue - except with hundreds or thousands of r
 
 # Lab Video
 
-If you prefer to learn by watching, here is a video lab on using the Trace tool
-
-[https://youtu.be/luCU2XTh5J0](https://youtu.be/luCU2XTh5J0)
+If you prefer to learn by watching, here is [a screencast on using the Trace tool](https://youtu.be/luCU2XTh5J0)
 
 # For Extra Credit
 
-Take a few minutes and explore the Trace interface a bit deeper.  Hover over the steps in the request/response visualization and note the Latency bubble that pops up, showing you how much time elapsed at that particular step.  Drill into the metadata in the bottom window.  Click the ‘Extract Variables’ policy and note that the initials you provided are shown as an extracted variable called ‘alphaid’.
+* Take a few minutes and explore the Trace interface a bit deeper.  Hover over the steps in the request/response visualization and note the Latency bubble that pops up, showing you how much time elapsed at that particular step.  Drill into the metadata in the bottom window.  Click the ‘Extract Variables’ policy and note that the initials you provided are shown as an extracted variable called ‘alphaid’.
 
-Finally, take a look at the exported trace session from the lab.  See if you can interpret the results -- imagine some scenarios where this export could be ingested into other tools for offline diagnostics.
+* Take a look at the exported trace session from the lab.  See if you can interpret the results -- imagine some scenarios where this export could be ingested into other tools for offline diagnostics.
+
+* What if you send in a request from a different client - for example the [Apigee REST client](https://apigee-rest-client.appspot.com/)?  What effect does this have on the trace facility?  
+
 
 # For Discussion
 
@@ -146,6 +147,7 @@ Finally, take a look at the exported trace session from the lab.  See if you can
 
 3. Will the Trace utility be useful for logging all transactions? Why or why not?
 
+4. Could you programmatically start a trace session and collect data for requests, during a CI/CD pipeline?  How?
 
 
 # Summary
