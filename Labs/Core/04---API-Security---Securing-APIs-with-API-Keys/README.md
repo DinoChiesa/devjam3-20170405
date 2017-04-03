@@ -148,7 +148,7 @@ There can be  any number of Apps assigned to a single App Developer. Each App ca
 
     * Product: Click **+Product** to add your API Product to this App.
 
-  ![image alt text](./media/image_9.png)
+  ![image alt text](./media/select-api-product.gif)
 
 * In the lower right corner, click the blue **Save** button.
 
