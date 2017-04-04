@@ -202,7 +202,7 @@ Again, you need to do this only if you have not created an App for the
 
 3. Populate the following fields
 
-    * Name: **{your_initials}-oauth-app
+    * Name: **{your_initials}**-oauth-app
 
     * Developer: (choose any available developer)
 
@@ -256,12 +256,20 @@ authenticates both the client app and the end user of the app.
    https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
    ```
 
-  Paste the resulting URL into the address bar of the empty browser tab.
+   Paste the resulting URL into the address bar of the empty browser tab.
 
 4. You should see a login screen, like this:
 
-  ![image alt text](./media/screenshot-20170404-115414.png)
+   ![image alt text](./media/screenshot-20170404-115414.png)
 
+   This login screen is actually being served by Apigee Edge. In the normal case, the
+   login-and-consent user experience is somethiing the API provider exposes
+   independently. It will have branding corresponding to the API provider, and will
+   be a common experience that will apply to multiple, perhaps many, third party apps.
+   Every time a user authorizes a new third-party app, they'll go through the same
+   user login-and-consent experience.
+   
+   
 5. Authenticate as a user, with one of the username/password pairs given to you
    by your instructor.  dino / IloveAPIs might work.
 
@@ -278,7 +286,7 @@ authenticates both the client app and the end user of the app.
 
 9. Specify these settings:
 
-   * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-ac/token
+   * url endpoint: `https://**{YOURORG}**-test.apigee.net/devjam3/oauth2-ac/token`
    * method: POST
    * Body parameters:
       * `grant_type` : `authorization_code`
