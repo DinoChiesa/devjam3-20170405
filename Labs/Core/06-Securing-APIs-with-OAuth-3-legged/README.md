@@ -25,7 +25,7 @@ The idea is that the user will authenticate to the Identity Server, which will c
 
 The flow looks like this:
 
-**{insert sequence diagram here}**
+![image alt text](./media/screenshot-20170404-124037.png)
 
 
 # Pre-requisites
