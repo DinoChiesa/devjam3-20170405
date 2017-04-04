@@ -10,9 +10,23 @@ You have a set of APIs that are consumed by trusted partners. You want to secure
 
 # How can Apigee Edge help?
 
-Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. OAuth defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and, in some cases, to get authorization codes. These endpoints refer to specific OAuth 2.0 policies that execute when the endpoint is called. 
+[The OAuth specification](https://tools.ietf.org/html/rfc6749) defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and, when using 3-legged OAuth, to kick off the authorization code flow.
 
-Authorization code is one of the most commonly used OAuth 2.0 grant types. The authorization code flow is a "three-legged OAuth" configuration. In this configuration, the user authenticates himself with the resource server and gives the app consent to access his protected resources without divulging username/passwords to the client app. This grant type is intended for apps that are written by third-party developers who do not have a trusted business relationship with the API provider. For example, developers who register for public API programs should not generally be trusted. With this grant type, the user's credentials on the resource server are never shared with the app. 
+Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. Apigee Edge OAuth policies 
+can be used to implement the standard OAuth endpoints, and lets you easily secure your APIs using a simply policy to verify tokens.
+
+Authorization code is one of the most commonly used OAuth 2.0 grant types. The authorization code flow is also sometimes called the "three-legged OAuth" configuration. In this configuration, the user authenticates himself with the resource server and gives the app consent to access his protected resources without divulging username/passwords to the client app. This grant type is intended for apps that are written by third-party developers who should not be trusted to handle the user credentials. For example, developers who register for public API programs should not generally be trusted. With this grant type, the user's credentials on the resource server are never shared with the app. 
+
+# Background: What are the Three Legs?
+
+The "three legs" in the name refer to the User Identity Server, the resource (API) server, and the client app itself. These are three pieces of software that are involved in an exchange. 
+
+The idea is that the user will authenticate to the Identity Server, which will confirm that with the resource (API) server, which will generate a token and provide it to the app, on behalf of the user. In this way the user never directly provides credentials to the application. The theory is the user can then control which apps have access to resources on his or her behalf. 
+
+The flow looks like this:
+
+<insert sequence diagram here>
+
 
 # Pre-requisites
 
@@ -22,45 +36,45 @@ Authorization code is one of the most commonly used OAuth 2.0 grant types. The a
 
 # Instructions
 
-* Go to [https://apigee.com/edge](https://apigee.com/edge) and log in. This is the Edge management UI. 
+1. First, Download the pre-built OAuth proxy bundle from [here](https://github.com/apigee/devjam3/blob/master/Resources/xx_oauth_code_grant.zip) 
 
-* Select **Develop > API Proxies** in the side navigation menu
+2. Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
-	![image alt text](./media/image_0.jpg)
+3. Select **Develop > API Proxies** in the side navigation menu
 
-* Download the pre-built OAuth proxy bundle from [here](https://github.com/apigee/devjam3/blob/master/Resources/xx_oauth_code_grant.zip) 
+   ![image alt text](./media/Develop-Proxies.gif)
 
 * Click the **+Proxy** button 
 
-	![image alt text](./media/image_1.png)
+        ![image alt text](./media/image_1.png)
 
 * Select **Proxy Bundle** option and click Next.
 
-	![image alt text](./media/image_2.png)
+        ![image alt text](./media/image_2.png)
 
 * Now, choose the bundle that you downloaded earlier, rename the proxy in this format
-**_{your_initials}_**_oauthcodegrant and click **Next** and then Build	
+**_{your_initials}_**_oauthcodegrant and click **Next** and then Build  
 
   ![image alt text](./media/image_3.png)
 
 * Click on the API Proxy name.
 
-	![image alt text](./media/image_4.png)
+        ![image alt text](./media/image_4.png)
 
 * Click on **Develop** and select default.
 
-	![image alt text](./media/image_5.png)
+        ![image alt text](./media/image_5.png)
 
 * From the code editor, find the base path entry and update it so that it follows this format.
   ```
-	/v1/{your_initials}/oauth_ac
+        /v1/{your_initials}/oauth_ac
   ```
   
-	![image alt text](./media/image_6.png)
+        ![image alt text](./media/image_6.png)
 
 * Now **Save** the proxy and **deploy** it to test environment.
 
-	![image alt text](./media/image_7.png)
+        ![image alt text](./media/image_7.png)
 
 * Once the proxy is deployed, select **Publish > API Products** from the side navigation menu.
 
@@ -68,35 +82,35 @@ Authorization code is one of the most commonly used OAuth 2.0 grant types. The a
 
 * Select the API Product that you created as a part of *API Security - Securing APIs with API Keys* lab.
 
-	![image alt text](./media/image_9.png)
+        ![image alt text](./media/image_9.png)
 
 * Click on **Edit**
 
-	![image alt text](./media/image_10.png)
+        ![image alt text](./media/image_10.png)
 
 * Now under **Resources > API Proxy** section, click on **+ API Proxy**.
 
-	![image alt text](./media/image_11.png)
+        ![image alt text](./media/image_11.png)
 
 * Select the API Proxy and click **Save**.
 
-	![image alt text](./media/image_12.png)
+        ![image alt text](./media/image_12.png)
 
 * Now select **Develop > API Proxies** in the side navigation menu
 
-	![image alt text](./media/image_13.jpg)
+        ![image alt text](./media/image_13.jpg)
 
 * Click on the API proxy that you created in "API Design : Create a Reverse Proxy with OpenAPI Specification" lab. 
 
 * Click on the **Develop** tab. Select **PreFlow** from the sidebar under **Proxy Endpoints** section
 
-	![image alt text](./media/image_14.png)
+        ![image alt text](./media/image_14.png)
 
-	![image alt text](./media/image_15.png)
+        ![image alt text](./media/image_15.png)
 
 * Click on **Add** Step and in the dialog, select *OAuth v2.0* from the Security section then click the **Add** button.
 
-	![image alt text](./media/image_16.png)
+        ![image alt text](./media/image_16.png)
 
 * Click on the policy and in the code editor, paste the code give below
 
@@ -113,7 +127,7 @@ Authorization code is one of the most commonly used OAuth 2.0 grant types. The a
 
 * Once again click on **Add** Step and in the dialog, select *Assign Message policy* from the Mediation section then click the **Add** button
 
-	![image alt text](./media/image_17.png)
+        ![image alt text](./media/image_17.png)
 
 * Click on the policy and in the code editor, paste the code give below
 
@@ -135,7 +149,7 @@ Note: You’ll have to remove the Authorization header using the Assign Message 
 
 * **Save** the proxy and deploy it on the **test** environment.
 
-	![image alt text](./media/image_18.png)
+        ![image alt text](./media/image_18.png)
 
 * *Congratulations!*...You’ve now successfully secured your APIs with OAuth 2.0.
 
@@ -143,38 +157,38 @@ Note: You’ll have to remove the Authorization header using the Assign Message 
 
 * Click **Publish > Apps** from the side navigation menu.
 
-	![image alt text](./media/image_19.png)
+        ![image alt text](./media/image_19.png)
 
 * Select the app that you created in the *API Security : Securing APIs with API Key* lab.
 
-	![image alt text](./media/image_20.png)
+        ![image alt text](./media/image_20.png)
 
 * Click on the **Show** button under Consumer Key, Consumer Secret.
 
 * Copy the values and store them somewhere safe.
 
-  ![image alt text](./media/image_21.png)	
+  ![image alt text](./media/image_21.png)       
 
 * Mac and Linux users, open Terminal and type the following command
 
-	```
+        ```
   echo -n <consumer_key>:<consumer_secret> | base64
   ```
 
-	Windows users, refer this [link](https://support.microsoft.com/en-us/kb/191239), or use this [link](https://www.base64encode.org/) to generate the value.
+        Windows users, refer this [link](https://support.microsoft.com/en-us/kb/191239), or use this [link](https://www.base64encode.org/) to generate the value.
 
 * Copy the URL for oauth API proxy. 
 
-	![image alt text](./media/image_22.png)
+        ![image alt text](./media/image_22.png)
 
 * First, you’ll obtain an Authorization code which will be exchanged to obtain the access token. To obtain an Authorization code, you’ll have to call the ```/authorize``` endpoint with your app’s client id, code response type and required scopes as query params
 
-	Query param: 
+        Query param: 
   ```
   response_type=code, client_id=<your app’s client id>,scope=READ,UPDATE
   ```
   
-	The final URL will look something like this - 
+        The final URL will look something like this - 
   
   ```
   http://apigeedemovideos-test.apigee.com/v1/mrk/oauth_ac/authorize?client_id=<client_id>&response_type=code&scope=READ,UPDATE
@@ -182,50 +196,50 @@ Note: You’ll have to remove the Authorization header using the Assign Message 
 
 * Make a call to this URL from your browser, it will then redirect you to a login page which will look like this.
 
-	![image alt text](./media/image_23.png)
+        ![image alt text](./media/image_23.png)
 
-	Use these details to login
+        Use these details to login
 
   ```
-	User Name: test
+        User Name: test
 
-	Password: password
+        Password: password
   ```
 
 * After you’re logged in, you should be able to see the consent page asking you to authorize the permissions
 
-	![image alt text](./media/image_24.png)
+        ![image alt text](./media/image_24.png)
 
-	Click on the **submit** button.
+        Click on the **submit** button.
 
 * You will be redirected to the callback URL that you provided while creating the app with a query parameter i.e, code.
 
 * To obtain an access token, we need to call the ```/token``` endpoint with the following
 
-	body information passed in the ```x-www-form-url-encoded``` format
+        body information passed in the ```x-www-form-url-encoded``` format
 
-	* code : **{auth code you obtained from the previous step}**
+        * code : **{auth code you obtained from the previous step}**
 
-	* grant_type : authorization_code
+        * grant_type : authorization_code
 
-	* client_id : **{App’s client_id}**
+        * client_id : **{App’s client_id}**
 
-	* client_secret : **{app’s client_secret}**
+        * client_secret : **{app’s client_secret}**
   
 
 * Now, let’s use the [REST Client](https://apigee-rest-client.appspot.com/) to obtain an access token. Open the REST Client on a new browser window.  
 
 * Paste the URL with the ```/token``` endpoint, select **POST** and then fill up the body.
 
-	![image alt text](./media/image_25.png)
+        ![image alt text](./media/image_25.png)
 
 * Hit **Send** and you should see a response like this below. Then, copy the value for access token, refresh token and save them.
 
-	![image alt text](./media/image_26.png)
+        ![image alt text](./media/image_26.png)
 
 * Now, you should be able to get the employees list using the access token that we just obtained. Copy the URL for the proxy you created earlier in this lab.
 
-	![image alt text](./media/image_27.png)
+        ![image alt text](./media/image_27.png)
 
 * Paste the URL in the Rest client and add the Authorization header. The value for Authorization header will be the access token that we obtained previously.
 
@@ -237,11 +251,11 @@ Note: You’ll have to remove the Authorization header using the Assign Message 
 
 * Hit **Send** and you should see a response like this below. 
 
-	![image alt text](./media/image_29.png)
+        ![image alt text](./media/image_29.png)
 
 * And, if you remove the Authorization header and hit send, you will see a 401 Unauthorized status.
 
-	![image alt text](./media/image_30.png)
+        ![image alt text](./media/image_30.png)
 
 # Lab Video
 

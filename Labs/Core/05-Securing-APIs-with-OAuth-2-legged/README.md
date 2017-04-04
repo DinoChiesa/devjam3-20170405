@@ -73,7 +73,7 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
    ![image alt text](./media/click-the-develop-tab.png)
 
-   This shows you the contents of the API Proxy definition.  
+   This shows you the contents of the API Proxy definition. This is just a pass-through proxy. There are no logic steps on this proxy, yet. 
 
 3. Select the Proxy name and Update the display name with your initials.
 

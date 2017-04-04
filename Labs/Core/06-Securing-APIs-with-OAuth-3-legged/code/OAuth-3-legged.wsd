@@ -1,0 +1,63 @@
+title 3-legged OAuth flow
+participant User Agent as USERAGENT
+participant 3rd party app\n(Browser/Mobile app) as C_APP
+participant Apigee Edge as APIEDGE
+participant User Auth and Consent\nWebsite as AUTHWEB
+participant Apigee Edge\nSession API\nAPIs as APIXSESS
+participant Backend APIs as BACKEND 
+C_APP->APIEDGE: GET /oauth2/authorize?\nresponse_type=code&scope=<SCOPE>&client_id=<CLIENT_ID>\n&state=...\n&redirect_uri=...\n&...
+
+activate APIEDGE
+APIEDGE->APIEDGE: validate request
+alt invalid request
+    APIEDGE-->C_APP: return error
+else valid request
+    APIEDGE->APIEDGE: generate <AUTHORIZE_TX_ID> with\nauthorize request details
+    APIEDGE-->C_APP: HTTP 302\nLocation:\nhttps://<CONSENT_ENDPOINT>/login?ref=<AUTHORIZE_TX_ID>
+end
+deactivate APIEDGE
+
+USERAGENT->AUTHWEB: GET https://<CONSENT_ENDPOINT>/login?ref=<AUTHORIZE_TX_ID>
+activate AUTHWEB
+opt session information
+    AUTHWEB->APIXSESS: GET /info/<AUTHORIZE_TX_ID>
+    activate APIXSESS
+    APIXSESS-->AUTHWEB: + client details:\n- scope\n- required fields\n+ login_hint (decrypted)\n+ id_token_hint (decrypted)
+    deactivate APIXSESS
+end
+note over APIEDGE, AUTHWEB: The Consent Website handles authentication (maybe also registration) and consent management.\nThe logic is not described here as it is site-dependent. Also, not relevant for the high level integration between Apigee Edge and customer IdM systems.\nThe expected interaction is for this webapp to connect to a directory server via LDAP.  Or potentially support SAML, etc.
+AUTHWEB->AUTHWEB: authenticate user and confirm consent
+
+AUTHWEB->APIEDGE: POST /oauth2/auth/<AUTHORIZE_TX_ID>\n+ user and profile details
+activate APIEDGE
+APIEDGE->APIEDGE: generate code
+APIEDGE-->AUTHWEB: <returnURI> including code
+deactivate APIEDGE
+AUTHWEB-->USERAGENT: HTTP 302 Redirect\nLocation:\n<returnURI>\n(includes auth_code)
+deactivate AUTHWEB
+note over USERAGENT, APIXSESS: The user must copy/paste the code from the trusted user agent into the app. 
+
+C_APP->APIEDGE: POST /token\ngrant_type=authorization_code&code=<CODE>
+activate APIEDGE
+APIEDGE->APIEDGE: validate code, generate token
+APIEDGE->C_APP: token
+deactivate APIEDGE
+
+note over C_APP,APIEDGE: The Application has received the token. This confirms the authorization given by the user.\nThe Application can then use the token in any subsequent appropriate API calls. 
+
+opt use token
+    C_APP->APIEDGE: GET https://apiendpoint\n+<Access_Token>
+    activate APIEDGE
+    APIEDGE->APIEDGE: verify token
+    alt invalid, expired, or revoked token
+        APIEDGE-->C_APP: 401
+    else valid token
+        APIEDGE->BACKEND: GET https://apiendpoint
+        activate BACKEND
+        BACKEND->BACKEND: do work
+        BACKEND->APIEDGE: result
+        deactivate BACKEND
+        APIEDGE->C_APP: result
+    end
+    deactivate APIEDGE
+end
