@@ -1,0 +1,30 @@
+title 2-legged OAuth flow
+participant 3rd party app\n(Browser/Mobile app) as APP
+participant Apigee Edge as APIXOIC
+participant Backend API as VIDWEB
+opt get new token
+APP->APIXOIC: POST /token\n+client_id, client_secret
+activate APIXOIC
+APIXOIC->APIXOIC: validate request
+opt invalid request
+   APIXOIC-->APP: 400, 401
+end
+APIXOIC-->APP: access token, refresh token, expiry
+deactivate APIXOIC
+note over APP,VIDWEB: The Application has received the token  and can now use the token to invoke APIs exposed in the Gateway. 
+end
+opt use token
+APP->APIXOIC: GET https://apiendpoint\n+<Access_Token>
+activate APIXOIC
+APIXOIC->APIXOIC: verify token
+opt invalid, expired, or revoked token
+   APIXOIC-->APP: 401
+end
+APIXOIC->VIDWEB: GET https://apiendpoint
+activate VIDWEB
+VIDWEB->VIDWEB: do work
+VIDWEB->APIXOIC: result
+deactivate VIDWEB
+APIXOIC->APP: result
+deactivate APIXOIC
+end

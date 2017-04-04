@@ -10,9 +10,24 @@ You have a set of APIs that are consumed by trusted partners. You want to secure
 
 # How can Apigee Edge help?
 
-Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. OAuth defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and, in some cases, to get authorization codes. These endpoints refer to specific OAuth 2.0 policies that execute when the endpoint is called. 
+[The OAuth specification](https://tools.ietf.org/html/rfc6749) defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and, when using 3-legged OAuth, to kick off the authorization code flow.
 
-Most typically, the client_credentials grant type is used when the app is also the resource owner. For example, an app may need to access a backend cloud-based storage service to store and retrieve data that it uses to perform its work, rather than data specifically owned by the end user. This grant type flow occurs strictly between a client app and the authorization server. An end user does not participate in this grant type flow. In this flow, Apigee Edge is the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and pass authorized requests for protected resources on to the resource server
+Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. Apigee Edge OAuth policies 
+can be used to implement the standard OAuth endpoints, and lets you easily secure your APIs using a simply policy to verify tokens.
+
+# Background: What's a token?
+
+An OAuth token is a digital analog of an old-school subway token: it's a "ticket to ride". The holder of an OAuth token (a client application) can present it to the token verifier (typically a gateway or a server application), and if the token is valid, then the token verifier will treat the request as valid. 
+
+When you use Apigee Edge OAuth to protect your APIs, Apigee Edge acts as the token issuer and the token verifier. A 2-legged OAuth flow, also known as a client credentials grant type, looks like this: 
+
+![image alt text](./media/2-legged_OAuth_flow.png)
+
+Most typically, the client_credentials grant type is used when the app is also the resource owner. For example, an app may need to access a backend cloud-based storage service to store and retrieve data that it uses to perform its work, rather than data specifically owned by the end user. Imagine a mobile app that allows customers to place orders. The client credentials might be used to protect data that is not customer specific - like a query on the product catalog, or even populating an anonymously-held "shopping cart". 
+
+As the name indicates, a client-credentials grant will verify only the credentials of the client, or the app itself. A Client credentials grant does not verify user credentials. 
+
+When using the Client credentials grant type, Apigee Edge is the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and pass authorized requests for protected resources on to the resource server
 
 # Pre-requisites
 
@@ -28,36 +43,34 @@ Most typically, the client_credentials grant type is used when the app is also t
 
 * Select **Develop → API Proxies** in the side navigation menu
 
-	![image alt text](./media/image_0.jpg)
+        ![image alt text](./media/image_0.jpg)
 
 * Click on the API proxy that you created in *Create a Reverse Proxy with OpenAPI Specification* lab. 
 
 * Click on the **Develop** tab. Select **PreFlow** from the sidebar under **Proxy Endpoints** section.
 
-	![image alt text](./media/image_1.png)
+        ![image alt text](./media/image_1.png)
 
-	![image alt text](./media/image_2.png)
+        ![image alt text](./media/image_2.png)
 
 * Click on Add Step and in the dialog, select **OAuth v2.0** from the Security section then click the **Add** button.
 
-	![image alt text](./media/image_3.png)
+        ![image alt text](./media/image_3.png)
 
-* Click on the policy and in the code editor, paste the code give below
+* Click on the policy and in the code editor, paste the code given below:
 
 ```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OAuthV2 async="false" continueOnError="false" enabled="true" name="OAuth-v20-1">
+<OAuthV2 name="OAuth-v20-1">
      <DisplayName>OAuth v2.0-1</DisplayName>
      <ExternalAuthorization>false</ExternalAuthorization>
      <Operation>VerifyAccessToken</Operation>
-     <SupportedGrantTypes/>
      <GenerateResponse enabled="true"/>
 </OAuthV2>
 ```
 
 * Once again click on Add Step and in the dialog, select **Assign Message** policy from the Mediation section then click the Add button.
 
-	![image alt text](./media/image_4.png)
+        ![image alt text](./media/image_4.png)
 
 * Click on the policy and in the code editor, paste the code give below
 
@@ -79,7 +92,7 @@ Note: You’ll have to remove the Authorization header using the Assign Message 
 
 * **Save** the proxy and deploy it on the **test** environment.
 
-	![image alt text](./media/image_5.png)
+        ![image alt text](./media/image_5.png)
 
 * *Congratulations!*...You’ve now successfully secured your APIs with OAuth 2.0.
 
@@ -87,22 +100,22 @@ Note: You’ll have to remove the Authorization header using the Assign Message 
 
 * Click **Publish > Apps** from the side navigation menu.
 
-	![image alt text](./media/image_6.png)
+        ![image alt text](./media/image_6.png)
 
 * Select the app that you created in the *API Security : Securing APIs with API Key* lab.
 
-	![image alt text](./media/image_7.png)
+        ![image alt text](./media/image_7.png)
 
 * Click on the show button under Consumer Key and Consumer Secret.
 
 * Copy the values and store them somewhere safe.
 
-![image alt text](./media/image_8.png)	
+![image alt text](./media/image_8.png)  
 
 * Mac and Linux users, open Terminal and type the following command
 
 ```
-	echo -n <consumer_key>:<consumer_secret> | base64
+        echo -n <consumer_key>:<consumer_secret> | base64
 ```
 
 If you are using Windows, refer this [link](https://www.base64encode.org/) to generate the value.
@@ -111,30 +124,30 @@ If you are using Windows, refer this [link](https://www.base64encode.org/) to ge
 
 * Copy the URL for oauth API proxy. 
 
-	![image alt text](./media/image_9.png)
+        ![image alt text](./media/image_9.png)
 
 * First, you’ll obtain an access token which will be used while fetching the employees list. To obtain an access token, you’ll have to make a POST request to the /oauth/client_credential/accesstoken endpoint with a client credentials grant type as a query param and an Authorization header which is the base64 encoded value of consumer key and secret pair that was obtained previously.
 
-	Query param: 
+        Query param: 
   ```
   grant_type=client_credentials
   ```
   
-	Header: 
+        Header: 
   
   ```
   Authorization: Basic <base64 encoded value>
   ```
 
-	![image alt text](./media/image_10.png)
+        ![image alt text](./media/image_10.png)
 
 * Hit **Send** and you should see a response like this below. Then, copy the value for access token.
 
-	![image alt text](./media/image_11.png)
+        ![image alt text](./media/image_11.png)
 
 * Now, you should be able to get the employees list using the access token that we just obtained. Copy the URL for the proxy you created earlier in this lab.
 
-	![image alt text](./media/image_12.png)
+        ![image alt text](./media/image_12.png)
 
 * Paste the URL in the Rest client, add the Authorization header and send a **GET** request . The value for Authorization header will be the access token that we obtained previously.
 
@@ -146,11 +159,11 @@ Authorization: Bearer {access_token}
 
 * Hit **Send** and you should see a response like this below. 
 
-	![image alt text](./media/image_14.png)
+        ![image alt text](./media/image_14.png)
 
 * And, if you remove the Authrorization header and hit send, you will see a 401 Unauthorized status.
 
-	![image alt text](./media/image_15.png)
+        ![image alt text](./media/image_15.png)
 
 # Lab Video
 
