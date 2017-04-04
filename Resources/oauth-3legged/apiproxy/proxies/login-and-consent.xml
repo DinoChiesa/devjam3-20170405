@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProxyEndpoint name="login">
+  <Description>Proxy for login interactions</Description>
+      <!-- THIS IS A SAMPLE LOGIN interaction.... in a production case
+           this will be an external website. -->
+  <HTTPProxyConnection>
+    <BasePath>/devjam3/login-and-consent</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name="PreFlow">
+    <Request/>
+    <Response/>
+  </PreFlow>
+
+  <PostFlow name="PostFlow">
+    <Request/>
+    <Response/>
+  </PostFlow>
+
+  <Flows>
+
+    <Flow name="Login">
+      <Condition>(proxy.pathsuffix MatchesPath "/login") and (request.verb = "GET")</Condition>
+      <Description/>
+      <Request>
+        <Step>
+          <Condition>(request.queryparam.sessionid = null) OR (request.queryparam.sessionid = "")</Condition>
+          <Name>RF-InvalidRequestHtml</Name>
+        </Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+<!--
+    <Flow name="ValidateLogin">
+      <Condition>(proxy.pathsuffix MatchesPath "/validateLoginAndConsent") and (request.verb = "POST")</Condition>
+      <Description/>
+      <Request/>
+      <Response/>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+-->
+
+  </Flows>
+
+  <RouteRule name="Login">
+    <TargetEndpoint>login</TargetEndpoint>
+  </RouteRule>
+
+  <RouteRule name="NoRoute"/>
+
+</ProxyEndpoint>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="OAuthAuthCodeGrant">
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1408619365530</CreatedAt>
+    <CreatedBy>rganta@apigee.com</CreatedBy>
+    <Description>Proxy that dispenses tokens via Authorization Code grant</Description>
+    <DisplayName>OAuth2.0 Auth Code Grant</DisplayName>
+    <LastModifiedAt>1491328223880</LastModifiedAt>
+    <LastModifiedBy>rganta@apigee.com</LastModifiedBy>
+    <Policies/>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources/>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>

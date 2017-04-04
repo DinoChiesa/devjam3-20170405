@@ -25,267 +25,336 @@ The idea is that the user will authenticate to the Identity Server, which will c
 
 The flow looks like this:
 
-<insert sequence diagram here>
+**{insert sequence diagram here}**
 
 
 # Pre-requisites
 
-* You have an OAuth API proxy in Apigee Edge. If not, jump back to *API Design : Create a Reverse Proxy with OpenAPI Specification* lab.
+1. You have an OAuth API proxy in Apigee Edge. If not, jump back to *API Design : Create a Reverse Proxy with OpenAPI Specification* lab.
 
-* You have the following created on Apigee Edge - an API Product, a Developer and an App. If not, jump back to *API Security : Securing APIs with API Key* lab.
 
 # Instructions
 
-1. First, Download the pre-built OAuth proxy bundle from [here](https://github.com/apigee/devjam3/blob/master/Resources/xx_oauth_code_grant.zip) 
+1. Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
+
+If you have completed the 2-legged OAuth exercise, then, you do not need
+to create a different API Proxy, or API Product, or App. If you **have not** completed that
+exercise, you must create those three things now. Do so, like this: 
+
+## First, Create the API Proxy 
+
+1. First, download [this zip file](./code/apiproxy_xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
 
 2. Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
-3. Select **Develop > API Proxies** in the side navigation menu
+3. Select **Develop → API Proxies** in the side navigation menu
 
    ![image alt text](./media/Develop-Proxies.gif)
 
-* Click the **+Proxy** button 
+4. Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
-        ![image alt text](./media/image_1.png)
+   ![](./media/Plus-New-Proxy.gif)
 
-* Select **Proxy Bundle** option and click Next.
+5. Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
 
-        ![image alt text](./media/image_2.png)
+   ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
 
-* Now, choose the bundle that you downloaded earlier, rename the proxy in this format
-**_{your_initials}_**_oauthcodegrant and click **Next** and then Build  
+2. Specify the name for the new proxy, using your initials..., and click **Next**
 
-  ![image alt text](./media/image_3.png)
+   ![image alt text](./media/use-your-initials-click-next.png)
 
-* Click on the API Proxy name.
+2. Then click **Build**
 
-        ![image alt text](./media/image_4.png)
+   ![image alt text](./media/click-build.png)
 
-* Click on **Develop** and select default.
+2. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
 
-        ![image alt text](./media/image_5.png)
+2. You should see the proxy **Overview** screen. 
 
-* From the code editor, find the base path entry and update it so that it follows this format.
-  ```
-        /v1/{your_initials}/oauth_ac
-  ```
+2. Click the **Develop** tab.
+
+   ![image alt text](./media/click-the-develop-tab.png)
+
+   This shows you the contents of the API Proxy definition. This is just a pass-through proxy. There are no logic steps on this proxy, yet. 
+
+3. Select the Proxy name and Update the display name with your initials.
+
+   ![image alt text](./media/update-display-name.gif)
+
+4. Select the Proxy Endpoint and update the basepath, similarly.
+
+   ![image alt text](./media/update-basepath.gif)
+
+2. Select **PreFlow** from the sidebar under **Proxy Endpoints** section.
+
+   ![image alt text](./media/select-preflow.png)
+
+2. Click on **+Step**
+
+   ![image alt text](./media/add-a-step.png)
+
+2. In the resulting dialog, scroll down select **OAuth v2.0** from the Security section then click the **Add** button.
+
+   ![image alt text](./media/select-oauth2.gif)
+
+2. Click on the policy and in the code editor, paste the code given below:
+
+   ```
+   <OAuthV2 name="OAuth-v20-1">
+      <DisplayName>OAuth v2.0-1</DisplayName>
+      <ExternalAuthorization>false</ExternalAuthorization>
+      <Operation>VerifyAccessToken</Operation>
+      <GenerateResponse enabled="true"/>
+   </OAuthV2>
+   ```
+
+   It should look like this: 
+
+   ![image alt text](./media/should-look-like-this.png)
+
+2. Because we want Apigee to not pass the token to the backend API, let's remove the Authorization header. To do so, again click on **+Step**.
+
+2. In the dialog, select **Assign Message** policy from the Mediation section then click the **Add** button.
+
+   ![image alt text](./media/add-another-step-assign-message.gif)
+
+2. Click on the policy and in the code editor, paste the code give below
+
+   ```
+   <AssignMessage name="Assign-Message-1">
+     <DisplayName>Assign Message-1</DisplayName>
+     <Remove>
+        <Headers>
+           <Header name="Authorization"/>
+        </Headers>
+     </Remove>
+     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+     <AssignTo createNew="false" transport="http" type="request"/>
+   </AssignMessage>
+   ```
+
+   It should look like this:
+
+   ![image alt text](./media/screenshot-20170403-175612.png)
+
+
+2. Click the blue **Save** button to save the proxy.
+
+2. *Congratulations!*...You’ve now successfully created an API in Apigee Edge that is protected with OAuth 2.0.
+
+2. Use the Deployment dropdown to deploy it on the **test** environment.
+
+   ![image alt text](./media/deploy-on-test.gif)
+
+
+## Second, Create the API Product
+
+Once again, if you have completed the exercise for the OAuth 2-legged
+flow, you do not have to complete this set of steps. 
+
+1. In the Apigee UI, select **Publish → API Products** from the side navigation menu
+
+   ![image alt text](./media/select-publish-apiproducts.gif)
+
+2. Click **+API Product**
+
+   ![image alt text](./media/click-plus-apiproduct.png)
+
+3. Populate the following fields
+
+    * Section: Product Details
+
+        * Name: **{your_initials}**_oauth_product
+
+        * Environment: test
+
+        * Access: Public
+
+        * Allowed OAuth Scopes: A,B,C
+
+    * Section: Resources
+
+        * Section: API Proxies
+
+            * Click the **+API Proxy** button
+            
+              ![image alt text](./media/add-a-proxy-to-a-product.png)
+
+            * Select the API Proxy you just created.
+
+4. Click the blue **Save** button on the bottom right corner of the page, to save the API Product.
   
-        ![image alt text](./media/image_6.png)
+  There is now a new, consumable unit of APIs available to external (consuming) developers. 
 
-* Now **Save** the proxy and **deploy** it to test environment.
 
-        ![image alt text](./media/image_7.png)
+## Third, Create the App
 
-* Once the proxy is deployed, select **Publish > API Products** from the side navigation menu.
+Again, you need to do this only if you have not created an App for the
+2-legged OAuth exercise.
 
-  ![image alt text](./media/image_8.png)
+1. Click **Publish → Apps** in the side navigation
 
-* Select the API Product that you created as a part of *API Security - Securing APIs with API Keys* lab.
+   ![image alt text](./media/select-publish-apps.gif)
 
-        ![image alt text](./media/image_9.png)
+2. Click **+App**
 
-* Click on **Edit**
+   ![image alt text](./media/click-plus-apps.png)
 
-        ![image alt text](./media/image_10.png)
+3. Populate the following fields
 
-* Now under **Resources > API Proxy** section, click on **+ API Proxy**.
+    * Name: **{your_initials}-oauth-app
 
-        ![image alt text](./media/image_11.png)
+    * Developer: (choose any available developer)
 
-* Select the API Proxy and click **Save**.
+    * Product: Click **+Product** to add your API Product to this App.
 
-        ![image alt text](./media/image_12.png)
+   ![image alt text](./media/select-api-product.gif)
 
-* Now select **Develop > API Proxies** in the side navigation menu
+4. In the lower right corner, click the blue **Save** button.
 
-        ![image alt text](./media/image_13.jpg)
 
-* Click on the API proxy that you created in "API Design : Create a Reverse Proxy with OpenAPI Specification" lab. 
+## Get the client credentials
 
-* Click on the **Develop** tab. Select **PreFlow** from the sidebar under **Proxy Endpoints** section
+Now, obtain the consumer key and secret for the app, and encode them. 
 
-        ![image alt text](./media/image_14.png)
+1. In the apps list, select the app that you just created
 
-        ![image alt text](./media/image_15.png)
+2. Click on the show button under Consumer Key and Consumer Secret.
 
-* Click on **Add** Step and in the dialog, select *OAuth v2.0* from the Security section then click the **Add** button.
+3. Copy the values and store them somewhere safe.
 
-        ![image alt text](./media/image_16.png)
 
-* Click on the policy and in the code editor, paste the code give below
+## Obtain a token
 
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OAuthV2 async="false" continueOnError="false" enabled="true" name="OAuth-v20-1">
-    <DisplayName>OAuth v2.0-1</DisplayName>
-    <ExternalAuthorization>false</ExternalAuthorization>
-    <Operation>VerifyAccessToken</Operation>
-    <SupportedGrantTypes/>
-    <GenerateResponse enabled="true"/>
-</OAuthV2>
-```
+Now, we'll go through the 3-legged flow to obtain a token that
+authenticates both the client app and the end user of the app.
 
-* Once again click on **Add** Step and in the dialog, select *Assign Message policy* from the Mediation section then click the **Add** button
+1. In the Apigee UI, Navigate to Develop...Proxies...
 
-        ![image alt text](./media/image_17.png)
+2. Select the API Proxy called OAuthAuthCodeGrant.
 
-* Click on the policy and in the code editor, paste the code give below
+3. From the Proxy overview panel, copy the URL for your OAuth API proxy. 
 
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage async="false" continueOnError="false" enabled="true" name="Assign-Message-1">
-<DisplayName>Assign Message-1</DisplayName>
-<Remove>
-   <Headers>
-      <Header name="Authorization"/>
-   </Headers>
-</Remove>
-    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-    <AssignTo createNew="false" transport="http" type="request"/>
-</AssignMessage>
-```
+   ![image alt text](./media/copy-the-oauth2-ac-url.png)
 
-Note: You’ll have to remove the Authorization header using the Assign Message policy because, the header might create some conflict in the target backend.
+   The url should end with oauth2-ac; we use ac here to imply authorization code.
 
-* **Save** the proxy and deploy it on the **test** environment.
+2. Open a new, empty browser tab.
 
-        ![image alt text](./media/image_18.png)
+3. To obtain an access token via 3-legged OAuth, you need to construct the URL, with these settings:
 
-* *Congratulations!*...You’ve now successfully secured your APIs with OAuth 2.0.
+   * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?
+   * append these query params (separated by &):
+       * client_id: *{your client_id from above}**
+       * redirect_uri: http://dinochiesa.github.io/openid-connect/callback-handler.html
+       * response_type: code
+       * scope: A
+   * method: GET
 
-* Now let’s test it. To do that, we’d have to obtain the consumer key and secret for a particular app that is associated with a API Product containing the APIs that we created.
+   The url should look like this:
+   ```
+   https://cap500-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
+   ```
 
-* Click **Publish > Apps** from the side navigation menu.
+  Paste the resulting URL into the address bar of the empty browser tab.
 
-        ![image alt text](./media/image_19.png)
+4. You should see a login screen!
 
-* Select the app that you created in the *API Security : Securing APIs with API Key* lab.
+  ![image alt text](./media/screenshot-20170404-115414.png)
 
-        ![image alt text](./media/image_20.png)
+5. Authenticate as a user, with one of the username/password pairs given to you
+   by your instructor.  dino / IloveAPIs might work.
 
-* Click on the **Show** button under Consumer Key, Consumer Secret.
+6. After authenticating, you will then be asked to provide consent to the app.
+   This interaction collects consent from the user that App X will have the requested scopes.
 
-* Copy the values and store them somewhere safe.
+7. After you consent, you should then see an authorization code in your browser.
+   Copy that code.
 
-  ![image alt text](./media/image_21.png)       
+   In the normal flow, the user  then provides that code to the app, by pasting it into an app screen.
+   We will simulate this by using the [Apigee REST Client](https://apigee-rest-client.appspot.com/) to invoke the appropriate request.
 
-* Mac and Linux users, open Terminal and type the following command
+8. Open a browser tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/)
 
-        ```
-  echo -n <consumer_key>:<consumer_secret> | base64
-  ```
+9. Specify these settings:
 
-        Windows users, refer this [link](https://support.microsoft.com/en-us/kb/191239), or use this [link](https://www.base64encode.org/) to generate the value.
+   * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-ac/token
+   * method: POST
+   * Body parameters:
+      * `grant_type` : `authorization_code`
+      * `client_id` : **{your client id}**
+      * `client_secret` : **{your client secret}**
+      * `code` : **{the code you received after consent}**
+      * `redirect_uri` : http://dinochiesa.github.io/openid-connect/callback-handler.html
+      
+   ![image alt text](./media/rest-client-post-token.png)
 
-* Copy the URL for oauth API proxy. 
+9. Click **Send**. You should see a response like the following:
 
-        ![image alt text](./media/image_22.png)
+   ![image alt text](./media/access_token_response.png)
 
-* First, you’ll obtain an Authorization code which will be exchanged to obtain the access token. To obtain an Authorization code, you’ll have to call the ```/authorize``` endpoint with your app’s client id, code response type and required scopes as query params
+9. Copy the access_token value. 
 
-        Query param: 
-  ```
-  response_type=code, client_id=<your app’s client id>,scope=READ,UPDATE
-  ```
-  
-        The final URL will look something like this - 
-  
-  ```
-  http://apigeedemovideos-test.apigee.com/v1/mrk/oauth_ac/authorize?client_id=<client_id>&response_type=code&scope=READ,UPDATE
-  ```
 
-* Make a call to this URL from your browser, it will then redirect you to a login page which will look like this.
+## Use the token
 
-        ![image alt text](./media/image_23.png)
+1. In the Apigee UI, Navigate to Develop...Proxies....
 
-        Use these details to login
+2. Select the API Proxy called xxx_oauth_protected - this is the API proxy that
+   includes the VerifyAccessToken policy.
 
-  ```
-        User Name: test
+3. In the proxy overview panel, copy the URL for this proxy.
 
-        Password: password
-  ```
+  ![image alt text](./media/copy-the-proxy-url.png)
+   
+4. In the browser tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/),
+   paste in the proxy URL. Also specify:
 
-* After you’re logged in, you should be able to see the consent page asking you to authorize the permissions
+   * method: GET
+   * Header: Authorization: Bearer **{your access token}**
 
-        ![image alt text](./media/image_24.png)
+5. Click **Send**.  You should see a 200 OK response.
 
-        Click on the **submit** button.
 
-* You will be redirected to the callback URL that you provided while creating the app with a query parameter i.e, code.
-
-* To obtain an access token, we need to call the ```/token``` endpoint with the following
-
-        body information passed in the ```x-www-form-url-encoded``` format
-
-        * code : **{auth code you obtained from the previous step}**
-
-        * grant_type : authorization_code
-
-        * client_id : **{App’s client_id}**
-
-        * client_secret : **{app’s client_secret}**
-  
-
-* Now, let’s use the [REST Client](https://apigee-rest-client.appspot.com/) to obtain an access token. Open the REST Client on a new browser window.  
-
-* Paste the URL with the ```/token``` endpoint, select **POST** and then fill up the body.
-
-        ![image alt text](./media/image_25.png)
-
-* Hit **Send** and you should see a response like this below. Then, copy the value for access token, refresh token and save them.
-
-        ![image alt text](./media/image_26.png)
-
-* Now, you should be able to get the employees list using the access token that we just obtained. Copy the URL for the proxy you created earlier in this lab.
-
-        ![image alt text](./media/image_27.png)
-
-* Paste the URL in the Rest client and add the Authorization header. The value for Authorization header will be the access token that we obtained previously.
-
-  ```
-  Authorization: Bearer {access_token}
-  ```
-
-  ![image alt text](./media/image_28.png)
-
-* Hit **Send** and you should see a response like this below. 
-
-        ![image alt text](./media/image_29.png)
-
-* And, if you remove the Authorization header and hit send, you will see a 401 Unauthorized status.
-
-        ![image alt text](./media/image_30.png)
 
 # Lab Video
 
 You can watch this short video to see how to implement 3 legged OAuth on Apigee Edge. [https://youtu.be/vPryGej4ydg](https://youtu.be/vPryGej4ydg) 
 
-# Earn Extra-points
 
-Now that you’ve learned how to secure your API with OAuth 2.0, try to implement a refresh token flow which will give you an access token based in exchange for the refresh token.
+# For Extra Credit
 
-# Quiz
+1. See if you can use Header Injection to insert a header containing a value from the token attributes.
 
-1. How do you revoke an access token?
+2. Modify the Expiry of generated tokens and see how the token response changes.
 
-2. Explain how apigee edge lets you integrate with an external IdP?
+3. Test the re-use of the same authorization code, two or more times. What happens?
+
+
+# For Discussion
+
+1. Why does the 3-legged flow require a Web browser to participate in the flow? Would it be ok for a slick app to use one of the "embedded web browser" controls, for iOS, Android, .NET and so on?  What are the implications here? 
+
+2. We saw how tokens can have scopes attached. What scopes are possible?  How would an API Proxy evaluate scopes on a token, in order to make authorization decisions? 
+
+3. Would you ever have the need to use tokens obtained via client credentials grants, as well as tokens obtained via authorization code grants, from within the same application?  If so, under what circumstances? 
+
 
 # Summary
 
-In this lab you learned how to secure your API using a three legged OAuth, obtaining an auth code, exchanging it for an access code and using that against your API.
+In this lab you learned how to secure your API using a three legged OAuth, obtaining an auth code, exchanging it for an access token and using that against your API.
 
 # References
 
 * Link to Apigee docs page
 
-    * OAuth 2.0: Configuring a new API proxy [http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration ](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
+    * [OAuth 2.0: Configuring a new API proxy](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
 
-    * Secure an API with OAuth - Authorization Grant Type [http://docs.apigee.com/api-services/content/oauth-v2-policy-authorization-code-grant-type](http://docs.apigee.com/api-services/content/oauth-v2-policy-authorization-code-grant-type) 
+    * [Secure an API with OAuth - Authorization Grant Type](http://docs.apigee.com/api-services/content/oauth-v2-policy-authorization-code-grant-type) 
 
-* [Link](https://community.apigee.com/topics/oauth+2.0.html) to Community posts and articles with topic as "OAuth 2.0" 
+* [Community posts and articles with topic as "OAuth 2.0"](https://community.apigee.com/topics/oauth+2.0.html) 
 
-* Search and Revoke tokens - [https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html](https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html)
+* [Search and Revoke tokens](https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html)
 
 # Rate this lab
 

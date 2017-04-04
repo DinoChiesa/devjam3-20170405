@@ -161,11 +161,13 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 
     * Section: Product Details
 
-        * Name: **{your_initials}_{api_name}**_oauth_product
+        * Name: **{your_initials}**_oauth_product
 
         * Environment: test
 
         * Access: Public
+
+        * Allowed OAuth Scopes: A,B,C
 
     * Section: Resources
 
@@ -246,18 +248,24 @@ Now, obtain the consumer key and secret for the app, and encode them.
 Now, let’s test the deployment using the [REST Client](https://apigee-rest-client.appspot.com/).
 
 
-1. Copy the URL for your OAuth API proxy. 
+1. In the Apigee UI, Navigate to Develop...Proxies...
+
+2. Select the API Proxy called "oauth2-cc" or similar.
+
+3. From the Proxy overview panel, copy the URL for your OAuth API proxy. 
 
    ![image alt text](./media/copy-the-oauth-proxy-url.png)
 
-2. Open the [REST Client](https://apigee-rest-client.appspot.com/) in a new browser window.
+   The url should end with oauth2-cc; we use cc here to imply client credentials.
+
+2. Open the [Apigee REST Client](https://apigee-rest-client.appspot.com/) in a new browser window.
 
 3. Obtain an access token. Specify these settings:
 
    * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-cc/token
    * method: POST
    * Body: parameter: `grant_type` value: `client_credentials`
-   * Header: `Authorization: Basic <base64 encoded client credentials value>`
+   * Header: `Authorization: Basic **{base64 encoded client credentials value}**`
    
    For the value in the header, use the base64 encoded value of consumer key and secret pair that you obtained previously.
 
@@ -303,6 +311,9 @@ Now that you’ve learned how to secure your API with OAuth 2.0, try to control 
 
 2. What are the various operations that are provided by the OAuth v2.0 policy?
 
+3. Suppose an app has a token obtained via a client_credentials grant; what does the token authenticate?
+
+4. How would you go about getting a token that authenticated the end user?
 
 
 # Summary

@@ -1,0 +1,75 @@
+<ProxyEndpoint name='session'>
+  <Description>Proxy Endpoint to handle OAuth 2.0 session info</Description>
+  <HTTPProxyConnection>
+    <BasePath>/devjam3/oauth2-session</BasePath>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules>
+    <FaultRule name='unhandled-fault'>
+      <!-- This FaultRule always catches all uncaught faults. -->
+      <Step>
+        <Name>JS-MaybeFormatFault</Name>
+      </Step>
+    </FaultRule>
+  </FaultRules>
+  <!--
+  <FaultRule name='ruleName'>
+    <Step>
+      <Name>{policy_name}</Name>
+    </Step>
+    <Condition>{(conditional statement)}</Condition>
+  </FaultRule>
+  -->
+
+  <PreFlow name='PreFlow'>
+    <Request>
+      <!--
+          if you want to restrict callers to this API
+            <Step><Name>VerifyApiKey-1</Name></Step>
+        -->
+    </Request>
+      <Response/>
+  </PreFlow>
+  <PostFlow name='PostFlow'>
+      <Request/>
+      <Response>
+        <Step><Name>AM-CleanResponseHeaders</Name></Step>
+      </Response>
+  </PostFlow>
+
+  <Flows>
+    <Flow name='Authorization session info'>
+      <Description>Retrieve info regarding an existing authorization session</Description>
+      <Request>
+        <Step>
+          <Name>RF-InvalidRequest</Name>
+          <Condition>request.queryparam.sessionid = null</Condition>
+        </Step>
+        <Step><Name>CL-GetAuthzSession</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-SessionResponse</Name>
+          <Condition>authtx != null</Condition>
+        </Step>
+        <Step>
+          <Name>AM-NoResponse</Name>
+          <Condition>authtx = null</Condition>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/info") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name='NoRouteRule'/>
+
+</ProxyEndpoint>
