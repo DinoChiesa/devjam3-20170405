@@ -286,7 +286,7 @@ authenticates both the client app and the end user of the app.
 
 9. Specify these settings:
 
-   * url endpoint: `https://**{YOURORG}**-test.apigee.net/devjam3/oauth2-ac/token`
+   * url endpoint: `https://{YOURORG}-test.apigee.net/devjam3/oauth2-ac/token`
    * method: POST
    * Body parameters:
       * `grant_type` : `authorization_code`
@@ -320,7 +320,8 @@ authenticates both the client app and the end user of the app.
    paste in the proxy URL. Also specify:
 
    * method: GET
-   * Header: Authorization: Bearer **{your access token}**
+   * Headers:
+      * `Authorization` : `Bearer ` **{your access token}**
 
 5. Click **Send**.  You should see a 200 OK response.
 
@@ -328,7 +329,7 @@ authenticates both the client app and the end user of the app.
 
 # Lab Video
 
-You can watch this short video to see how to implement 3 legged OAuth on Apigee Edge. [https://youtu.be/vPryGej4ydg](https://youtu.be/vPryGej4ydg) 
+You can watch [this short video to see how to implement 3 legged OAuth on Apigee Edge.](https://youtu.be/vPryGej4ydg) 
 
 
 # For Extra Credit
