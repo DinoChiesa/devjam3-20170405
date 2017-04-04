@@ -79,7 +79,7 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
    ![image alt text](./media/update-display-name.gif)
 
-4. Select the Proxy Endpoint and update the basepath.
+4. Select the Proxy Endpoint and update the basepath, similarly.
 
    ![image alt text](./media/update-basepath.gif)
 
@@ -87,7 +87,7 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
    ![image alt text](./media/select-preflow.png)
 
-2. Click on **+Add Step**
+2. Click on **+Step**
 
    ![image alt text](./media/add-a-step.png)
 
@@ -110,9 +110,9 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
    ![image alt text](./media/should-look-like-this.png)
 
-2. Because we want Apigee to not pass the token to the backend API, let's remove the Authorization header. To do so, again click on Add Step.
+2. Because we want Apigee to not pass the token to the backend API, let's remove the Authorization header. To do so, again click on **+Step**.
 
-2. In the dialog, select **Assign Message** policy from the Mediation section then click the Add button.
+2. In the dialog, select **Assign Message** policy from the Mediation section then click the **Add** button.
 
    ![image alt text](./media/add-another-step-assign-message.gif)
 
@@ -185,15 +185,15 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 
 ## Create the App 
 
-2. Click **Publish → Apps** in the side navigation
+1. Click **Publish → Apps** in the side navigation
 
-  ![image alt text](./media/select-publish-apps.gif)
+   ![image alt text](./media/select-publish-apps.gif)
 
-3. Click **+App**
+2. Click **+App**
 
-  ![image alt text](./media/click-plus-apps.png)
+   ![image alt text](./media/click-plus-apps.png)
 
-4. Populate the following fields
+3. Populate the following fields
 
     * Name: **{your_initials}-oauth-app
 
@@ -201,7 +201,7 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 
     * Product: Click **+Product** to add your API Product to this App.
 
-  ![image alt text](./media/select-api-product.gif)
+   ![image alt text](./media/select-api-product.gif)
 
 4. In the lower right corner, click the blue **Save** button.
 
@@ -211,18 +211,20 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 Now, obtain the consumer key and secret for the app, and encode them. 
 
 1. In the apps list, select the app that you just created
-4.2. Click on the show button under Consumer Key and Consumer Secret.
+
+2. Click on the show button under Consumer Key and Consumer Secret.
 
 3. Copy the values and store them somewhere safe.
 
-  ![image alt text](./media/image_8.png)  
+4. To get the encoded value, visit a bas64 encoder site, like [this one](http://base64encode.net/).
 
-4. To get the encoded value, visit a bas64 encoder site, like [this one](http://base64encode.net/)
    Paste in the value of the consumer key, followed by a colon, followed by the consumer secret.
    For example if the consumer key is ABCDE and the consumer secret is 12345, you would paste in
    ```
    ABCDE:12345
    ```
+
+   There should be no spaces or newlines. 
 
    Mac and Linux users, you can do this from the command prompt. open Terminal and type the following command
 
@@ -232,7 +234,11 @@ Now, obtain the consumer key and secret for the app, and encode them.
 
    ...obviously replacing the value of your consumer key and secret as approprpiate.
 
-5. Save the resulting base64-encoded value.
+5. Save the resulting base64-encoded value. It will look something like this:
+
+   ```
+   bHE0ZpcVR3MXNpMDl3c29jTTdBak9CU2J5aTQ1aUE6N0F2b3pFamhBOGRkeEQ3Yg==
+   ```
 
 
 ## Test the app
@@ -242,7 +248,7 @@ Now, let’s test the deployment using the [REST Client](https://apigee-rest-cli
 
 1. Copy the URL for your OAuth API proxy. 
 
-   ![image alt text](./media/image_9.png)
+   ![image alt text](./media/copy-the-oauth-proxy-url.png)
 
 2. Open the [REST Client](https://apigee-rest-client.appspot.com/) in a new browser window.
 
@@ -250,22 +256,22 @@ Now, let’s test the deployment using the [REST Client](https://apigee-rest-cli
 
    * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-cc/token
    * method: POST
-   * payload: `grant_type=client_credentials`
+   * Body: parameter: `grant_type` value: `client_credentials`
    * Header: `Authorization: Basic <base64 encoded client credentials value>`
    
    For the value in the header, use the base64 encoded value of consumer key and secret pair that you obtained previously.
 
-  ![image alt text](./media/image_10.png)
+   ![image alt text](./media/rest-client-token.gif)
 
 4. Click **Send** and you should see a response like this below. Then, copy the value for access token.
 
-  ![image alt text](./media/image_11.png)
+   ![image alt text](./media/the-access-token.png)
 
-4. Now, you should be able to get the employees list using the access token that we just obtained. Copy the URL for the proxy you created earlier in this lab.
+4. Now, you should be able to get the employees list using the access token that we just obtained. Copy the URL for the OAuth protected proxy you created earlier in this lab.
 
-  ![image alt text](./media/image_12.png)
+   ![image alt text](./media/copy-the-proxy-url.png)
 
-4. Paste the URL in the Rest client, add the Authorization header and send a **GET** request . The value for Authorization header will be the access token that we obtained previously.
+4. Paste the URL in the REST client, add the Authorization header and send a **GET** request . The value for Authorization header will be the word "Bearer" followed by the access token that we obtained previously.
 
    ```
    Authorization: Bearer {access_token}
@@ -275,11 +281,12 @@ Now, let’s test the deployment using the [REST Client](https://apigee-rest-cli
 
 4. Hit **Send** and you should see a response like this below. 
 
-  ![image alt text](./media/image_14.png)
+   ![image alt text](./media/image_14.png)
 
-4. And, if you remove the Authrorization header and hit send, you will see a 401 Unauthorized status.
+4. If you alter the token in the Authorization header (remove a character) and then send another request, you will see a 401 Unauthorized, and a "Invalid Access Token" message.
 
-  ![image alt text](./media/image_15.png)
+4. If you remove the Authorization header and send another request, you will see a similar 401 Unauthorized error. 
+
 
 
 # Lab Video
@@ -290,11 +297,12 @@ If you are lazy and don’t want to implement this use case, it’s OK. You can 
 
 Now that you’ve learned how to secure your API with OAuth 2.0, try to control the expiry of the access token that is generated.
 
-# Quiz
+# For Discussion
 
 1. What are the various OAuth 2.0 grant types supported by Apigee Edge?
 
 2. What are the various operations that are provided by the OAuth v2.0 policy?
+
 
 
 # Summary
@@ -305,9 +313,9 @@ In this lab you learned how to secure your API using a two legged OAuth by using
 
 * Link to Apigee docs page
 
-    * OAuth 2.0: Configuring a new API proxy [http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration ](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
+  * OAuth 2.0: Configuring a new API proxy [http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration ](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
 
-    * Secure an API with OAuth [http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials](http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials) 
+  * Secure an API with OAuth [http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials](http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials) 
 
 * [Link](https://community.apigee.com/topics/oauth+2.0.html) to Community posts and articles with topic as "OAuth 2.0" 
 
