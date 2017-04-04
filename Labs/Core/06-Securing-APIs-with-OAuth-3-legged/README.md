@@ -350,7 +350,9 @@ You can watch [this short video to see how to implement 3 legged OAuth on Apigee
 
 # For Discussion and Consideration
 
-1. Why does the 3-legged flow require a Web browser to participate in the flow? Would it be ok for a slick app to use one of the "embedded web browser" controls, for iOS, Android, .NET and so on?  What are the security considerations here? 
+1. At what point in the flow we followed above is the client app authenticated? Before or after the user is authenticated?
+
+2. Why does the 3-legged flow require a Web browser to participate in the flow? Would it be ok for a slick app to use one of the "embedded web browser" controls, for iOS, Android, .NET and so on?  What are the security considerations here? 
 
 2. We saw that tokens can have scopes attached. What scopes are possible? How would an API Proxy evaluate scopes on a token, in order to make authorization decisions? Could an API proxy also evaluate user roles, or groups, some attribute obtained from the Identity Provider (like Active Directory)?
 
