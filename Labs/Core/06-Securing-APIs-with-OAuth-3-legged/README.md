@@ -245,20 +245,20 @@ authenticates both the client app and the end user of the app.
 
    * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?
    * append these query params (separated by &):
-       * client_id: *{your client_id from above}**
-       * redirect_uri: http://dinochiesa.github.io/openid-connect/callback-handler.html
-       * response_type: code
-       * scope: A
+       * `client_id`: **{your client_id from above}**
+       * `redirect_uri`: http://dinochiesa.github.io/openid-connect/callback-handler.html
+       * `response_type`: code
+       * `scope`: A
    * method: GET
 
    The url should look like this:
    ```
-   https://cap500-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
+   https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
    ```
 
   Paste the resulting URL into the address bar of the empty browser tab.
 
-4. You should see a login screen!
+4. You should see a login screen, like this:
 
   ![image alt text](./media/screenshot-20170404-115414.png)
 
@@ -285,7 +285,7 @@ authenticates both the client app and the end user of the app.
       * `client_id` : **{your client id}**
       * `client_secret` : **{your client secret}**
       * `code` : **{the code you received after consent}**
-      * `redirect_uri` : http://dinochiesa.github.io/openid-connect/callback-handler.html
+      * `redirect_uri` : `http://dinochiesa.github.io/openid-connect/callback-handler.html`
       
    ![image alt text](./media/rest-client-post-token.png)
 
@@ -300,7 +300,8 @@ authenticates both the client app and the end user of the app.
 
 1. In the Apigee UI, Navigate to Develop...Proxies....
 
-2. Select the API Proxy called xxx_oauth_protected - this is the API proxy that
+2. Select the API Proxy called *xxx*_oauth_protected (starting with your
+   initials). this is the API proxy that you created previously. It 
    includes the VerifyAccessToken policy.
 
 3. In the proxy overview panel, copy the URL for this proxy.
@@ -324,18 +325,18 @@ You can watch this short video to see how to implement 3 legged OAuth on Apigee 
 
 # For Extra Credit
 
-1. See if you can use Header Injection to insert a header containing a value from the token attributes.
+1. See if you can use Header Injection to add a header to be sent to the backend API.  The header name can be anything you choose, and the value should be something taken from the token attributes.
 
 2. Modify the Expiry of generated tokens and see how the token response changes.
 
 3. Test the re-use of the same authorization code, two or more times. What happens?
 
 
-# For Discussion
+# For Discussion and Consideration
 
-1. Why does the 3-legged flow require a Web browser to participate in the flow? Would it be ok for a slick app to use one of the "embedded web browser" controls, for iOS, Android, .NET and so on?  What are the implications here? 
+1. Why does the 3-legged flow require a Web browser to participate in the flow? Would it be ok for a slick app to use one of the "embedded web browser" controls, for iOS, Android, .NET and so on?  What are the security considerations here? 
 
-2. We saw how tokens can have scopes attached. What scopes are possible?  How would an API Proxy evaluate scopes on a token, in order to make authorization decisions? 
+2. We saw that tokens can have scopes attached. What scopes are possible? How would an API Proxy evaluate scopes on a token, in order to make authorization decisions? Could an API proxy also evaluate user roles, or groups, some attribute obtained from the Identity Provider (like Active Directory)?
 
 3. Would you ever have the need to use tokens obtained via client credentials grants, as well as tokens obtained via authorization code grants, from within the same application?  If so, under what circumstances? 
 
