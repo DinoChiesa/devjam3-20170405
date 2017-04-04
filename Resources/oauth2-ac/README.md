@@ -12,17 +12,17 @@ The API Product should have scopes: A,B,C
 ## To Kick off the flow:
 
 ```
-curl -i -X GET "https://cap500-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A&nonce=A12345&state=ABCDEFG"
+curl -i -X GET "https://cap500-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A"
 ```
 
 This will redirect you to a URL for the login-and-consent app.  You need to open the resulting link in a browser and authenticate.
 
 The login-and-consent app uses a mock user database, and these are the valid username / password pairs:
-* dino / IloveAPIs
-* valerie / Wizard123
-* heidi / 1Performance
-* greg / Memento4Quiet
-* naimish / Imagine4
+* dino@apigee.com / IloveAPIs
+* valerie@example.com / Wizard123
+* heidi@example.com / 1Performance
+* greg@example.com / Memento4Quiet
+* naimish@example.com / Imagine4
 
 
 Once you authenticate and grant consent, you will receive a code via the redirect_uri. 

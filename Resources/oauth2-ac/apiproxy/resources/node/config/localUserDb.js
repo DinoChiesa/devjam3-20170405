@@ -4,10 +4,10 @@
 // This is a mock user validation database.
 //
 // created: Fri Mar 25 20:01:12 2016
-// last saved: <2017-April-04 11:03:39>
+// last saved: <2017-April-04 14:06:57>
 
 var userDb = {
-      "dino" : {
+      "dino@apigee.com" : {
         hash: 'IloveAPIs',
         uuid: 'EA1BA8EB-0A83-46BE-8B05-4C2E827F25B3',
         motto: 'If this isn\'t nice, I don\'t know what is.',
@@ -15,36 +15,36 @@ var userDb = {
         family_name: "Chiesa",
         roles: ['read', 'edit', 'delete']
       },
-      "valerie" : {
+      "valerie@example.com" : {
         hash: 'Wizard123',
         uuid: '0B1A8BFF-5000-4868-817E-3C157510C1D9',
         given_name: "Valerie",
-        family_name: "Burns",
+        family_name: "Smith",
         motto: 'There\'s no problem that Regular Expressions cannot exacerbate.',
         roles: ['read']
       },
-      "heidi": {
+      "heidi@example.com": {
         hash : '1Performance',
         uuid: '11F795B4-F5FD-4A05-8B8C-BADD30098ABA',
         motto: 'This is the good part.',
         given_name: "Heidi",
-        family_name: "Nibouar",
+        family_name: "Smith",
         roles: ['read']
       },
-      "greg" : {
+      "greg@example.com" : {
         hash: 'Memento4Quiet',
         uuid: '12B1854A-BD79-4857-83C1-29457B3972B8',
         motto: 'Imagine it, Believe it, Make it Real.',
         given_name: "Greg",
-        family_name: "Petras",
+        family_name: "Smith",
         roles : ['read', 'edit']
       },
-      "naimish" : {
+      "naimish@example.com" : {
         hash: 'Imagine4',
         uuid: '12B1854A-BD79-4857-83C1-29457B3972B8',
         motto: 'Imagine it, Believe it, Make it Real.',
         given_name: "Naimish",
-        family_name: "Shah",
+        family_name: "Smith",
         roles : ['read', 'edit']
       },
 

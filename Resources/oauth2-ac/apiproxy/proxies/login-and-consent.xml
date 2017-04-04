@@ -5,7 +5,6 @@
            this will be an external website. -->
   <HTTPProxyConnection>
     <BasePath>/devjam3/login-and-consent</BasePath>
-    <Properties/>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
 
@@ -24,6 +23,8 @@
   <Flows>
 
     <Flow name="Login">
+      <!-- just some basic validation for one of the requests handled by
+           this proxy endpoint. -->
       <Condition>(proxy.pathsuffix MatchesPath "/login") and (request.verb = "GET")</Condition>
       <Description/>
       <Request>
@@ -35,28 +36,10 @@
       <Response/>
     </Flow>
 
-<!--
-    <Flow name="ValidateLogin">
-      <Condition>(proxy.pathsuffix MatchesPath "/validateLoginAndConsent") and (request.verb = "POST")</Condition>
-      <Description/>
-      <Request/>
-      <Response/>
-    </Flow>
-
-    <Flow name='unknown request'>
-      <Request>
-        <Step><Name>RF-UnknownRequest</Name></Step>
-      </Request>
-      <Response/>
-    </Flow>
--->
-
   </Flows>
 
   <RouteRule name="Login">
     <TargetEndpoint>login</TargetEndpoint>
   </RouteRule>
-
-  <RouteRule name="NoRoute"/>
 
 </ProxyEndpoint>

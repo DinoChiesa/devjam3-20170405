@@ -13,19 +13,11 @@
       </Step>
     </FaultRule>
   </FaultRules>
-  <!--
-  <FaultRule name='ruleName'>
-    <Step>
-      <Name>{policy_name}</Name>
-    </Step>
-    <Condition>{(conditional statement)}</Condition>
-  </FaultRule>
-  -->
 
   <PreFlow name='PreFlow'>
     <Request>
       <!--
-          if you want to restrict callers to this API
+          If you want to restrict callers to this API:
             <Step><Name>VerifyApiKey-1</Name></Step>
         -->
     </Request>
@@ -40,6 +32,16 @@
 
   <Flows>
     <Flow name='Authorization session info'>
+      <!--
+          This endpoint allows the login-and-consent app to inquire as
+          to the metadata around user attempting to authenticate.
+          Basically, the login app calls in with a session id, and
+          receives in response: the app name, the developer name, the
+          requested scopes, and so on. Example request:
+
+          GET /devjam3/oauth2-session/info?sessionid=rrt-006f23e80e7ff6f73-c-ea-25068-1170519-1
+
+          -->
       <Description>Retrieve info regarding an existing authorization session</Description>
       <Request>
         <Step>

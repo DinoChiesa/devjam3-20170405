@@ -2,7 +2,7 @@
 // ------------------------------------------------------------------
 //
 // created: Mon Apr  3 21:02:40 2017
-// last saved: <2017-April-04 10:45:39>
+// last saved: <2017-April-04 14:14:12>
 //
 // ------------------------------------------------------------------
 //
@@ -226,7 +226,9 @@ app.get('/login', function (request, response) {
     //   nonce?
     if (ctx.sessionInfo && ctx.sessionInfo.client_id) {
       ctx.viewData = copyHash(ctx.sessionInfo);
-      //ctx.viewData.postback_url = externalUrl(request) + '/validate';
+      if ( ! ctx.viewData.appLogoUrl) {
+        ctx.viewData.appLogoUrl = 'http://i.imgur.com/6DidtRS.png';
+      }
       ctx.viewData.postback_url = 'validate';
       ctx.viewData.action = 'Sign in';
       ctx.viewData.sessionid = ctx.sessionid;
@@ -282,14 +284,14 @@ app.post('/validate', function (request, response) {
     response.render('login', {
       postback_url  : 'validate',
       action        : 'Sign in',
-      txid          : request.body.sessionid,
+      sessionid     : request.body.sessionid,
       client_id     : request.body.client_id,
       response_type : request.body.response_type,
       req_scope     : request.body.requestedScopes,
       redirect_uri  : request.body.redirect_uri,
       req_state     : request.body.clientState,
       appName       : request.body.appName,
-      appLogoUrl    : request.body.appLogoUrl,
+      appLogoUrl    : request.body.appLogoUrl || 'http://i.imgur.com/6DidtRS.png',
       display       : request.body.display,
       login_hint    : request.body.login_hint,
       errorMessage  : "You must specify a user and a password."
@@ -302,7 +304,7 @@ app.post('/validate', function (request, response) {
           username: request.body.username,
           password: request.body.password
         },
-        txid : request.body.sessionid
+        sessionid : request.body.sessionid
       };
 
   q(context)
@@ -311,15 +313,16 @@ app.post('/validate', function (request, response) {
       if (ctx.loginStatus != 200) {
         response.status(401);
         response.render('login', {
+          postback_url  : 'validate',
           action        : 'Sign in',
-          txid          : ctx.txid,
+          sessionid     : ctx.sessionid,
           client_id     : request.body.client_id,
           response_type : request.body.response_type,
           req_scope     : request.body.requestedScopes,
           redirect_uri  : request.body.redirect_uri,
           req_state     : request.body.clientState,
           appName       : request.body.appName,
-          appLogoUrl    : request.body.appLogoUrl,
+          appLogoUrl    : request.body.appLogoUrl || 'http://i.imgur.com/6DidtRS.png',
           display       : request.body.display,
           login_hint    : request.body.login_hint,
           errorMessage  : "That login failed."
@@ -332,15 +335,15 @@ app.post('/validate', function (request, response) {
       response.status(200);
       response.render('consent', {
         action        : 'Consent',
-        txid          : ctx.txid,
-        postback_url  : externalUrl(request) + '/grantConsent',
+        sessionid     : ctx.sessionid,
+        postback_url  : 'grantConsent',
         client_id     : request.body.client_id,
         response_type : request.body.response_type,
         req_scope     : request.body.requestedScopes,
         redirect_uri  : request.body.redirect_uri,
         req_state     : request.body.clientState,
         appName       : request.body.appName,
-        appLogoUrl    : request.body.appLogoUrl,
+        appLogoUrl    : request.body.appLogoUrl || 'http://i.imgur.com/6DidtRS.png',
         display       : request.body.display,
         login_hint    : request.body.login_hint,
         userProfile   : base64Encode(JSON.stringify(ctx.userInfo))
