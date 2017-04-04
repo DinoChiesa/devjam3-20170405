@@ -231,15 +231,16 @@ authenticates both the client app and the end user of the app.
 
 1. In the Apigee UI, Navigate to Develop...Proxies...
 
-2. Select the API Proxy called OAuthAuthCodeGrant.
+2. Select the API Proxy called oauth2-ac (or similar).
 
 3. From the Proxy overview panel, copy the URL for your OAuth API proxy. 
 
    ![image alt text](./media/copy-the-oauth2-ac-url.png)
 
-   The url should end with oauth2-ac; we use ac here to imply authorization code.
+   The url should end with oauth2-ac; we use ac here to imply authorization code, the
+   OAuth grant type that this token-dispensing proxy supports.
 
-4. Click the Trace tab.  Start a Trace session on the OAuth proxy. Later, you
+4. Click the Trace tab. Start a Trace session on the OAuth proxy. Later, you
    can view this session to see the message exchanges. 
 
 5. Open a new, empty browser tab.
@@ -274,7 +275,7 @@ authenticates both the client app and the end user of the app.
    
    
 6. Authenticate as a user, with one of the username/password pairs given to you
-   by your instructor.  dino / IloveAPIs might work.
+   by your instructor.  dino@apigee.com / IloveAPIs might work.
 
 6. After authenticating, you will then be asked to provide consent to the app.
    This interaction collects consent from the user that App X will have the requested scopes.
