@@ -1,30 +1,32 @@
 title 2-legged OAuth flow
-participant 3rd party app\n(Browser/Mobile app) as APP
-participant Apigee Edge as APIXOIC
-participant Backend API as VIDWEB
+participant 3rd party app\n(Browser/Mobile app) as C_APP
+participant Apigee Edge as APIEDGE
+participant Backend API as BACKEND
 opt get new token
-APP->APIXOIC: POST /token\n+client_id, client_secret
-activate APIXOIC
-APIXOIC->APIXOIC: validate request
-opt invalid request
-   APIXOIC-->APP: 400, 401
-end
-APIXOIC-->APP: access token, refresh token, expiry
-deactivate APIXOIC
-note over APP,VIDWEB: The Application has received the token  and can now use the token to invoke APIs exposed in the Gateway. 
+    C_APP->APIEDGE: POST /token\n+client_id, client_secret
+    activate APIEDGE
+    APIEDGE->APIEDGE: validate request
+    alt invalid request
+        APIEDGE-->C_APP: 400, 401
+    else valid request
+        APIEDGE-->C_APP: access token, refresh token, expiry
+        deactivate APIEDGE
+        note over C_APP,BACKEND: The Application has received the token  and can now use the token to invoke APIs exposed in the Gateway.
+    end
 end
 opt use token
-APP->APIXOIC: GET https://apiendpoint\n+<Access_Token>
-activate APIXOIC
-APIXOIC->APIXOIC: verify token
-opt invalid, expired, or revoked token
-   APIXOIC-->APP: 401
-end
-APIXOIC->VIDWEB: GET https://apiendpoint
-activate VIDWEB
-VIDWEB->VIDWEB: do work
-VIDWEB->APIXOIC: result
-deactivate VIDWEB
-APIXOIC->APP: result
-deactivate APIXOIC
+    C_APP->APIEDGE: GET https://apiendpoint\n+<Access_Token>
+    activate APIEDGE
+    APIEDGE->APIEDGE: verify token
+    alt invalid, expired, or revoked token
+        APIEDGE-->C_APP: 401
+    else valid token
+        APIEDGE->BACKEND: GET https://apiendpoint
+        activate BACKEND
+        BACKEND->BACKEND: do work
+        BACKEND->APIEDGE: result
+        deactivate BACKEND
+        APIEDGE->C_APP: result
+    end
+    deactivate APIEDGE
 end

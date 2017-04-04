@@ -39,62 +39,103 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
 # Instructions
 
-* Go to [https://apigee.com/edge](https://apigee.com/edge) and log in. This is the Edge management UI. 
+* First, download [this zip file](./code/xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
+
+* Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
 * Select **Develop → API Proxies** in the side navigation menu
 
-        ![image alt text](./media/image_0.jpg)
+  ![image alt text](./media/Develop-Proxies.gif)
 
-* Click on the API proxy that you created in *Create a Reverse Proxy with OpenAPI Specification* lab. 
+* Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
-* Click on the **Develop** tab. Select **PreFlow** from the sidebar under **Proxy Endpoints** section.
+  ![](./media/Plus-New-Proxy.gif)
 
-        ![image alt text](./media/image_1.png)
+* Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
 
-        ![image alt text](./media/image_2.png)
+  ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
 
-* Click on Add Step and in the dialog, select **OAuth v2.0** from the Security section then click the **Add** button.
+* Specify the name for the new proxy, using your initials..., and click **Next**
 
-        ![image alt text](./media/image_3.png)
+  ![image alt text](./media/use-your-initials-click-next.png)
+
+* Then click **Build**
+
+  ![image alt text](./media/click-build.png)
+
+* Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
+
+* You should see the proxy **Overview** screen. 
+
+* Click the **Develop** tab.
+
+  ![image alt text](./media/click-the-develop-tab.png)
+
+  This shows you the contents of the API Proxy definition.  
+
+* Select **PreFlow** from the sidebar under **Proxy Endpoints** section.
+  (This should already be selected)
+
+  ![image alt text](./media/select-preflow.png)
+
+* Click on **+Add Step**
+
+  ![image alt text](./media/add-a-step.png)
+
+* In the resulting dialog, scroll down select **OAuth v2.0** from the Security section then click the **Add** button.
+
+  ![image alt text](./media/select-oauth2.gif)
 
 * Click on the policy and in the code editor, paste the code given below:
 
-```
-<OAuthV2 name="OAuth-v20-1">
+  ```
+  <OAuthV2 name="OAuth-v20-1">
      <DisplayName>OAuth v2.0-1</DisplayName>
      <ExternalAuthorization>false</ExternalAuthorization>
      <Operation>VerifyAccessToken</Operation>
      <GenerateResponse enabled="true"/>
-</OAuthV2>
-```
+  </OAuthV2>
+  ```
+  
+  It should look like this: 
+  
+  ![image alt text](./media/should-look-like-this.png)
 
-* Once again click on Add Step and in the dialog, select **Assign Message** policy from the Mediation section then click the Add button.
+* Because we want Apigee to not pass the token to the backend API, let's remove the Authorization header. To do so, again click on Add Step.
 
-        ![image alt text](./media/image_4.png)
+* In the dialog, select **Assign Message** policy from the Mediation section then click the Add button.
+
+  ![image alt text](./media/add-another-step-assign-message.gif)
 
 * Click on the policy and in the code editor, paste the code give below
 
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage async="false" continueOnError="false" enabled="true" name="Assign-Message-1">
-<DisplayName>Assign Message-1</DisplayName>
-<Remove>
-   <Headers>
-      <Header name="Authorization"/>
-   </Headers>
-</Remove>
-<IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-<AssignTo createNew="false" transport="http" type="request"/>
-</AssignMessage>
-```
+  ```
+  <AssignMessage name="Assign-Message-1">
+    <DisplayName>Assign Message-1</DisplayName>
+    <Remove>
+       <Headers>
+          <Header name="Authorization"/>
+       </Headers>
+    </Remove>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+  </AssignMessage>
+  ```
 
-Note: You’ll have to remove the Authorization header using the Assign Message policy because, the header might create a conflict in the target backend.
+  It should look like this:
 
-* **Save** the proxy and deploy it on the **test** environment.
+  ![image alt text](./media/screenshot-20170403-175612.png)
 
-        ![image alt text](./media/image_5.png)
 
-* *Congratulations!*...You’ve now successfully secured your APIs with OAuth 2.0.
+* Click the blue **Save** button to save the proxy.
+
+* Use the Deployment dropdown to deploy it on the **test** environment.
+
+  ![image alt text](./media/deploy-on-test.gif)
+
+* *Congratulations!*...You’ve now successfully created an API that is protected with OAuth 2.0.
+
+
 
 * Now, let’s test it. To do that, we’d have to obtain the consumer key and secret for a particular app that is associated with a API Product containing the APIs that we created.
 
