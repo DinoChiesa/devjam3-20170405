@@ -239,9 +239,12 @@ authenticates both the client app and the end user of the app.
 
    The url should end with oauth2-ac; we use ac here to imply authorization code.
 
-2. Open a new, empty browser tab.
+4. Click the Trace tab.  Start a Trace session on the OAuth proxy. Later, you
+   can view this session to see the message exchanges. 
 
-3. To obtain an access token via 3-legged OAuth, you need to construct the URL, with these settings:
+5. Open a new, empty browser tab.
+
+6. To obtain an access token via 3-legged OAuth, you need to construct the URL, with these settings:
 
    * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?
    * append these query params (separated by &):
@@ -258,7 +261,7 @@ authenticates both the client app and the end user of the app.
 
    Paste the resulting URL into the address bar of the empty browser tab.
 
-4. You should see a login screen, like this:
+6. You should see a login screen, like this:
 
    ![image alt text](./media/screenshot-20170404-115414.png)
 
@@ -270,7 +273,7 @@ authenticates both the client app and the end user of the app.
    user login-and-consent experience.
    
    
-5. Authenticate as a user, with one of the username/password pairs given to you
+6. Authenticate as a user, with one of the username/password pairs given to you
    by your instructor.  dino / IloveAPIs might work.
 
 6. After authenticating, you will then be asked to provide consent to the app.
@@ -302,6 +305,9 @@ authenticates both the client app and the end user of the app.
    ![image alt text](./media/access_token_response.png)
 
 9. Copy the access_token value. 
+
+9. Flip back to the Apigee UI.  Examine the trace UI, to see the various requests.
+   Note: You may see requests from other developers working on the same exercise.
 
 
 ## Use the token
