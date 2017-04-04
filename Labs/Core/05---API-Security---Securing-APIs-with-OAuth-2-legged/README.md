@@ -39,54 +39,56 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
 # Instructions
 
-* First, download [this zip file](./code/xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
+## Create the API Proxy 
 
-* Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
+1. First, download [this zip file](./code/xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
 
-* Select **Develop → API Proxies** in the side navigation menu
+2. Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
+
+3. Select **Develop → API Proxies** in the side navigation menu
 
   ![image alt text](./media/Develop-Proxies.gif)
 
-* Click **+ Proxy**. The Build a Proxy wizard is invoked.
+4. Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
   ![](./media/Plus-New-Proxy.gif)
 
-* Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
+5. Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
 
   ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
 
-* Specify the name for the new proxy, using your initials..., and click **Next**
+2. Specify the name for the new proxy, using your initials..., and click **Next**
 
   ![image alt text](./media/use-your-initials-click-next.png)
 
-* Then click **Build**
+2. Then click **Build**
 
   ![image alt text](./media/click-build.png)
 
-* Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
+2. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
 
-* You should see the proxy **Overview** screen. 
+2. You should see the proxy **Overview** screen. 
 
-* Click the **Develop** tab.
+2. Click the **Develop** tab.
 
   ![image alt text](./media/click-the-develop-tab.png)
 
   This shows you the contents of the API Proxy definition.  
 
-* Select **PreFlow** from the sidebar under **Proxy Endpoints** section.
+2. Select **PreFlow** from the sidebar under **Proxy Endpoints** section.
   (This should already be selected)
 
   ![image alt text](./media/select-preflow.png)
 
-* Click on **+Add Step**
+2. Click on **+Add Step**
 
   ![image alt text](./media/add-a-step.png)
 
-* In the resulting dialog, scroll down select **OAuth v2.0** from the Security section then click the **Add** button.
+2. In the resulting dialog, scroll down select **OAuth v2.0** from the Security section then click the **Add** button.
 
   ![image alt text](./media/select-oauth2.gif)
 
-* Click on the policy and in the code editor, paste the code given below:
+2. Click on the policy and in the code editor, paste the code given below:
 
   ```
   <OAuthV2 name="OAuth-v20-1">
@@ -101,13 +103,13 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
   
   ![image alt text](./media/should-look-like-this.png)
 
-* Because we want Apigee to not pass the token to the backend API, let's remove the Authorization header. To do so, again click on Add Step.
+2. Because we want Apigee to not pass the token to the backend API, let's remove the Authorization header. To do so, again click on Add Step.
 
-* In the dialog, select **Assign Message** policy from the Mediation section then click the Add button.
+2. In the dialog, select **Assign Message** policy from the Mediation section then click the Add button.
 
   ![image alt text](./media/add-another-step-assign-message.gif)
 
-* Click on the policy and in the code editor, paste the code give below
+2. Click on the policy and in the code editor, paste the code give below
 
   ```
   <AssignMessage name="Assign-Message-1">
@@ -127,45 +129,118 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
   ![image alt text](./media/screenshot-20170403-175612.png)
 
 
-* Click the blue **Save** button to save the proxy.
+2. Click the blue **Save** button to save the proxy.
 
-* Use the Deployment dropdown to deploy it on the **test** environment.
+2. *Congratulations!*...You’ve now successfully created an API in Apigee Edge that is protected with OAuth 2.0.
+
+2. Use the Deployment dropdown to deploy it on the **test** environment.
 
   ![image alt text](./media/deploy-on-test.gif)
+  
 
-* *Congratulations!*...You’ve now successfully created an API that is protected with OAuth 2.0.
+## Create the API Product 
+
+To test the API Proxy, we need to expose that proxy via an API Product, and generate a new developer app. First, the product.
+
+* In the Apigee UI, select **Publish → API Products** from the side navigation menu
+
+  ![image alt text](./media/select-publish-apiproducts.gif)
+
+* Click **+API Product**
+
+  ![image alt text](./media/click-plus-apiproduct.png)
+
+* Populate the following fields
+
+    * Section: Product Details
+
+        * Name: **{your_initials}_{api_name}**_oauth_product
+
+        * Environment: test
+
+        * Access: Public
+
+    * Section: Resources
+
+        * Section: API Proxies
+
+            * Click the **+API Proxy** button
+            
+              ![image alt text](./media/add-a-proxy-to-a-product.png)
+
+            * Select the API Proxy you just created.
+
+* Click the blue **Save** button on the bottom right corner of the page, to save the API Product.
+  
+  There is now a new, consumable unit of APIs available to external (consuming) developers. 
 
 
 
-* Now, let’s test it. To do that, we’d have to obtain the consumer key and secret for a particular app that is associated with a API Product containing the APIs that we created.
+## Create the App 
 
-* Click **Publish > Apps** from the side navigation menu.
+* Click **Publish → Apps** in the side navigation
 
-        ![image alt text](./media/image_6.png)
+  ![image alt text](./media/select-publish-apps.gif)
 
-* Select the app that you created in the *API Security : Securing APIs with API Key* lab.
+* Click **+App**
 
-        ![image alt text](./media/image_7.png)
+  ![image alt text](./media/click-plus-apps.png)
 
-* Click on the show button under Consumer Key and Consumer Secret.
+* Populate the following fields
 
-* Copy the values and store them somewhere safe.
+    * Name: **{your_initials}-oauth-app
 
-![image alt text](./media/image_8.png)  
+    * Developer: (choose any available developer)
 
-* Mac and Linux users, open Terminal and type the following command
+    * Product: Click **+Product** to add your API Product to this App.
 
-```
-        echo -n <consumer_key>:<consumer_secret> | base64
-```
+  ![image alt text](./media/select-api-product.gif)
 
-If you are using Windows, refer this [link](https://www.base64encode.org/) to generate the value.
+* In the lower right corner, click the blue **Save** button.
 
-* Now, let’s test the deployment using the [REST Client](https://apigee-rest-client.appspot.com/). Open the REST Client on a new browser window.  
 
-* Copy the URL for oauth API proxy. 
+## Get the client credentials
 
-        ![image alt text](./media/image_9.png)
+Now, obtain the consumer key and secret for the app, and encode them. 
+
+1. In the apps list, select the app that you just created
+
+2. Click on the show button under Consumer Key and Consumer Secret.
+
+3. Copy the values and store them somewhere safe.
+
+  ![image alt text](./media/image_8.png)  
+
+4. To get the encoded value, visit a bas64 encoder site, like [this one](http://base64encode.net/)
+   Paste in the value of the consumer key, followed by a colon, followed by the consumer secret.
+   For example if the consumer key is ABCDE and the consumer secret is 12345, you would paste in
+   ```
+   ABCDE:12345
+   ```
+
+   Mac and Linux users, you can do this from the command prompt. open Terminal and type the following command
+
+   ```
+    echo -n ABCDE:12345 | base64
+   ```
+
+   ...obviously replacing the value of your consumer key and secret as approprpiate.
+
+5. Save the resulting base64-encoded value.
+
+
+## Test the app
+
+Now, let’s test the deployment using the [REST Client](https://apigee-rest-client.appspot.com/).
+
+
+1. Copy the URL for your OAuth API proxy. 
+
+   ![image alt text](./media/image_9.png)
+
+2. Open the [REST Client](https://apigee-rest-client.appspot.com/) in a new browser window.
+
+3. Obtain an access token.
 
 * First, you’ll obtain an access token which will be used while fetching the employees list. To obtain an access token, you’ll have to make a POST request to the /oauth/client_credential/accesstoken endpoint with a client credentials grant type as a query param and an Authorization header which is the base64 encoded value of consumer key and secret pair that was obtained previously.
 
