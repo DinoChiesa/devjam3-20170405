@@ -47,23 +47,23 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
 3. Select **Develop → API Proxies** in the side navigation menu
 
-  ![image alt text](./media/Develop-Proxies.gif)
+   ![image alt text](./media/Develop-Proxies.gif)
 
 4. Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
-  ![](./media/Plus-New-Proxy.gif)
+   ![](./media/Plus-New-Proxy.gif)
 
 5. Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
 
-  ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
+   ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
 
 2. Specify the name for the new proxy, using your initials..., and click **Next**
 
-  ![image alt text](./media/use-your-initials-click-next.png)
+   ![image alt text](./media/use-your-initials-click-next.png)
 
 2. Then click **Build**
 
-  ![image alt text](./media/click-build.png)
+   ![image alt text](./media/click-build.png)
 
 2. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
 
@@ -71,69 +71,69 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
 2. Click the **Develop** tab.
 
-  ![image alt text](./media/click-the-develop-tab.png)
+   ![image alt text](./media/click-the-develop-tab.png)
 
-  This shows you the contents of the API Proxy definition.  
+   This shows you the contents of the API Proxy definition.  
 
 3. Select the Proxy name and Update the display name with your initials.
 
-  ![image alt text](./media/update-display-name.gif)
+   ![image alt text](./media/update-display-name.gif)
 
 4. Select the Proxy Endpoint and update the basepath.
 
-  ![image alt text](./media/update-basepath.gif)
+   ![image alt text](./media/update-basepath.gif)
 
 2. Select **PreFlow** from the sidebar under **Proxy Endpoints** section.
 
-  ![image alt text](./media/select-preflow.png)
+   ![image alt text](./media/select-preflow.png)
 
 2. Click on **+Add Step**
 
-  ![image alt text](./media/add-a-step.png)
+   ![image alt text](./media/add-a-step.png)
 
 2. In the resulting dialog, scroll down select **OAuth v2.0** from the Security section then click the **Add** button.
 
-  ![image alt text](./media/select-oauth2.gif)
+   ![image alt text](./media/select-oauth2.gif)
 
 2. Click on the policy and in the code editor, paste the code given below:
 
-  ```
-  <OAuthV2 name="OAuth-v20-1">
-     <DisplayName>OAuth v2.0-1</DisplayName>
-     <ExternalAuthorization>false</ExternalAuthorization>
-     <Operation>VerifyAccessToken</Operation>
-     <GenerateResponse enabled="true"/>
-  </OAuthV2>
-  ```
-  
-  It should look like this: 
-  
-  ![image alt text](./media/should-look-like-this.png)
+   ```
+   <OAuthV2 name="OAuth-v20-1">
+      <DisplayName>OAuth v2.0-1</DisplayName>
+      <ExternalAuthorization>false</ExternalAuthorization>
+      <Operation>VerifyAccessToken</Operation>
+      <GenerateResponse enabled="true"/>
+   </OAuthV2>
+   ```
+
+   It should look like this: 
+
+   ![image alt text](./media/should-look-like-this.png)
 
 2. Because we want Apigee to not pass the token to the backend API, let's remove the Authorization header. To do so, again click on Add Step.
 
 2. In the dialog, select **Assign Message** policy from the Mediation section then click the Add button.
 
-  ![image alt text](./media/add-another-step-assign-message.gif)
+   ![image alt text](./media/add-another-step-assign-message.gif)
 
 2. Click on the policy and in the code editor, paste the code give below
 
-  ```
-  <AssignMessage name="Assign-Message-1">
-    <DisplayName>Assign Message-1</DisplayName>
-    <Remove>
-       <Headers>
-          <Header name="Authorization"/>
-       </Headers>
-    </Remove>
-    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-    <AssignTo createNew="false" transport="http" type="request"/>
-  </AssignMessage>
-  ```
+   ```
+   <AssignMessage name="Assign-Message-1">
+     <DisplayName>Assign Message-1</DisplayName>
+     <Remove>
+        <Headers>
+           <Header name="Authorization"/>
+        </Headers>
+     </Remove>
+     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+     <AssignTo createNew="false" transport="http" type="request"/>
+   </AssignMessage>
+   ```
 
-  It should look like this:
+   It should look like this:
 
-  ![image alt text](./media/screenshot-20170403-175612.png)
+   ![image alt text](./media/screenshot-20170403-175612.png)
 
 
 2. Click the blue **Save** button to save the proxy.
@@ -142,7 +142,7 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
 2. Use the Deployment dropdown to deploy it on the **test** environment.
 
-  ![image alt text](./media/deploy-on-test.gif)
+   ![image alt text](./media/deploy-on-test.gif)
   
 
 ## Create the API Product 
@@ -151,11 +151,11 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 
 1. In the Apigee UI, select **Publish → API Products** from the side navigation menu
 
-  ![image alt text](./media/select-publish-apiproducts.gif)
+   ![image alt text](./media/select-publish-apiproducts.gif)
 
 2. Click **+API Product**
 
-  ![image alt text](./media/click-plus-apiproduct.png)
+   ![image alt text](./media/click-plus-apiproduct.png)
 
 3. Populate the following fields
 
