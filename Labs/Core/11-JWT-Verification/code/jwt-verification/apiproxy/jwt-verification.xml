@@ -2,8 +2,8 @@
   <ConfigurationVersion minorVersion='0' majorVersion='4'/>
   <CreatedAt>1491366969143</CreatedAt>
   <CreatedBy>dchiesa</CreatedBy>
-  <Description></Description>
-  <DisplayName>jwt-verification</DisplayName>
+  <Description>API Proxy for verifying JWT</Description>
+  <DisplayName>xxx-jwt-verification</DisplayName>
   <LastModifiedAt>1491368493631</LastModifiedAt>
   <LastModifiedBy>orgAdmin</LastModifiedBy>
   <TargetEndpoints>
