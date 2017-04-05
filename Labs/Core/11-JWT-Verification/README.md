@@ -154,6 +154,8 @@ Because Apigee Edge can verify JWT, you can construct your API Proxies to author
 
 1. Use the online JWT generator tool to generate different JWT with different claims. Try them out.
 
+2. Obtain a JWT from some other source, and modify the API Proxy in Apigee Edge so that it will verify that JWT.  This may require using a different algorithm (RS256) and key.
+
 
 # For Discussion and Consideration
 
