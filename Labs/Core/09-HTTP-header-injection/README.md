@@ -122,7 +122,9 @@ complete these steps.
 
    You should be able to scroll down and see the HTTP headers that will be sent
    to the backend system.
-   
+
+9. When you're finished sending requests, click "Stop Trace Session"
+
 
 # For Extra Credit
 
