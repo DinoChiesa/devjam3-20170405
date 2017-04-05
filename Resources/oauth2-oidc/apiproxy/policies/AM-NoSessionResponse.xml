@@ -1,0 +1,10 @@
+<AssignMessage name='AM-NoSessionResponse'>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <Set>
+    <Payload contentType='application/json'>{
+  "message" : "Session not found"
+}</Payload>
+    <StatusCode>404</StatusCode>
+    <ReasonPhrase>Not Found</ReasonPhrase>
+  </Set>
+</AssignMessage>

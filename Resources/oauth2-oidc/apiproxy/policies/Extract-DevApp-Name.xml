@@ -1,0 +1,12 @@
+<ExtractVariables name='Extract-DevApp-Name'>
+  <Source>AccessEntity.AE-DeveloperApp-1</Source>
+  <VariablePrefix>developer_app</VariablePrefix>
+  <XMLPayload>
+    <Variable name='name' type='string'>
+      <XPath>string(/App/@name)</XPath>
+    </Variable>
+    <Variable name='appLogoUrl' type='string'>
+      <XPath>/App/Attributes/Attribute[Name='appLogoUrl']/Value/text()</XPath>
+    </Variable>
+  </XMLPayload>
+</ExtractVariables>

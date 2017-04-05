@@ -1,0 +1,25 @@
+<ProxyEndpoint name="discovery">
+    <HTTPProxyConnection>
+        <BasePath>/devjam3-oidc/.well-known/openid-configuration</BasePath>
+        <VirtualHost>secure</VirtualHost>
+    </HTTPProxyConnection>
+    <Description>OpenID Connect Discovery endpoint</Description>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>Verify-API-Key</Name>
+            </Step>
+        </Request>
+        <Response>
+            <Step>
+                <Name>AM-DiscoveryReponse</Name>
+            </Step>
+        </Response>
+    </PreFlow>
+    <Flows/>
+    <PostFlow name="PostFlow">
+        <Request/>
+        <Response/>
+    </PostFlow>
+    <RouteRule name="noroute"/>
+</ProxyEndpoint>

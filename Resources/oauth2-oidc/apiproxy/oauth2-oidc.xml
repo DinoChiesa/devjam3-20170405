@@ -1,0 +1,12 @@
+<APIProxy revision='1' name='oauth2-oidc'>
+  <ConfigurationVersion minorVersion='0' majorVersion='4'/>
+  <CreatedAt>1456786910599</CreatedAt>
+  <CreatedBy>dchiesa@google.com</CreatedBy>
+  <Description>OpenID Connect proxy bundle</Description>
+  <DisplayName>oauth2-oidc</DisplayName>
+  <LastModifiedAt>1491353931808</LastModifiedAt>
+  <LastModifiedBy>orgAdmin</LastModifiedBy>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
+</APIProxy>

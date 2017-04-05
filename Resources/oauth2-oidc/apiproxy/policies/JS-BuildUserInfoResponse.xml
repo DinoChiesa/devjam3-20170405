@@ -1,0 +1,4 @@
+<Javascript name="JS-BuildUserInfoResponse">
+    <DisplayName>JS: Build UserInfo Response</DisplayName>
+    <ResourceURL>jsc://buildUserInfoResponse.js</ResourceURL>
+</Javascript>

@@ -1,0 +1,65 @@
+<ProxyEndpoint name='session'>
+  <Description>OIDC Session Proxy</Description>
+  <HTTPProxyConnection>
+    <BasePath>/devjam3-oidc/session</BasePath>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules>
+    <FaultRule name='unhandled-fault'>
+      <!-- This FaultRule always catches all uncaught faults. -->
+      <Step>
+        <Name>JS-MaybeFormatFault</Name>
+      </Step>
+    </FaultRule>
+  </FaultRules>
+
+  <PreFlow name='PreFlow'>
+      <Request/>
+      <Response/>
+  </PreFlow>
+  <PostFlow name='PostFlow'>
+      <Request/>
+      <Response>
+        <Step><Name>AM-CleanResponseHeaders</Name></Step>
+      </Response>
+  </PostFlow>
+
+  <Flows>
+    <Flow name='Authorization session info'>
+      <Description>Retrieve info regarding an existing authorization session</Description>
+      <Request>
+        <Step>
+          <Name>RF-InvalidRequest</Name>
+          <Condition>request.queryparam.txid = null</Condition>
+        </Step>
+        <!--
+            <Step><Name>VerifyAPIKey-1</Name></Step>
+         -->
+        <Step><Name>CL-GetAuthzTx</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-SessionInfoResponse</Name>
+          <Condition>authtx != null</Condition>
+        </Step>
+        <Step>
+          <Name>AM-NoSessionResponse</Name>
+          <Condition>authtx = null</Condition>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/info") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name='NoRouteRule'/>
+
+</ProxyEndpoint>

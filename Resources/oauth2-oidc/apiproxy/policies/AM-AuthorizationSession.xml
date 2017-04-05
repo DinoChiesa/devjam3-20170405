@@ -1,0 +1,24 @@
+<AssignMessage name="AM-AuthorizationSession">
+  <DisplayName>Assign: Authorization Session</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignTo createNew="true" transport="http" type="request">session.request</AssignTo>
+  <Set>
+    <Payload contentType="application/json">{
+  "client_id" : "{request.queryparam.client_id}",
+  "response_type" : "{oidc_response_type}",
+  "response_type_token" : "{response_type_token}",
+  "response_type_id_token" : "{response_type_id_token}",
+  "response_type_code" : "{response_type_code}",
+  "req_scope" : "{oidc_scope}",
+  "redirect_uri":"{oidc_redirect_uri}",
+  "oidcserver":"{client.scheme}://{request.header.host}{request.path}",
+  "req_state":"{oidc_state}",
+  "appName":"{developer_app.name}",
+  "appLogoUrl":"{developer_app.appLogoUrl}",
+  "nonce":"{oidc_nonce}",
+  "display":"{oidc_display}",
+  "login_hint":"{oidc_login_hint}",
+  "open_id":"true"
+}</Payload>
+  </Set>
+</AssignMessage>

@@ -30,12 +30,10 @@ The flow looks like this:
 
 # Pre-requisites
 
-1. You have an OAuth API proxy in Apigee Edge. If not, jump back to *API Design : Create a Reverse Proxy with OpenAPI Specification* lab.
+1. You have a login to Apigee Edge, and your organization includes the devjam oauth2-ac API proxy.  Your lab proctor can help with that, or you can deploy your own. See [the proxy bundle](../../../Resources/oauth2-ac).
 
 
 # Instructions
-
-1. Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
 If you have completed the 2-legged OAuth exercise, then, you do not need
 to create a different API Proxy, or API Product, or App. If you **have not** completed that

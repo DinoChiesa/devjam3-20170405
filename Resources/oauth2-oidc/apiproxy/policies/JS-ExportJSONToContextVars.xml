@@ -1,0 +1,6 @@
+<Javascript name="JS-ExportJSONToContextVars">
+  <Properties>
+    <Property name='varname'>session.Payload</Property>
+  </Properties>
+  <ResourceURL>jsc://exportJSONToContextVars.js</ResourceURL>
+</Javascript>

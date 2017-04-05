@@ -2,10 +2,10 @@
   <Set>
     <Headers>
       <Header name="Location">
-        https://{request.header.Host}{proxy.basepath}/../login-and-consent/login?sessionid={messageid}
+        {client.scheme}://{request.header.Host}{proxy.basepath}/../login-and-consent/login?sessionid={messageid}
       </Header>
     </Headers>
-    <Payload contentType="text/plain">https://{request.header.Host}{proxy.basepath}/../login-and-consent/login?sessionid={messageid}</Payload>
+    <Payload contentType="text/plain">{client.scheme}://{request.header.Host}{proxy.basepath}/../login-and-consent/login?sessionid={messageid}</Payload>
     <StatusCode>302</StatusCode>
     <ReasonPhrase>Found</ReasonPhrase>
   </Set>
