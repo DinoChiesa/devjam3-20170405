@@ -22,112 +22,135 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 # Instructions
 
-* Go to [https://apigee.com/edge](https://apigee.com/edge) and log in. This is the Edge management UI. 
+1. Go to [https://apigee.com/edge](https://apigee.com/edge) and log in. This is the Edge management UI. 
 
-* Select **Develop →API Proxies** in the side navigation menu
+2. Select **Develop →API Proxies** in the side navigation menu
 
-  ![](./media/Develop-Proxies.gif)
+   ![](./media/Develop-Proxies.gif)
 
-* Click **+ Proxy**. The Build a Proxy wizard is invoked.
+3. Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
-  ![](./media/Plus-New-Proxy.gif)
+   ![](./media/Plus-New-Proxy.gif)
 
-* Select **Reverse proxy**. Click on **Next**.
+4. Select **Reverse proxy**. Click on **Next**.
 
-  ![image alt text](./media/Plus-New-Proxy-Next.gif)
+   ![image alt text](./media/Plus-New-Proxy-Next.gif)
 
-* Enter details in the proxy wizard. Replace **{your-initials}** with the initials of your name. 
+5. Enter details in the proxy wizard. Replace **{your-initials}** with the initials of your name. 
 
-  * Proxy Name: **{your_initials}**_reverse_proxy
+   * Proxy Name: **{your_initials}**_reverse_proxy
+   * Proxy Base Path: /v1/**{your_initials}**_reverse_proxy
+   * Existing API: [http://apigeedemovideos-test.apigee.net/employees-api](http://apigeedemovideos-test.apigee.net/employees-api) 
 
-  * Proxy Base Path: /v1/**{your_initials}**_reverse_proxy
+   ![image alt text](./media/New-Proxy-Info.png)
 
-  * Existing API: [http://apigeedemovideos-test.apigee.net/employees-api](http://apigeedemovideos-test.apigee.net/employees-api) 
+6. Verify the values and click **Next**.
 
-  ![image alt text](./media/New-Proxy-Info.png)
-
-* Verify the values and click **Next**.
-
-* Select **Pass through (none)** for the authorization in order to choose not to apply any security policy for the proxy. Click **Next**. 
+7. Select **Pass through (none)** for the authorization in order to choose not to apply any security policy for the proxy. Click **Next**. 
   
-  ![image alt text](./media/image_4.jpg)
+   ![image alt text](./media/image_4.jpg)
 
-* Go with the **default Virtual Host** configuration.
+8. Go with the **default Virtual Host** configuration.
 
-  ![image alt text](./media/image_5.jpg)
+   ![image alt text](./media/image_5.jpg)
 
-* Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy.** 
+9. Ensure that only the **test** environment is selected to deploy to and click **Build and Deploy.** 
 
-  ![image alt text](./media/image_6.jpg)
+   ![image alt text](./media/image_6.jpg)
 
-  Apigee Edge will build and deploy an API Proxy. 
+   Apigee Edge will build and deploy an API Proxy. 
   
-* Once the API proxy has been built and deployed **click** the link to view your proxy in the proxy editor. 
+9. Once the API proxy has been built and deployed **click** the link to view your proxy in the proxy editor. 
 
-  ![image alt text](./media/image_7.jpg)
+   ![image alt text](./media/image_7.jpg)
 
-* You should see the proxy **Overview** screen. You should familiarize yourself with the controls available here. Some highlights are shown in this screenshot.  
+9. You should see the proxy **Overview** screen. You should familiarize
+   yourself with the controls available here. Some highlights are shown in
+   this screenshot.
 
-  ![image alt text](./media/image_8.jpg)
+   ![image alt text](./media/image_8.jpg)
 
-* *Congratulations!*...You have now built a reverse proxy for an existing backend service. This wizard experience gives you a simple "pass-through" proxy. The proxy changes nothing in the request, before invoking the backend (also known as "target") service. We'll get to more complicated scenarios later on. 
+9. *Congratulations!*...You have now built a reverse proxy for an
+   existing backend service. This wizard experience gives you a simple
+   "pass-through" proxy. The proxy changes nothing in the request,
+   before invoking the backend (also known as "target") service. We'll
+   get to more complicated scenarios later on.
 
-* For now, let's test the newly built API proxy using the [Apigee REST Client](https://apigee-rest-client.appspot.com/).  The Apigee REST Client is a web application that can invoke HTTP APIs.  Right-click the link to open the REST Client in a new browser window.
+9. For now, let's test the newly built API proxy using the [Apigee REST
+   Client](https://apigee-rest-client.appspot.com/).  The Apigee REST
+   Client is a web application that can invoke HTTP APIs.  Right-click
+   the link to open the REST Client in a new browser window.
 
-* Copy the URL for your API proxy. 
+9. Copy the URL for your API proxy. 
 
-  ![image alt text](./media/Copy-the-URL.png)
+   ![image alt text](./media/Copy-the-URL.png)
 
-* Now, switch to the tab containing the Apigee REST Client.  Paste the link into the form field on that web page, and **click** SEND. This will send a GET request.
+9. Now, switch to the tab containing the Apigee REST Client.  Paste the
+   link into the form field on that web page, and **click** SEND. This will
+   send a GET request.
 
-  ![image alt text](./media/Paste-URL-and-SEND.gif)
+   ![image alt text](./media/Paste-URL-and-SEND.gif)
 
-* In the page for the Apigee REST client, you should see a success response similar to this:
+9. In the page for the Apigee REST client, you should see a success response similar to this:
 
-  ![image alt text](./media/image_11.jpg)
+   ![image alt text](./media/image_11.jpg)
 
-* OK, now let's test deployment and undeployment.  Flip back to the browser tab with Apigee Edge.  Undeploy the API Proxy.
+9. OK, now let's test deployment and undeployment.  Flip back to the browser tab with Apigee Edge.  Undeploy the API Proxy.
 
-  ![image alt text](./media/Undeploy-the-Proxy.gif)
+   ![image alt text](./media/Undeploy-the-Proxy.gif)
 
-  You should see a confirmation that the proxy is undeployed.
+   You should see a confirmation that the proxy is undeployed.
 
-* Now, switch again to the tab containing the Apigee REST Client. Invoke the request again. (Send the GET request)
+9. Now, switch again to the tab containing the Apigee REST Client. Invoke the request again. (Send the GET request)
 
-  You should see a 400 response.  
+   You should see a 400 response.  
   
-  ![image alt text](./media/No-One-is-home.png)
+   ![image alt text](./media/No-One-is-home.png)
 
-  If you flip back to the Apigee tab and deploy the proxy again, then try again to send a GET request,
-  you should see a successful response again.
+   If you flip back to the Apigee tab and deploy the proxy again, then
+   try again to send a GET request, you should see a successful response
+   again.
 
-  When you "deploy" a proxy in Apigee Edge, you are telling Apigee Edge to make it available for inbound requests. A proxy that is not deployed will not handle requests. 
+   When you "deploy" a proxy in Apigee Edge, you are telling Apigee Edge
+   to make it available for inbound requests. A proxy that is not
+   deployed will not handle requests.
 
   
 # Export the API Proxy
 
-* Let’s now download the API Proxy definition, so that we can use it in other labs.
+Let’s now download the API Proxy definition, so that we can use it in other labs.
 
-* Flip back to the Apigee.com tab. Click Project...Download revision. 
+1. Flip back to the Apigee.com tab. Click Project...Download revision. 
 
-![image alt text](./media/Download-API-Proxy.gif)
+   ![image alt text](./media/Download-API-Proxy.gif)
 
-  This will save a file in ZIP format on your machine. The zip has a name like `dpc_reverse_proxy_rev1_2017_03_30.zip`, with your initials and today's date appearing in the appropriate places. And the  format of the file is like so:
+   This will save a file in ZIP format on your machine. The zip has a
+   name like `dpc_reverse_proxy_rev1_2017_03_30.zip`, with your initials
+   and today's date appearing in the appropriate places. And the format
+   of the file is like so:
 
-```
-  Length      Date    Time    Name
----------  ---------- -----   ----
-      808  03-30-2017 21:58   apiproxy/dpc_reverse_proxy.xml
-      474  03-30-2017 21:58   apiproxy/targets/default.xml
-      630  03-30-2017 21:58   apiproxy/proxies/default.xml
----------                     -------
-     1912                     3 files
+   ```
+     Length      Date    Time    Name
+   ---------  ---------- -----   ----
+         808  03-30-2017 21:58   apiproxy/dpc_reverse_proxy.xml
+         474  03-30-2017 21:58   apiproxy/targets/default.xml
+         630  03-30-2017 21:58   apiproxy/proxies/default.xml
+   ---------                     -------
+        1912                     3 files
 
-```
+   ```
 
-All of these files are XML text files. These files can be extracted from the ZIP and checked into a source code management system. Later, we'll see how to do the converse: import a bundle of files as a new proxy, or new revision of a proxy. 
+   All of these files are XML text files. These files can be extracted
+   from the ZIP and checked into a source code management system. Later,
+   we'll see how to do the converse: import a bundle of files as a new
+   proxy, or new revision of a proxy.
 
-This is a relatively simple proxy; all it does is "pass through" requests, and it requires just 3 configuration files for that purpose. As we work on more complex scenarios, we'll see that any downloaded bundle will include the Apigee Edge policies and resource files (nodejs code, XSLT scripts, Java JARs, and so on) for the proxy. Proxies can become pretty elaborate! 
+   This is a relatively simple proxy; all it does is "pass through"
+   requests, and it requires just 3 configuration files for that
+   purpose. As we work on more complex scenarios, we'll see that any
+   downloaded bundle will include the Apigee Edge policies and resource
+   files (nodejs code, XSLT scripts, Java JARs, and so on) for the
+   proxy. Proxies can become pretty elaborate!
 
   
 # Lab Video
