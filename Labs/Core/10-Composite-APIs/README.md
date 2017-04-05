@@ -98,6 +98,8 @@ authorization, as well as content-based security.
 
    ![](./media/image_3.png)
 
+6. Scroll down to select an AssignMessage policy. Name it and Add the policy. 
+
    ![](./media/image_4.png)
 
 6. Modify the policy to reflect a request with the appropriate query parameters for the Google Geolocation API.
@@ -134,7 +136,7 @@ authorization, as well as content-based security.
 
    **\<AssignTo\>** - Creates a named variable called ’GeoCodingRequest’of type ‘Request’. This variable encapsulates the request object that will be sent by the ServiceCallout policy.
 
-   *\<Set\>\<QueryParams\>** - Sets the query parameters that are needed for the service callout API call. In this case, the Google Geocoding API needs to know the location, which is expressed with a zipcode. The API calling client supplies this information, and we simply extract it here. The region and sensor parameters are by the API, and we just hardcode it to certain values here.
+   **\<Set\>\<QueryParams\>** - Sets the query parameters that are needed for the service callout API call. In this case, the Google Geocoding API needs to know the location, which is expressed with a zipcode. The API calling client supplies this information, and we simply extract it here. The region and sensor parameters are by the API, and we just hardcode it to certain values here.
 
    **\<Verb\>** - In this case, we are making a GET request to the API.
 
@@ -146,7 +148,7 @@ authorization, as well as content-based security.
 
 
 
-## Use Service Callout Policy to invoke the Google GeoCoding API
+## Use the ServiceCallout Policy to invoke the Google GeoCoding API
 
 1. Click on **+ Step**
 
@@ -158,10 +160,10 @@ authorization, as well as content-based security.
 
    ![image alt text](./media/image_6.png)
 
-   Then click on **Add** button.
+   Then click the **Add** button.
 
 2. Update the **Request** variable from *myRequest* to **GeoCodingRequest** and also
-   update the *Response* variable from *calloutResponse* to **GeoCodingResponse**.
+   update the **Response** variable from *calloutResponse* to **GeoCodingResponse**.
 
    ![image alt text](./media/image_7.png)
 
@@ -180,14 +182,14 @@ authorization, as well as content-based security.
 
    ![image alt text](./media/image_8.png)
 
-   Scroll down the policy list and select **Extract Variables** and update the
+2. Scroll down the policy list and select **Extract Variables** and update the
    default display name to **Extract Geocodes**
 
    ![image alt text](./media/image_9.png)
 
-   Then click on **Add**.
+   Then click **Add**.
 
-2. Update the policy to parse the **GeoCodingResponse** and store the results in variables.
+3. Update the policy to parse the **GeoCodingResponse** and store the results in variables.
 
    ```
    <ExtractVariables name="Extract-Geocodes">
@@ -215,7 +217,7 @@ authorization, as well as content-based security.
 
    This ExtractVariables policy will produce two variables whose names consist of the variable prefix (geocodeResponse) and the actual variable names that are specified in the policy. These variables are stored in the API proxy and will be available to other policies within the proxy flow, as you will see. The variables are: geocodeResponse.latitude & geocodeResponse.longitude
 
-4. Save the API Proxy.
+4. Click **Save** to save the API Proxy.
 
 
 
@@ -225,11 +227,11 @@ authorization, as well as content-based security.
 
    ![image alt text](./media/image_10.png)
 
-   Scroll down the policy list and select **Javascript** and update the default display name to **Create Location Query** select *Create New Script* and then name it **Create-Location-Query.js**
+2. Scroll down the policy list and select **Javascript** and update the default display name to **Create Location Query** select *Create New Script* and then name it **Create-Location-Query.js**
 
    ![image alt text](./media/image_11.png)
 
-2. Select the newly created script file and add the following code:
+3. Select the newly created script file and add the following code:
 
    ![image alt text](./media/image_12.png)
 
@@ -261,11 +263,11 @@ authorization, as well as content-based security.
 
    ![image alt text](./media/image_13.png)
 
-   Scroll down the policy list and select **Assign Message** and update the default display name to **Set Query Parameters**
+2. Scroll down the policy list and select **Assign Message** and update the default display name to **Set Query Parameters**
 
    ![image alt text](./media/image_14.jpg)
 
-2. Update the policy to include the *baasQL* as a query parameter and remove the zipcode and radius query parameters from the request.
+3. Update the policy to include the *baasQL* as a query parameter and remove the zipcode and radius query parameters from the request.
 
    ```
    <AssignMessage name="Set-Query-Parameters">
@@ -292,59 +294,55 @@ authorization, as well as content-based security.
 
 ## Testing the API Proxy with the location query after deploying changes
 
-* Click on the **Save** button to save and deploy the changes to the API Proxy.
+1. Click on the **Save** button to save and deploy the changes to the API Proxy.
 
-![image alt text](./media/image_15.png)
+   ![image alt text](./media/image_15.png)
 
-*  Go to the **Trace** tab and start a trace session by clicking the *Start Trace Session* button.
+2. Go to the **Trace** tab and start a trace session by clicking the *Start Trace Session* button.
 
-![image alt text](./media/image_16.png)
+   ![image alt text](./media/image_16.png)
 
-* Using your browser or the [Apigee REST Client](https://apigee-rest-client.appspot.com/), invoke the API with the following query parameter combinations and review the results being returned:
-```
-zipcode=31721&radius=20000
-```
-```
-zipcode=31721&radius=500000
-```
-```
-No query parameters
-```
+3. Using your browser or the [Apigee REST
+   Client](https://apigee-rest-client.appspot.com/), invoke the API with the
+   following query parameter combinations and review the results being returned:
+   `zipcode=31721&radius=20000`  
+   `zipcode=31721&radius=500000`  
+   `(No query parameters)`  
 
-Note: radius is measured in meters.
+   Note: radius is measured in meters.
 
-Example URL: 
-```
-http://apigeedemovideos-test.apigee.net/v1/ap_employees?zipcode=31721&radius=20000
-```
+   Example URL: 
+   `http://apigeedemovideos-test.apigee.net/v1/ap_employees?zipcode=31721&radius=20000`
 
 # Lab Video
 
-If you like to learn by watching, here is a short video on creating a mash-up services [https://youtu.be/S4SLEogusp**4](https://youtu.be/S4SLEogusp4)
+If you like to learn by watching, here is [a short video on creating a mash-up services](https://youtu.be/S4SLEogusp4)
 
 # Earn Extra-points
 
 You should may have noticed at the end of the lab, if you did not include the **radius **and **zipcode** query parameters, you will receive an Unresolved variable error. You can add a conditional policy to the steps you defined in the API Proxy PreFlow to automatically detect if the query parameters were not passed.
 
-* Under Proxy Endpoints, select PreFlow.
+1. Under Proxy Endpoints, select PreFlow.
 
-![image alt text](./media/image_17.png)
+   ![image alt text](./media/image_17.png)
 
-* For each Step, add a condition to check for null query parameters.
+2. For each Step, add a condition to check for null query parameters.
 
-```
-<Condition>(request.queryparam.radius != null) and (request.queryparam.zipcode != null)</Condition>
-```
+   ```
+   <Condition>(request.queryparam.radius != null) and (request.queryparam.zipcode != null)</Condition>
+   ```
 
-![image alt text](./media/image_18.png)
+   ![image alt text](./media/image_18.png)
 
-* Start a new **Trace** session and invoke the API again. You should no longer receive the **Unresolved variable **error and now receive a full list of all employees from the Employees API.
+3. Start a new **Trace** session and invoke the API again. You should no longer receive the **Unresolved variable **error and now receive a full list of all employees from the Employees API.
 
-# Quiz
+
+# For Discussion
 
 1. Which policy performed the actual request to the Google Geocoding API?
 
 2. In this lab, we used the Javascript policy to set variables used in the request to the backend. What other policy could we use to achieve the same result?
+
 
 # Summary
 
@@ -356,7 +354,7 @@ Common themes and use cases, are best handled with standard implementations and 
 
 * Useful Apigee documentation links on API Mashups 
 
-    * Watch this 4 minute video on "Create a Mashup using Edge" - [https://youtu.be/Htx5cdinNBQ](https://youtu.be/Htx5cdinNBQ) 
+    * Watch this [4 minute video entitled "Create a Mashup using Edge"](https://youtu.be/Htx5cdinNBQ) 
 
 # Rate this lab
 
