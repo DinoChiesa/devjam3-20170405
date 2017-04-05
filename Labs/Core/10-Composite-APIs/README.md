@@ -311,8 +311,6 @@ authorization, as well as content-based security.
 
    Note: radius is measured in meters.
 
-   Example URL: 
-   `http://apigeedemovideos-test.apigee.net/v1/ap_employees?zipcode=31721&radius=20000`
 
 # Lab Video
 
