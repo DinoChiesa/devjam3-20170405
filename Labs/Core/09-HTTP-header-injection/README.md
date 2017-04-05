@@ -6,12 +6,18 @@
 
 # Use case
 
-You have an API Proxy that exposes a RESTful interface, and verifies the security of the inbound request.  You want to communicate the authenticated identity (client, or client and user) to the backend system, via an HTTP Header.
+You have an API Proxy that exposes a RESTful interface, and verifies the
+security of the inbound request.  You want to communicate the
+authenticated identity (client, or client and user) to the backend
+system, via an HTTP Header.
 
 # How can Apigee Edge help?
 
-The [AssignMessage Policy](http://docs.apigee.com/api-services/reference/assign-message-policy) in Edge allows you to set additional headers into the southbound HTTP message. This allows your backend to understand the identity authenticated by Edge.  
-
+The [AssignMessage
+Policy](http://docs.apigee.com/api-services/reference/assign-message-policy)
+in Edge allows you to set additional headers into the southbound HTTP
+message. This allows your backend to understand the identity
+authenticated by Edge.
 
 
 
