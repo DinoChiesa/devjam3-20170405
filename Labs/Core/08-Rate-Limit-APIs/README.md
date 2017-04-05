@@ -16,11 +16,11 @@ You have a requirement to apply rate limits (quota limits) dynamically, such tha
 
 # Pre-requisites
 
-You must have completed the *API Security - Securing APIs with API Keys* lab in order to run this lab. 
+You must have completed the [*Securing APIs with API Keys*](04-Securing-APIs-with-API-Keys) lab in order to run this lab. 
 
 # Instructions
 
-Note: As you will have already completed the *API Security - Securing APIs with API Keys* lab and are familiar with how to setup API Products and Developer Apps, and how to use the test client to specify an API Key, detailed instructions for those steps will be omitted here. Refer back to the *API Security - Securing APIs with API Keys* lab if you need to see detailed instructions for those steps.
+Note: As you will have already completed the [*Securing APIs with API Keys*](04-Securing-APIs-with-API-Keys) lab and are familiar with how to setup API Products and Developer Apps, and how to use the test client to specify an API Key, detailed instructions for those steps will be omitted here. Refer back to the *API Security - Securing APIs with API Keys* lab if you need to see detailed instructions for those steps.
 
 1. Login to Edge Management UI.
 

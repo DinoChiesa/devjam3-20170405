@@ -174,17 +174,20 @@ There can be  any number of Apps assigned to a single App Developer. Each App ca
 1. Menu: **Develop > API Proxies**
 
 2. Open your API Proxy and click the **Develop** tab to see the flow
-   editor (you may have to move the panes to see the full request and
-   response flow lines)
+   editor.
+
+   ![image alt text](./media/select-develop-tab.gif)
 
 3. Click **+Step** on the request flow and select *Verify API Key*
    policy from the *Security* section of the list.  The name can be
    changed or left at the default.
 
+   ![image alt text](./media/select-verify-api-key.png)
+
 4. Click **Add**
 
 5. The policy will be added after any policies you previously had in the
-   Request flow.  Since we likely want this to occur first, drag the new
+   Request flow. Since we likely want this to occur first, drag the new
    policy to be the leftmost.
 
 6. With the *Verify API Key* policy selected, you can see its
@@ -204,18 +207,20 @@ There can be  any number of Apps assigned to a single App Developer. Each App ca
 
 8. Click the **Trace** tab near the top of the window.
 
+   ![image alt text](./media/click-trace-tab.png)
+
 9. Click **Start Trace Session** to begin a trace session.
 
 9. Click **Send** to send a request. If your API Proxy requires query
-   parameters add them dire prior to sending (Do not add the API Key yet)
+   parameters add them prior to clicking **Send**. Do not add the API Key yet.
 
 9. You should see a 401 (unauthorized) response for your API Call
    because the API Proxy was expecting an API Key as a query parameter.
    See the trace session below
 
-9. Now add the query parameter ```?apikey={your_api_key}``` to the URL
-   in the trace tool and try again. (Use the API Key you created above, and
-   resend the request.
+9. Now add the query parameter `apikey={your_api_key}` to the URL
+   in the trace tool and try again. Use the API Key you created above. Then
+   click **Send** to send another request.
 
 9. You should see a 2xx response code and the Trace for that request
    should show that the Verify API Key policy is now passing.
