@@ -130,15 +130,15 @@ authorization, as well as content-based security.
    Here's a brief description of the elements in this policy. You can read more
    about this policy in Assign Message policy.
 
-   **<AssignMessage name>** - Gives this policy a name. The name is used when the policy is referenced in a flow.
+   **\<AssignMessage name\>** - Gives this policy a name. The name is used when the policy is referenced in a flow.
 
-   **<AssignTo>** - Creates a named variable called ’GeoCodingRequest’of type ‘Request’. This variable encapsulates the request object that will be sent by the ServiceCallout policy.
+   **\<AssignTo\>** - Creates a named variable called ’GeoCodingRequest’of type ‘Request’. This variable encapsulates the request object that will be sent by the ServiceCallout policy.
 
-   **<Set><QueryParams>** - Sets the query parameters that are needed for the service callout API call. In this case, the Google Geocoding API needs to know the location, which is expressed with a zipcode. The API calling client supplies this information, and we simply extract it here. The region and sensor parameters are by the API, and we just hardcode it to certain values here.
+   *\<Set\>\<QueryParams\>** - Sets the query parameters that are needed for the service callout API call. In this case, the Google Geocoding API needs to know the location, which is expressed with a zipcode. The API calling client supplies this information, and we simply extract it here. The region and sensor parameters are by the API, and we just hardcode it to certain values here.
 
-   **<Verb>** - In this case, we are making a simple GET request to the API.
+   **\<Verb\>** - In this case, we are making a GET request to the API.
 
-   **<AssignVariable>** - zipcode and radius are new variables being created to store values being passed to the API. In this example, the variables will be accessed later in the proxy flow.
+   **\<AssignVariable\>** - zipcode and radius are new variables being created to store values being passed to the API. In this example, the variables will be accessed later in the proxy flow.
 
    Note: The properties associated with the ‘Assign Message’ policy could have been modified using the ‘Property Inspector’ panel that’s presented in the ‘Develop’ tab on the right. Any changes made in the ‘Code’ panel are reflected in the ‘Property Inspector’ panel and vice-versa. We will use the ‘Property Inspector’ panel to set properties for some of the policies as the lesson progresses.
 
@@ -150,139 +150,141 @@ authorization, as well as content-based security.
 
 1. Click on **+ Step**
 
-![image alt text](./media/image_5.png)
+   ![image alt text](./media/image_5.png)
 
-Scroll down the policy list and select **Service Callout** and update the default display name to **Call Geocoding API** select **HTTP** and then enter the **HTTP Target** with the following URL:
+   Scroll down the policy list and select **Service Callout** and update the default
+   display name to **Call Geocoding API** select **HTTP** and then enter the **HTTP
+   Target** as: `http://maps.googleapis.com/maps/api/geocode/json`
 
-```
-http://maps.googleapis.com/maps/api/geocode/json
-```
+   ![image alt text](./media/image_6.png)
 
-![image alt text](./media/image_6.png)
+   Then click on **Add** button.
 
-Then click on **Add** button.
+2. Update the **Request** variable from *myRequest* to **GeoCodingRequest** and also
+   update the *Response* variable from *calloutResponse* to **GeoCodingResponse**.
 
-2. Update the **Request** variable from *myRequest* to **GeoCodingRequest** and also update the *Response* variable from *calloutResponse* to **GeoCodingResponse**.
+   ![image alt text](./media/image_7.png)
 
-![image alt text](./media/image_7.png)
+   **\<Request variable\>** - This is the variable ‘GeoCodingRequest’ that was created in the AssignMessage policy in the previous step. It encapsulates the request going to the Google Geocoding API.
 
-**<Request variable>** - This is the variable ‘GeoCodingRequest’ that was created in the AssignMessage policy in the previous step. It encapsulates the request going to the Google Geocoding API.
+   **\<Response\>** - This element names a variable ‘GeoCodingResponse’ in which the response from the Google Geocoding API will be stored. As you will see, this variable will be accessed later by the ExtractVariables policy.
 
-**<Response>**- This element names a variable ‘GeoCodingResponse’ in which the response from the Google Geocoding API will be stored. As you will see, this variable will be accessed later by the ExtractVariables policy.
+   **\<HTTPTargetConnection\>\<URL\>** - Specifies the target URL to be used by the service callout - in this case the URL of the Google Geocoding API: [http://maps.googleapis.com/maps/api/geocode/json](http://maps.googleapis.com/maps/api/geocode/json) 
 
-**<HTTPTargetConnection><URL>** - Specifies the target URL to be used by the service callout - in this case the URL of the Google Geocoding API: [http://maps.googleapis.com/maps/api/geocode/json](http://maps.googleapis.com/maps/api/geocode/json) 
+3. **Save** the API Proxy.
 
-* **Save** the API Proxy.
 
 ## Use Extract Message Policy to parse the service callout response
 
-3. Click on **+ Step**
+1. Click on **+ Step**
 
-![image alt text](./media/image_8.png)
+   ![image alt text](./media/image_8.png)
 
-Scroll down the policy list and select **Extract Variables** and update the default display name to **Extract Geocodes**
+   Scroll down the policy list and select **Extract Variables** and update the
+   default display name to **Extract Geocodes**
 
-![image alt text](./media/image_9.png)
+   ![image alt text](./media/image_9.png)
 
-Then click on **Add**.
+   Then click on **Add**.
 
-4. Update the policy to parse the **GeoCodingResponse** and store the results in variables.
+2. Update the policy to parse the **GeoCodingResponse** and store the results in variables.
 
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ExtractVariables async="false" continueOnError="false" enabled="true" name="Extract-Geocodes">
-    <DisplayName>Extract Geocodes</DisplayName>
-    <Source>GeoCodingResponse</Source>
-    <VariablePrefix>geocodeResponse</VariablePrefix>
-    <JSONPayload>
-        <Variable name="latitude">
-            <JSONPath>$.results[0].geometry.location.lat</JSONPath>
-        </Variable>
-        <Variable name="longitude">
-            <JSONPath>$.results[0].geometry.location.lng</JSONPath>
-        </Variable>
-    </JSONPayload>
-</ExtractVariables>
-```
+   ```
+   <ExtractVariables name="Extract-Geocodes">
+       <DisplayName>Extract Geocodes</DisplayName>
+       <Source>GeoCodingResponse</Source>
+       <VariablePrefix>geocodeResponse</VariablePrefix>
+       <JSONPayload>
+           <Variable name="latitude">
+               <JSONPath>$.results[0].geometry.location.lat</JSONPath>
+           </Variable>
+           <Variable name="longitude">
+               <JSONPath>$.results[0].geometry.location.lng</JSONPath>
+           </Variable>
+       </JSONPayload>
+   </ExtractVariables>
+   ```
 
-Here's a brief description of the elements that were modified in this policy. You can read more about this policy in [Extract Variables policy](http://apigee.com/docs/api-services/reference/extract-variables-policy).
+   Here's a brief description of the elements that were modified in this policy. You can read more about this policy in [the reference documentation](http://apigee.com/docs/api-services/reference/extract-variables-policy).
 
-- Specifies the response variable ‘GeoCodingResponse’ that we created in the ServiceCallout policy. This is the variable from which this policy extracts data.
+   **\<Source\>** - Specifies the response variable ‘GeoCodingResponse’ that we created in the ServiceCallout policy. This is the variable from which this policy extracts data.
 
-- The variable prefix ‘geocodeResponse’ specifies a namespace for other variables created in this policy. The prefix can be any name, except for the reserved names defined by the [Apigee Edge Platform's predefined variables](http://apigee.com/docs/api-platform/api/variables-reference).
+   **\<VariablePrefix\>** - ‘geocodeResponse’ specifies a variable prefix for variables created by this policy. The prefix can be any name, except for the reserved names defined by the [Apigee Edge Platform's predefined variables](http://apigee.com/docs/api-platform/api/variables-reference).
 
-- This element retrieves the response data that is of interest and puts it into named variables. In fact, the Google Geocoding API returns much more information than latitude and longitude. However, these are the only values needed for these lessons. You can see a complete rendering of the JSON in the [Google Geocoding API documentation](https://developers.google.com/maps/documentation/geocoding/). The values of geometry.location.lat and geometry.location.lng are simply two of the many fields in the returned JSON object.
+   **\<Variable\>** - This element retrieves the response data that is of interest and puts it into named variables. In fact, the Google Geocoding API returns much more information than latitude and longitude. However, these are the only values needed for these lessons. You can see a complete rendering of the JSON in the [Google Geocoding API documentation](https://developers.google.com/maps/documentation/geocoding/). The values of geometry.location.lat and geometry.location.lng are simply two of the many fields in the returned JSON object.
 
-It may not be obvious, but it's important to see that ExtractVariables produces two variables whose names consist of the variable prefix (geocodeResponse) and the actual variable names that are specified in the policy. These variables are stored in the API proxy and will be available to other policies within the proxy flow, as you will see. The variables are: geocodeResponse.latitude & geocodeResponse.longitude
+   This ExtractVariables policy will produce two variables whose names consist of the variable prefix (geocodeResponse) and the actual variable names that are specified in the policy. These variables are stored in the API proxy and will be available to other policies within the proxy flow, as you will see. The variables are: geocodeResponse.latitude & geocodeResponse.longitude
 
-* Save the API Proxy.
+4. Save the API Proxy.
+
+
 
 ## Use the Javascript Policy to create the Location Query to send to the BaaS target endpoint
 
-5. Click on **+ Step**
+1. Click on **+ Step**
 
-![image alt text](./media/image_10.png)
+   ![image alt text](./media/image_10.png)
 
-Scroll down the policy list and select **Javascript** and update the default display name to **Create Location Query** select *Create New Script* and then name it **Create-Location-Query.js**
+   Scroll down the policy list and select **Javascript** and update the default display name to **Create Location Query** select *Create New Script* and then name it **Create-Location-Query.js**
 
-![image alt text](./media/image_11.png)
+   ![image alt text](./media/image_11.png)
 
-6. Select the newly created script file and add the following code:
+2. Select the newly created script file and add the following code:
 
-![image alt text](./media/image_12.png)
+   ![image alt text](./media/image_12.png)
 
-```
-var latitude = context.getVariable("geocodeResponse.latitude"),
-    longitude = context.getVariable("geocodeResponse.longitude"),
-    radius = context.getVariable("radius");
+   ```
+   var latitude = context.getVariable("geocodeResponse.latitude"),
+       longitude = context.getVariable("geocodeResponse.longitude"),
+       radius = context.getVariable("radius");
 
-// set default (0 meters)
-radius = (radius === "") ? "0" : radius;
+   // set default (0 meters)
+   radius = (radius === "") ? "0" : radius;
 
-// set BaaS query
-var baasQL = "location within " + radius + " of " + latitude + "," + longitude;
-context.setVariable("baasQL", baasQL);
-```
+   // set BaaS query
+   var baasQL = "location within " + radius + " of " + latitude + "," + longitude;
+   context.setVariable("baasQL", baasQL);
+   ```
 
-This Javascript code uses the ‘context’ object, which is part of the [Apigee Edge Javascript object model](http://apigee.com/docs/api-services/reference/javascript-object-model) to retrieve 3 variables - geocodeResponse.latitude, geoCodeResponse.latitude, radius - that were set by policies earlier in the flow.
+   This Javascript code uses the ‘context’ object, which is part of the [Apigee Edge Javascript object model](http://apigee.com/docs/api-services/reference/javascript-object-model) to retrieve 3 variables - geocodeResponse.latitude, geoCodeResponse.latitude, radius - that were set by policies earlier in the flow.
 
-It sets a default in case the variables are empty strings, creates a new query variable called ‘baasQL’ using the API BaaS query language syntax for a location query, and adds the ‘baasQL’ variable to the ‘context’ object to be used later in the flow by the Assign Message policy to set the query parameter before the API BaaS target endpoint is invoked.
+   It sets a default in case the variables are empty strings, creates a new query variable called ‘baasQL’ using the API BaaS query language syntax for a location query, and adds the ‘baasQL’ variable to the ‘context’ object to be used later in the flow by the Assign Message policy to set the query parameter before the API BaaS target endpoint is invoked.
 
-You can read more about this policy in [Javascript policy](http://apigee.com/docs/api-services/reference/javascript-policy).
+   You can read more about this policy in [Javascript policy](http://apigee.com/docs/api-services/reference/javascript-policy).
 
-* Save the API Proxy.
+3. Save the API Proxy.
+
 
 ## Use the Assign Message Policy to add the Location Query to the query parameter before BaaS target endpoint invocation
 
-7. Click on **+ Step**
+1. Click on **+ Step**
 
-![image alt text](./media/image_13.png)
+   ![image alt text](./media/image_13.png)
 
-Scroll down the policy list and select **Assign Message** and update the default display name to **Set Query Parameters**
+   Scroll down the policy list and select **Assign Message** and update the default display name to **Set Query Parameters**
 
-![image alt text](./media/image_14.jpg)
+   ![image alt text](./media/image_14.jpg)
 
-* Update the policy to include the *baasQL* as a query parameter and remove the zipcode and radius query parameters from the request.
+2. Update the policy to include the *baasQL* as a query parameter and remove the zipcode and radius query parameters from the request.
 
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage async="false" continueOnError="false" enabled="true" name="Set-Query-Parameters">
-    <DisplayName>Set Query Parameters</DisplayName>
-    <Remove>
-        <QueryParams>
-            <QueryParam name="zipcode"/>
-            <QueryParam name="radius"/>
-        </QueryParams>
-    </Remove>
-    <Set>
-        <QueryParams>
-            <QueryParam name="ql">{baasQL}</QueryParam>
-        </QueryParams>
-    </Set>
-</AssignMessage>
-```
+   ```
+   <AssignMessage name="Set-Query-Parameters">
+       <DisplayName>Set Query Parameters</DisplayName>
+       <Remove>
+           <QueryParams>
+               <QueryParam name="zipcode"/>
+               <QueryParam name="radius"/>
+           </QueryParams>
+       </Remove>
+       <Set>
+           <QueryParams>
+               <QueryParam name="ql">{baasQL}</QueryParam>
+           </QueryParams>
+       </Set>
+   </AssignMessage>
+   ```
 
-Here's a brief description of the elements that were modified in this policy. You can read more about this policy in [Extract Variables policy](http://apigee.com/docs/api-services/reference/extract-variables-policy).
+   Here's a brief description of the elements that were modified in this policy. You can read more about this policy in [Extract Variables policy](http://apigee.com/docs/api-services/reference/extract-variables-policy).
 
 - Removes the query parameters (‘zipcode’ and ‘radius’) that were sent in the original client request to the API Proxy.
 
