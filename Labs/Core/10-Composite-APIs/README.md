@@ -18,35 +18,61 @@ location within {distance_in_meters} of {latitude},{longitude}
 
 As you can see, you need to provide the latitude and longitude information to perform the query.
 
-For mobile applications meant for smartphones, obtaining geocode information is easy and can be provided directly as part of an API call. For this lesson, assume that this API interface is being created for devices and applications that cannot easily provide the geocoordinate information, but simply requests the user to provide the zip code. In such a situation, the first thing is to obtain the geo-coordinates for the zip code provided before doing further processing. Below are the high level steps to implement this in the proxy:
+For mobile applications meant for smartphones, obtaining geocode information is easy
+and can be provided directly as part of an API call. For this lesson, assume that
+this API interface is being created for devices and applications that cannot easily
+provide the geocoordinate information, but simply requests the user to provide the
+zip code. In such a situation, the first thing is to obtain the geo-coordinates for
+the zip code provided before doing further processing. Below are the high level
+steps to implement this in the proxy:
 
-* Retrieve the zipcode and radius from the request query parameters
+1. Retrieve the zipcode and radius from the request query parameters
 
-* Use the zipcode as an input parameter to call an external service that converts the zipcode to the geo-coordinates
+2. Use the zipcode as an input parameter to call an external service that converts the zipcode to the geo-coordinates
 
-* Extract the latitude and longitude geo-coordinates information from the response of the external service call
+3. Extract the latitude and longitude geo-coordinates information from the response of the external service call
 
-* Use the geo-coordinates to create the geo-location query.
+4. Use the geo-coordinates to create the geo-location query.
 
-* Add the location query as a query parameter before the target BaaS service is invoked
+5. Add the location query as a query parameter before the target BaaS service is invoked
+
 
 A pictorial representation of the logic is depicted below:
 
-![image alt text](./media/image_0.png)
+![](./media/image_0.png)
 
 For the service callout to convert the zipcode to the geocoordinate, you will use the [Google GeoCoding API](https://developers.google.com/maps/documentation/geocoding/).
 
 # How can Apigee Edge help?
 
-Apigee Edge enables you to design API behavior by using the out of the box policie'. A policy is like a module that implements a specific, limited management function. Policies are designed to let you add common types of management capabilities to an API easily and reliably.
+Apigee Edge enables you to design API behavior by using the out of the box
+policie'. A policy is like a module that implements a specific, limited management
+function. Policies are designed to let you add common types of management
+capabilities to an API easily and reliably.
 
-In this lab we will see how you can extend an existing API by aggregating it with another API and creating a single interface for your App Developers to consume. In this example, we will be combining data from our Employee API with the Google Weather to have a single response of the employee information and weather for their location. We will discover and use the following types of policies:
+In this lab we will see how you can extend an existing API by aggregating it with
+another API and creating a single interface for your App Developers to consume. In
+this example, we will be combining data from our Employee API with the Google
+Weather to have a single response of the employee information and weather for their
+location. We will discover and use the following types of policies:
 
-**Traffic Management Policies** in the traffic management category enable you to control the flow of request and response messages through an API proxy. These policies support both operational- and business-level control. They give you control over raw throughput, and can also control traffic on a per-app basis. Traffic management policy types enable you to enforce quotas, and they also help you to mitigate denial of service attacks.
+**Traffic Management Policies** in the traffic management category enable you to
+control the flow of request and response messages through an API proxy. These
+policies support both operational- and business-level control. They give you
+control over raw throughput, and can also control traffic on a per-app
+basis. Traffic management policy types enable you to enforce quotas, and they also
+help you to mitigate denial of service attacks.
 
-**Mediation Policies** in the mediation category enable you to actively manipulate messages as they flow through API proxies. They enable you to transform message formats, from XML to JSON (and vice-versa), or to transform one XML format to another XML format. They also enable you to parse messages, to generate new messages and to change values on outbound messages. Mediation policies also interact with basic services exposed by API Services, enabling you to retrieve data about apps, developers, security tokens, and API products at runtime.
+**Mediation Policies** in the mediation category enable you to actively manipulate
+messages as they flow through API proxies. They enable you to transform message
+formats, from XML to JSON (and vice-versa), or to transform one XML format to
+another XML format. They also enable you to parse messages, to generate new
+messages and to change values on outbound messages. Mediation policies also
+interact with basic services exposed by API Services, enabling you to retrieve
+data about apps, developers, security tokens, and API products at runtime.
 
-**Security Policies** in the security category support authentication, authorization, as well as content-based security.
+**Security Policies** in the security category support authentication,
+authorization, as well as content-based security.
 
 **Extension Policies** in the extension category enable you to tap into the extensibility of API Services to implement custom behavior in the programming language of your choice.
 
@@ -56,71 +82,69 @@ In this lab we will see how you can extend an existing API by aggregating it wit
 
 # Instructions
 
-## Select existing Employees API
+## Select your existing Employees API
 
-1. Go to [https://apigee.com/edge](https://apigee.com/edge) and log in. This is the Edge management UI. 
+1. Navigate to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in. 
 
 2. Select **Develop → API Proxies** in the side navigation menu.
 
-![image alt text](./media/image_1.jpg)
+   ![image alt text](./media/Develop-Proxies.gif)
 
-3. Click on the proxy you created before.
+3. Select the proxy you previously created. You will see the overview panel. 
 
-![image alt text](./media/image_2.png)
-
-4. Click on the **Develop** tab
-
-## Use an Assign Message Policy to prepare the service callout request
+4. Click on the **Develop** tab. 
 
 5. Click on **+ Step** on PreFlow Request Flow.
 
-![image alt text](./media/image_3.png)
+   ![](./media/image_3.png)
 
-![image alt text](./media/image_4.png)
+   ![](./media/image_4.png)
 
 6. Modify the policy to reflect a request with the appropriate query parameters for the Google Geolocation API.
 
-```
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage async="false" continueOnError="false" enabled="true" name="Create-Geocoding-Request">
-    <DisplayName>Create Geocoding Request</DisplayName>
-    <AssignTo createNew="true" type="request">GeoCodingRequest</AssignTo>
-    <Set>
-        <QueryParams>
-            <QueryParam name="address">{request.queryparam.zipcode}</QueryParam>
-            <QueryParam name="region">US</QueryParam>
-            <QueryParam name="sensor">false</QueryParam>
-        </QueryParams>
-        <Verb>GET</Verb>
-    </Set>
-    <!-- Set variables for use in the flow -->
-    <AssignVariable>
-        <Name>zipcode</Name>
-        <Ref>request.queryparam.zipcode</Ref>
-    </AssignVariable>
-    <AssignVariable>
-        <Name>radius</Name>
-        <Value>0</Value>
-        <Ref>request.queryparam.radius</Ref>
-    </AssignVariable>
-</AssignMessage>
-```
+   ```
+   <AssignMessage name="Create-Geocoding-Request">
+       <DisplayName>Create Geocoding Request</DisplayName>
+       <AssignTo createNew="true" type="request">GeoCodingRequest</AssignTo>
+       <Set>
+           <QueryParams>
+               <QueryParam name="address">{request.queryparam.zipcode}</QueryParam>
+               <QueryParam name="region">US</QueryParam>
+               <QueryParam name="sensor">false</QueryParam>
+           </QueryParams>
+           <Verb>GET</Verb>
+       </Set>
+       <!-- Set variables for use in the flow -->
+       <AssignVariable>
+           <Name>zipcode</Name>
+           <Ref>request.queryparam.zipcode</Ref>
+       </AssignVariable>
+       <AssignVariable>
+           <Name>radius</Name>
+           <Value>0</Value>
+           <Ref>request.queryparam.radius</Ref>
+       </AssignVariable>
+   </AssignMessage>
+   ```
 
-Here's a brief description of the elements in this policy. You can read more about this policy in Assign Message policy.
+   Here's a brief description of the elements in this policy. You can read more
+   about this policy in Assign Message policy.
 
-**<AssignMessage name>** - Gives this policy a name. The name is used when the policy is referenced in a flow.
+   **<AssignMessage name>** - Gives this policy a name. The name is used when the policy is referenced in a flow.
 
-**<AssignTo>** - Creates a named variable called ’GeoCodingRequest’of type ‘Request’. This variable encapsulates the request object that will be sent by the ServiceCallout policy.
+   **<AssignTo>** - Creates a named variable called ’GeoCodingRequest’of type ‘Request’. This variable encapsulates the request object that will be sent by the ServiceCallout policy.
 
-**<Set><QueryParams>** - Sets the query parameters that are needed for the service callout API call. In this case, the Google Geocoding API needs to know the location, which is expressed with a zipcode. The API calling client supplies this information, and we simply extract it here. The region and sensor parameters are by the API, and we just hardcode it to certain values here.
+   **<Set><QueryParams>** - Sets the query parameters that are needed for the service callout API call. In this case, the Google Geocoding API needs to know the location, which is expressed with a zipcode. The API calling client supplies this information, and we simply extract it here. The region and sensor parameters are by the API, and we just hardcode it to certain values here.
 
-**<Verb>** - In this case, we are making a simple GET request to the API.
+   **<Verb>** - In this case, we are making a simple GET request to the API.
 
-**<AssignVariable>** - zipcode and radius are new variables being created to store values being passed to the API. In this example, the variables will be accessed later in the proxy flow.
+   **<AssignVariable>** - zipcode and radius are new variables being created to store values being passed to the API. In this example, the variables will be accessed later in the proxy flow.
 
-Note: The properties associated with the ‘Assign Message’ policy could have been modified using the ‘Property Inspector’ panel that’s presented in the ‘Develop’ tab on the right. Any changes made in the ‘Code’ panel are reflected in the ‘Property Inspector’ panel and vice-versa. We will use the ‘Property Inspector’ panel to set properties for some of the policies as the lesson progresses.
+   Note: The properties associated with the ‘Assign Message’ policy could have been modified using the ‘Property Inspector’ panel that’s presented in the ‘Develop’ tab on the right. Any changes made in the ‘Code’ panel are reflected in the ‘Property Inspector’ panel and vice-versa. We will use the ‘Property Inspector’ panel to set properties for some of the policies as the lesson progresses.
 
-* **Save** the API Proxy
+6. **Save** the API Proxy
+
+
 
 ## Use Service Callout Policy to invoke the Google GeoCoding API
 
