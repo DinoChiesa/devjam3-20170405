@@ -30,96 +30,96 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 # Instructions
 
-* First, download [this zip file](./code/intro-nodejs-proxy-20170330.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
+1. First, download [this zip file](./code/intro-nodejs-proxy-20170330.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
 
-* In a separate browser tab, navigate to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
+2. In a separate browser tab, navigate to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
-* Select **Develop →API Proxies** in the side navigation menu
+3. Select **Develop →API Proxies** in the side navigation menu
 
-  ![](./media/Develop-Proxies.gif)
+   ![](./media/Develop-Proxies.gif)
 
-* Click **+ Proxy**. The Build a Proxy wizard is invoked.
+4. Click **+ Proxy**. The Build a Proxy wizard is invoked.
 
-  ![](./media/Plus-New-Proxy.gif)
+   ![](./media/Plus-New-Proxy.gif)
 
-* Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
+5. Select **Proxy bundle**. Click on **Next**, and then choose the zip file that you just downloaded.
 
-  ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
+   ![image alt text](./media/New-Proxy-Import-Bundle-Next.gif)
 
-* Specify the name for the new proxy, using your initials..., and click **Next**
+6. Specify the name for the new proxy, using your initials..., and click **Next**
 
-  ![image alt text](./media/use-your-initials-click-next.png)
+   n![image alt text](./media/use-your-initials-click-next.png)
 
-* then click **Build**
+7. then click **Build**
 
-  ![image alt text](./media/click-build.png)
+   ![image alt text](./media/click-build.png)
 
-* Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
+8. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
 
-  ![image alt text](./media/view-the-imported-proxy.png)
+   ![image alt text](./media/view-the-imported-proxy.png)
 
-* You should see the proxy **Overview** screen. 
+9. You should see the proxy **Overview** screen. 
 
-* Click the **Develop** tab.
+9. Click the **Develop** tab.
 
-  ![image alt text](./media/click-the-develop-tab.png)
+   ![image alt text](./media/click-the-develop-tab.png)
 
-  This shows you the contents of the API Proxy definition.  
+   This shows you the contents of the API Proxy definition.  
 
-* On the lower left-hand side you can see
-  the nodejs script that is included in this Proxy. Click the **expressServer.js**
+9. On the lower left-hand side you can see
+   the nodejs script that is included in this Proxy. Click the **expressServer.js**
 
-  ![image alt text](./media/click-express-server.gif)
+   ![image alt text](./media/click-express-server.gif)
 
-  At this point you can view the nodejs code that is connecting to a Postgres server available
-  on the internet. 
+   At this point you can view the nodejs code that is connecting to a Postgres server available
+   on the internet. 
 
-* Making sure the left-hand navigator pane is expanded, click the default target.
+9. Making sure the left-hand navigator pane is expanded, click the default target.
 
-  ![image alt text](./media/click-default-target.gif)
+   ![image alt text](./media/click-default-target.gif)
 
-  This is where you can set environment variables used by the nodejs server code.
-  In this example, we set the Postgres database URL. 
-
-
-* The imported proxy is not yet deployed. We must change the
-  base path in order to deploy it.  The basepath is encoded in the proxy configuration we just imported, which
-  means it is the same for everyone. Let's change it to something unique for each user.  
-
-* On the left-hand-side, select the "default" Proxy endpoint. Then update the Base Path. And click **Save**. 
-
-  ![image alt text](./media/change-the-basepath.gif)
-
-* Deploy the Proxy to the "test" environment. 
-
-  ![image alt text](./media/deploy-the-proxy.gif)
-
-* *Congratulations!*...You have now imported and deployed a proxy for a non-HTTP service.
-
-* Let us test the newly built API proxy. First, let's copy the URL for this proxy.  Click the **Overview** tab and copy the URL. 
-
-  ![image alt text](./media/copy-the-proxy-url.gif)
+   This is where you can set environment variables used by the nodejs server code.
+   In this example, we set the Postgres database URL. 
 
 
-* Now, open a new tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/), or switch to an existing browser tab that has the Apigee REST Client open. 
+9. The imported proxy is not yet deployed. We must change the base path
+   in order to deploy it.  The basepath is encoded in the proxy
+   configuration we just imported, which means it is the same for
+   everyone. Let's change it to something unique for each user.
 
-* Paste the link into the form field on that web page.  Append to the URL a /status.  Like so:
+9. On the left-hand-side, select the "default" Proxy endpoint. Then update the Base Path. And click **Save**. 
 
-  ![image alt text](./media/Apigee_Rest_Client-paste-and-click-send.png)
+   ![image alt text](./media/change-the-basepath.gif)
 
-* **Click** SEND. This will send a GET request.
+9. Deploy the Proxy to the "test" environment. 
 
-* In the page for the Apigee REST client, you should see a success response similar to this:
+   ![image alt text](./media/deploy-the-proxy.gif)
 
-  ![image alt text](./media/rest-client-good-response.png)
+9. *Congratulations!*...You have now imported and deployed a proxy for a non-HTTP service.
+
+9. Let us test the newly built API proxy. First, let's copy the URL for this proxy.  Click the **Overview** tab and copy the URL. 
+
+   ![image alt text](./media/copy-the-proxy-url.gif)
 
 
-* Now, replace /status with /visit, select the POST verb, and click Send. Like so:
+9. Now, open a new tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/), or switch to an existing browser tab that has the Apigee REST Client open. 
 
-  ![image alt text](./media/make-a-post-request.gif)
+9. Paste the link into the form field on that web page.  Append to the URL a /status.  Like so:
 
-* This will run different logic in the nodejs server, which updates Postgres. 
+   ![image alt text](./media/Apigee_Rest_Client-paste-and-click-send.png)
 
+9. **Click** SEND. This will send a GET request.
+
+9. In the page for the Apigee REST client, you should see a success response similar to this:
+
+   ![image alt text](./media/rest-client-good-response.png)
+
+
+9. Now, replace /status with /visit, select the POST verb, and click Send. Like so:
+
+   ![image alt text](./media/make-a-post-request.gif)
+
+9, This will run different logic in the nodejs server, which updates Postgres. 
 
 
 # For Extra Credit
