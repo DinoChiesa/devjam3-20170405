@@ -22,108 +22,123 @@ You have an API proxy created in Apigee Edge.  If not, jump back to the [Create 
 
 ## Part 1 - Configure API Proxy
 
-* Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in. This is the Edge management UI.
+1. Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in. This is the Edge management UI.
 
-* Select **Develop → API Proxies** in the side navigation menu
+2. Select **Develop → API Proxies** in the side navigation menu
 
-  ![image alt text](./media/Select-apiproxies.gif)
+   ![image alt text](./media/Select-apiproxies.gif)
 
-* Select the **{your_initials}_reverse_proxy** that you created in an earlier lab exercise. 
+3. Select the **{your_initials}_reverse_proxy** that you created in an earlier lab exercise. 
 
-* Click on the **Develop** tab to access the API Proxy development dashboard.
+4. Click on the **Develop** tab to access the API Proxy development dashboard.
 
-  ![image alt text](./media/navigate-to-develop-tab.png)
+   ![image alt text](./media/navigate-to-develop-tab.png)
 
-* Click on **PreFlow** under Proxy Endpoints default, Click on **+Step** on the Request flow to attach an *Extract Variables* policy.
+5. Click on **PreFlow** under Proxy Endpoints default, Click on **+Step** on the Request flow to attach an *Extract Variables* policy.
 
-  ![image alt text](./media/preflow-plus-step.gif)
+   ![image alt text](./media/preflow-plus-step.gif)
 
-* In the dialog that is presented, scroll down about 75%, and select **Extract Variables Policy**. Specify "Extract Inbound Initials" for the Display Name, and click on the **Add** button to add the Extract Variables policy.
+6. In the dialog that is presented, scroll down about 75%, and select
+   **Extract Variables Policy**. Specify "Extract Inbound Initials" for the
+   Display Name, and click on the **Add** button to add the Extract
+   Variables policy.
 
-  After you click Add, the Extract Variables policy icon will be visible on the request flow. It shows where the policy is attached. The corresponding XML (in keeping with Edge’s config-then-code approach) can be seen in the edit pane below.
+   After you click Add, the Extract Variables policy icon will be
+   visible on the request flow. It shows where the policy is
+   attached. The corresponding XML (in keeping with Edge’s
+   config-then-code approach) can be seen in the edit pane below.
 
-* Change the Policy XML configuration to match the code below. (Ctrl-C to copy the below, Click in the pane, ctrl-A to select all, then Ctrl-V to paste in what is below).  The modified proxy will then extract the inbound query parameter into a separate context variable, available for subsequent policies in the API proxy. 
+7. Change the Policy XML configuration to match the code below. (Ctrl-C
+   to copy the below, Click in the pane, ctrl-A to select all, then
+   Ctrl-V to paste in what is below).  The modified proxy will then
+   extract the inbound query parameter into a separate context variable,
+   available for subsequent policies in the API proxy.
 
-  Note: Paste the following code without change. 
+   Note: Paste the following code without change. 
 
-  ```
-  <ExtractVariables name="Extract-Initials">
-      <DisplayName>Extract Inbound Initials</DisplayName>
-      <Properties/>
-      <QueryParam name="initials">
-          <Pattern ignoreCase="true">{alphaid}</Pattern>
-      </QueryParam>
-  </ExtractVariables>
-  ```
+   ```
+   <ExtractVariables name="Extract-Initials">
+       <DisplayName>Extract Inbound Initials</DisplayName>
+       <Properties/>
+       <QueryParam name="initials">
+           <Pattern ignoreCase="true">{alphaid}</Pattern>
+       </QueryParam>
+   </ExtractVariables>
+   ```
 
-  It should look like this:
-  ![image alt text](./media/EV-policy-should-look-like-this.png)
+   It should look like this:
+   ![image alt text](./media/EV-policy-should-look-like-this.png)
   
-* Click the blue **Save** button to save your proxy.  You may see a dialog asking you to "Save a new Revision".  Do so.
+8. Click the blue **Save** button to save your proxy.  You may see a dialog asking you to "Save a new Revision".  Do so.
 
-* Deploy the revision. Verify that the correct revision is deployed.
+9. Deploy the revision. Verify that the correct revision is deployed.
 
-  ![image alt text](./media/make-sure-latest-revision-is-deployed.png)
+   ![image alt text](./media/make-sure-latest-revision-is-deployed.png)
 
-  Your revision need not be revision 2.  Just make sure the latest revision of your API proxy is deployed.
+   Your revision need not be revision 2.  Just make sure the latest revision of your API proxy is deployed.
   
 
 ## Part 2 - Trace and Troubleshoot
 
 Consider a scenario where one of your API consumers reports seeing 404 errors in response to their requests.  How would you get to the bottom of this issue?  The Trace tool allows you to isolate that user’s requests and step through proxy logic one step at a time.  Let’s send some traceable requests -- note the failure -- and attempt to understand why it’s failing.
 
-* Click on the **TRACE** tab to access the real-time API Trace tool.
+1. Click on the **TRACE** tab to access the real-time API Trace tool.
 
-  ![image alt text](./media/click-trace.png)
+   ![image alt text](./media/click-trace.png)
 
-* Locate the URL field and append "/ABCDEFG?initials=xxx" to it, using your own initials.
+2. Locate the URL field and append "/ABCDEFG?initials=xxx" to it, using your own initials.
 
-  ![image alt text](./media/trace-append-this.png)
+   ![image alt text](./media/trace-append-this.png)
 
-* Click the green **Start Trace Session** button, then click **Send**.
+3. Click the green **Start Trace Session** button, then click **Send**.
 
-  ![image alt text](./media/click-click.png)
+   ![image alt text](./media/click-click.png)
 
-* Notice a trace log is captured, with a 404 response.
+4. Notice a trace log is captured, with a 404 response.
 
-* Step through the visualization, clicking points of interest along the request/response flow and taking note of the metadata provided at the bottom of the screen.
+5. Step through the visualization, clicking points of interest along the request/response flow and taking note of the metadata provided at the bottom of the screen.
 
-  ![image alt text](./media/trace-ui-clickaround.gif)
+   ![image alt text](./media/trace-ui-clickaround.gif)
 
-* *Congratulations!*  You’ve found the problem.  Your target service cannot find an entity with the ID provided: ABCDEFG.  This is a trivial example, but you can see how the tool -- providing before and after insight into message, query, and header contents -- would be of immense use in diagnosing malformed requests, target errors, and other common issues.
+6. *Congratulations!* You’ve found the problem.  Your target service
+   cannot find an entity with the ID provided: ABCDEFG.  This is a
+   trivial example, but you can see how the tool -- providing before and
+   after insight into message, query, and header contents -- would be of
+   immense use in diagnosing malformed requests, target errors, and
+   other common issues.
 
-* Edit your URL field to replace ABCDEFG with  da94d538-d793-11e6-a734-122e0737977d . The full pattern is below: 
+7. Edit your URL field to replace ABCDEFG with  da94d538-d793-11e6-a734-122e0737977d . The full pattern is below: 
 
-  ```
-  /da94d538-d793-11e6-a734-122e0737977d?initials={your initials}
-  ```
+   ```
+   /da94d538-d793-11e6-a734-122e0737977d?initials={your initials}
+   ```
 
-* Again, click the **Send** button. This time, your request returns a valid JSON response.
+8. Again, click the **Send** button. This time, your request returns a valid JSON response.
 
-* Now, on the left hand side, highlight the successful transaction, and you can view the processing of that request and response. 
+9. Now, on the left hand side, highlight the successful transaction, and you can view the processing of that request and response. 
 
 
 ## Part 3 - Filtering
 
 Now, imagine troubleshooting this issue - except with hundreds or thousands of requests flowing through the system at a given time.  Fortunately, the Trace tool can filter its real-time capture so that it only shows entries with a given query or header parameter.
 
-* Click the red **Stop Trace Session** button. Expand the filters pane on the left side of your screen.  
+1. Click the red **Stop Trace Session** button. Expand the filters pane on the left side of your screen.  
 
-  ![image alt text](./media/stop-expand-filters.gif)
+   ![image alt text](./media/stop-expand-filters.gif)
 
-* Add a query parameter filter named ‘initials’.  Put your initials in the value column and ensure the URL also holds your initials, like before.
+2. Add a query parameter filter named ‘initials’.  Put your initials in the value column and ensure the URL also holds your initials, like before.
 
-* Click the green **Start Trace Session** button, then click the **Send** button again to fire another API call.  Note the captured trace entry.
+3. Click the green **Start Trace Session** button, then click the **Send** button again to fire another API call.  Note the captured trace entry.
 
-* Update the URL with a new, different value for the initials query parameter.  xyz, or anything that is not the value you inserted for the filter. 
+4. Update the URL with a new, different value for the initials query parameter.  xyz, or anything that is not the value you inserted for the filter. 
 
-* Again click the **Send** button. 
+5. Again click the **Send** button. 
 
-  No new trace entry is captured.  This is expected behavior, as the filter is configured to only trace requests with your initials in the query.
+   No new trace entry is captured.  This is expected behavior, as the filter is configured to only trace requests with your initials in the query.
 
-* One more thing -- with your trace session still active, click the **Download Trace Session** button to export a record of the trace results.  
+6. One more thing -- with your trace session still active, click the **Download Trace Session** button to export a record of the trace results.  
 
-  This is an XML file that can be saved and viewed later. It describes everything you can see in the Trace UI.
+   This is an XML file that can be saved and viewed later. It describes everything you can see in the Trace UI.
   
 
 # Lab Video
@@ -132,11 +147,20 @@ If you prefer to learn by watching, here is [a screencast on using the Trace too
 
 # For Extra Credit
 
-* Take a few minutes and explore the Trace interface a bit deeper.  Hover over the steps in the request/response visualization and note the Latency bubble that pops up, showing you how much time elapsed at that particular step.  Drill into the metadata in the bottom window.  Click the ‘Extract Variables’ policy and note that the initials you provided are shown as an extracted variable called ‘alphaid’.
+1. Take a few minutes and explore the Trace interface a bit deeper.
+   Hover over the steps in the request/response visualization and note
+   the Latency bubble that pops up, showing you how much time elapsed at
+   that particular step.  Drill into the metadata in the bottom window.
+   Click the ‘Extract Variables’ policy and note that the initials you
+   provided are shown as an extracted variable called ‘alphaid’.
 
-* Take a look at the exported trace session from the lab.  See if you can interpret the results -- imagine some scenarios where this export could be ingested into other tools for offline diagnostics.
+2. Take a look at the exported trace session from the lab.  See if you
+   can interpret the results -- imagine some scenarios where this export
+   could be ingested into other tools for offline diagnostics.
 
-* What if you send in a request from a different client - for example the [Apigee REST client](https://apigee-rest-client.appspot.com/)?  What effect does this have on the trace facility?  
+3. What if you send in a request from a different client - for example
+   the [Apigee REST client](https://apigee-rest-client.appspot.com/)?  What
+   effect does this have on the trace facility?
 
 
 # For Discussion
