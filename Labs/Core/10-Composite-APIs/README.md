@@ -318,7 +318,7 @@ authorization, as well as content-based security.
 
 If you like to learn by watching, here is [a short video on creating a mash-up services](https://youtu.be/S4SLEogusp4)
 
-# Earn Extra-points
+# For Extra Credit
 
 You should may have noticed at the end of the lab, if you did not include the **radius **and **zipcode** query parameters, you will receive an Unresolved variable error. You can add a conditional policy to the steps you defined in the API Proxy PreFlow to automatically detect if the query parameters were not passed.
 
