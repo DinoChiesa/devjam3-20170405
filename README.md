@@ -18,8 +18,7 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 8. [Traffic Management - Rate Limit APIs            ](./Labs/Core/08-Rate-Limit-APIs)
 9. [Transformation - HTTP header injection          ](./Labs/Core/09-HTTP-header-injection)
 10. [API Development - Composite APIs               ](./Labs/Core/10-Composite-APIs)
-11. [API Publishing - Packaging APIs                ](./Labs/Core/11---API-Publishing---Packaging-APIs)
-12. [JWT Verification                               ](./Labs/Core/12---JWT-Verification)
+11. [JWT Verification                               ](./Labs/Core/11-JWT-Verification)
 
 
 ### [Appendix Labs](./Labs/Appendix)
