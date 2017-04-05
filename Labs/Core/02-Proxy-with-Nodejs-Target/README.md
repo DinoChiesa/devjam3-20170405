@@ -87,7 +87,7 @@ A web browser (we suggest Google Chrome), and an internet connection.
    configuration we just imported, which means it is the same for
    everyone. Let's change it to something unique for each user.
 
-9. On the left-hand-side, select the "default" Proxy endpoint. Then update the Base Path. And click **Save**. 
+   On the left-hand-side, select the "default" Proxy endpoint. Then update the Base Path. And click **Save**. 
 
    ![image alt text](./media/change-the-basepath.gif)
 
