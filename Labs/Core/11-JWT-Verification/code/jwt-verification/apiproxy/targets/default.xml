@@ -1,0 +1,28 @@
+<TargetEndpoint name='default'>
+  <Description>default target endpoint</Description>
+  <FaultRules>
+    <FaultRule name='other-fault'>
+      <!-- This FaultRule always catches all uncaught faults. -->
+      <Step>
+        <Name>JS-MaybeFormatFault</Name>
+      </Step>
+    </FaultRule>
+  </FaultRules>
+
+  <Flows/>
+  <PreFlow name='PreFlow'>
+    <Request>
+    </Request>
+    <Response>
+    </Response>
+  </PreFlow>
+
+  <HTTPTargetConnection>
+    <SSLInfo>
+        <Enabled>true</Enabled>
+        <IgnoreValidationErrors>true</IgnoreValidationErrors>
+    </SSLInfo>
+    <Properties/>
+    <URL>https://dc-echo.herokuapp.com</URL>
+  </HTTPTargetConnection>
+</TargetEndpoint>

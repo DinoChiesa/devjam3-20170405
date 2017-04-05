@@ -1,0 +1,9 @@
+<AssignMessage name='AM-InjectHeaders'>
+  <AssignTo createNew='false' type='request'/>
+  <Set>
+    <Headers>
+      <Header name='JWT-Subject'>{jwt_subject}</Header>
+      <Header name='JWT-Issuer'>{jwt_issuer}</Header>
+    </Headers>
+  </Set>
+</AssignMessage>

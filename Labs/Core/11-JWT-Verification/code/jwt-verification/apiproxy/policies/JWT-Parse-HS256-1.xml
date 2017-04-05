@@ -1,0 +1,16 @@
+<JavaCallout name='JWT-Parse-HS256-1'>
+  <Properties>
+    <Property name="algorithm">HS256</Property>
+    <Property name="jwt">{request.formparam.jwt}</Property>
+    <Property name='secret-key'>{request.formparam.key}</Property>
+
+    <!-- verify these claims -->
+    <Property name="claim_sub">https://cloud.google.com/apigee-api-management</Property>
+    <Property name="claim_iss">Online JWT Builder</Property>
+    <Property name="claim_aud">https://apigee.com</Property>
+
+  </Properties>
+
+  <ClassName>com.apigee.callout.jwtsigned.JwtParserCallout</ClassName>
+  <ResourceURL>java://apigee-edge-callout-jwt-signed-1.0.5.jar</ResourceURL>
+</JavaCallout>

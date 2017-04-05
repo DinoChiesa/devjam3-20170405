@@ -1,0 +1,63 @@
+<ProxyEndpoint name='default'>
+  <Description>Default Proxy</Description>
+  <HTTPProxyConnection>
+    <BasePath>/devjam3/jwt-verification</BasePath>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name='PreFlow'>
+      <Request/>
+      <Response/>
+  </PreFlow>
+  <PostFlow name='PostFlow'>
+      <Request/>
+      <Response>
+        <Step><Name>AM-CleanResponseHeaders</Name></Step>
+      </Response>
+  </PostFlow>
+  <PostClientFlow name='PostFlow'>
+      <Request/>
+      <Response/>
+  </PostClientFlow>
+
+  <Flows>
+    <Flow name='test 1'>
+      <Description>verify a JWT issued by the online tool</Description>
+      <Request>
+        <Step>
+          <Name>RF-InvalidRequest</Name>
+          <Condition>(request.formparam.jwt = null) OR (request.formparam.jwt = "") OR (request.formparam.key = null) OR (request.formparam.key = "")</Condition>
+        </Step>
+        <Step><Name>JWT-Parse-HS256-1</Name></Step>
+
+        <Step>
+          <Condition>jwt_isValid != true</Condition>
+          <Name>RF-JwtNotValid</Name>
+        </Step>
+        <Step>
+          <Name>AM-InjectHeaders</Name>
+        </Step>
+      </Request>
+
+      <Response>
+      </Response>
+
+      <Condition>(proxy.pathsuffix MatchesPath "/t1") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name='InvokeRouteRule'>
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+
+</ProxyEndpoint>

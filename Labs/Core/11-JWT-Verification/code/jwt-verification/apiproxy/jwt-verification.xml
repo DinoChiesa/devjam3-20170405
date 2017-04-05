@@ -1,0 +1,12 @@
+<APIProxy revision='1' name='jwt-verification'>
+  <ConfigurationVersion minorVersion='0' majorVersion='4'/>
+  <CreatedAt>1491366969143</CreatedAt>
+  <CreatedBy>dchiesa</CreatedBy>
+  <Description></Description>
+  <DisplayName>jwt-verification</DisplayName>
+  <LastModifiedAt>1491368493631</LastModifiedAt>
+  <LastModifiedBy>orgAdmin</LastModifiedBy>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
+</APIProxy>

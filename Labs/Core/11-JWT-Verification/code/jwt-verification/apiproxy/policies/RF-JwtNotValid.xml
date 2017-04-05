@@ -1,0 +1,17 @@
+<RaiseFault name='RF-JwtNotValid'>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <FaultResponse>
+    <Set>
+      <Payload contentType='application/json'>{
+  "error" : {
+    "code" : 401.01,
+    "message" : "the jwt was rejected.",
+    "reason" : "{jwt_reason}"
+  }
+}
+</Payload>
+      <StatusCode>401</StatusCode>
+      <ReasonPhrase>Unauthorized</ReasonPhrase>
+    </Set>
+  </FaultResponse>
+</RaiseFault>
