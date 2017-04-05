@@ -17,7 +17,6 @@ You have a set of APIs that are consumed by trusted partners. You want to secure
 * Several well-defined scopes, including profile, email. Allowing the app to see this information about the user.
 * ways to provide hints to the authentication experience - like a login hint or a display suggestion
 
-
 Without OpenID Connect, apps that depend on OAuth2.0 tokens delivered via Authorization Code grants, and service providers that deliver tokens via Authorization Code grants, all work *similarly*, but not exactly the same. With OpenID Connect, there is a standard way for authentication to occur, a standard way to retrieve information about users. 
 
 Standardization of these things means apps can be developed without regard for the token dispensary. It means better interoperability and lower effort in building apps.
@@ -31,7 +30,7 @@ The result of an OpenID Connect can be an opaque OAuth token, which can be valid
 Either way, Apigee Edge quickly lets you deliver tokens with OpenID Connect, and then secure your APIs using pre-built OAuth policies. 
 
 
-# Background: What is the Authorization Code grant?
+# What is the Authorization Code grant?
 
 If you are not familiar with the Authorization Code grant in OAuth2.0, you should review the
 [OAuth2.0 specification - RFC 6749](https://tools.ietf.org/html/rfc6749). 
