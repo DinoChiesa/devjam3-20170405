@@ -294,7 +294,7 @@ authenticates both the client app and the end user of the app.
 7. After you consent, you should then see an authorization code in your browser.
    Copy that code.
 
-   In the normal flow, the user  then provides that code to the app, by pasting it into an app screen.
+   In the normal flow, the user then provides that code to the app, by pasting it into an app screen.
    We will simulate this by using the [Apigee REST Client](https://apigee-rest-client.appspot.com/) to invoke the appropriate request.
 
 8. Open a browser tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/)
@@ -303,6 +303,7 @@ authenticates both the client app and the end user of the app.
 
    * url endpoint: `https://{YOURORG}-test.apigee.net/devjam3/oauth2-ac/token`
    * method: POST
+   * Header parameters: none!
    * Body parameters:
       * `grant_type` : `authorization_code`
       * `client_id` : **{your client id}**
@@ -311,6 +312,9 @@ authenticates both the client app and the end user of the app.
       * `redirect_uri` : `http://dinochiesa.github.io/openid-connect/callback-handler.html`
       
    ![image alt text](./media/rest-client-post-token.png)
+
+   Here, you need to verify that you have CLEARED any Header parameters. There may be
+   some header params still in the web form, from your prior requests. Remove them. 
 
 9. Click **Send**. You should see a response like the following:
 
