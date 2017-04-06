@@ -28,6 +28,9 @@ The flow looks like this:
 ![image alt text](./media/screenshot-20170404-124037.png)
 
 
+In a 3-legged flow, Apigee Edge acts as the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and proxy authorized requests for protected resources on to the resource server. Apigee Edge delegates user authentication to the Identity Provider. 
+
+
 # Pre-requisites
 
 1. You have a login to Apigee Edge, and your organization includes the devjam oauth2-ac API proxy.  Your lab proctor can help with that, or you can deploy your own. See [the proxy bundle](../../../Resources/oauth2-ac).
