@@ -272,27 +272,42 @@ authenticates both the client app and the end user of the app.
    ```
 
    Paste the resulting URL into the address bar of the empty browser tab.
+   
 
-6. You should see a login screen, like this:
+6. When ytou click return in that address bar, you should see a login screen, like this:
 
    ![image alt text](./media/screenshot-20170404-115414.png)
 
-   This login screen is actually being served by Apigee Edge. In the normal case, the
-   login-and-consent user experience is somethiing the API provider exposes
-   independently. It will have branding corresponding to the API provider, and will
-   be a common experience that will apply to multiple, perhaps many, third party apps.
-   Every time a user authorizes a new third-party app, they'll go through the same
-   user login-and-consent experience.
+   If you look in the browser address bar, you may notice that it is a different address
+   than what you just pasted. This is because Apigee Edge served a 302 and redirected the
+   web browser to the configured login-and-consent form.
    
+   
+   *In this particular case*, this login screen is actually being served by Apigee
+   Edge. In the normal case, the login-and-consent user experience is somethiing the
+   API provider exposes independently. It will have branding corresponding to the
+   API provider, and will be a common experience that will apply to multiple,
+   perhaps many, third party apps.  Every time a user authorizes a new third-party
+   app, they'll go through the same user login-and-consent experience.
+
    
 6. Authenticate as a user, with one of the username/password pairs given to you
-   by your instructor.  dino@apigee.com / IloveAPIs might work.
+   by your instructor.  `dino@apigee.com` / `IloveAPIs` might work.
 
 6. After authenticating, you will then be asked to provide consent to the app.
    This interaction collects consent from the user that App X will have the requested scopes.
 
+   *In this particular login-and-consent experience*, the login (authentication) is
+   performed on one web page, and the consent is collected on a second web page.
+   This is not required. It may be that you want to present the login and the
+   consent on the same web form.  That's fine, no problem. With Apigee Edge,
+   designing and implementing this login-and-consent experience is the
+   responsibility of the API provider. Apigee can help, but this needs to be a
+   system the API Provider owns. 
+
 7. After you consent, you should then see an authorization code in your browser.
    Copy that code.
+
 
    In the normal flow, the user then provides that code to the app, by pasting it into an app screen.
    We will simulate this by using the [Apigee REST Client](https://apigee-rest-client.appspot.com/) to invoke the appropriate request.
