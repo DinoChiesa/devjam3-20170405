@@ -351,7 +351,7 @@ authenticates both the client app and the end user of the app.
 
 5. If you like, modify the token to be some other value, an invalid value. Click **Send** again.  You should see a 401 response.
 
-6. If you started a Tracing session in Apigee Edge, you might want to flip back to that browser tab to examine the transactions. 
+6. If earlier,you started a Tracing session in Apigee Edge for this API Proxy, you might want to flip back to that browser tab to examine the transactions. 
 
 
 
