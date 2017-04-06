@@ -181,9 +181,18 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 
 4. Click the blue **Save** button on the bottom right corner of the page, to save the API Product.
   
-  There is now a new, consumable unit of APIs available to external (consuming) developers. 
+   There is now a new, consumable unit of APIs available to external (consuming) developers. 
 
+   Side note: What is an OAuth scope?  A scope is something you can attach to an OAuth token that
+   stipulates or limits the authorization associated to the token.  For example, you could define
+   READ and WRITE scopes on a single resource.  Or, you could imagine a 2x2 matrix of {READ,WRITE} and {RESOURCE1,RESOURCE2}.
+   A user may wish to grant READ access to an app (let's say, ability to read a "favorites list"),
+   or WRITE access to the app (eg, ability to update the "favorites list"). For more on OAuth scopes,
+   please see [this article](https://www.oauth.com/oauth2-servers/scope/defining-scopes/).
 
+   Apigee Edge allows you to define any set of scopes that *can be* attached to a token, and allows
+   users the ability to restrict the set of scopes they grant to an app. 
+   
 
 ## Create the App 
 
