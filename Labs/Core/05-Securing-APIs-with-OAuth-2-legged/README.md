@@ -237,13 +237,15 @@ Now, obtain the consumer key and secret for the app, and encode them.
 
    There should be no spaces or newlines. 
 
-   Mac and Linux users, you can do this from the command prompt. open Terminal and type the following command
+   Mac and Linux users, you can do this from the command prompt. Open **Terminal** and type the following command:
 
    ```
     echo -n ABCDE:12345 | base64
    ```
 
    ...obviously replacing the value of your consumer key and secret as approprpiate.
+   
+   **Note**: For those who like to skim instructions (you know who you are). The -n in the above command is important. You need to include the -n.  Without -n, the echo command will append a newline, and the string that is base64-encoded will be different - the client_secret will include a newline.  So, *don't forget the -n*. 
 
 5. Save the resulting base64-encoded value. It will look something like this:
 
@@ -254,12 +256,12 @@ Now, obtain the consumer key and secret for the app, and encode them.
 
 ## Test the app
 
-Now, let’s test the deployment using the [REST Client](https://apigee-rest-client.appspot.com/).
+Now, let’s test the deployment using the [Apigee REST Client](https://apigee-rest-client.appspot.com/). (You can also use Postman or Paw or any other rest client tool that you know)
 
 
 1. In the Apigee UI, Navigate to Develop...Proxies...
 
-2. Select the API Proxy called "oauth2-cc" or similar.
+2. Select the API Proxy called "oauth2-cc" or similar. This is a proxy that was previously configured for you. Everyone will use this same proxy. (This is not a proxy you configured today). 
 
 3. From the Proxy overview panel, copy the URL for your OAuth API proxy. 
 
