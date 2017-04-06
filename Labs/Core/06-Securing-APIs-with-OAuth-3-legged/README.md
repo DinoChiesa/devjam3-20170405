@@ -331,12 +331,14 @@ authenticates both the client app and the end user of the app.
 1. In the Apigee UI, Navigate to Develop...Proxies....
 
 2. Select the API Proxy called *xxx*_oauth_protected (starting with your
-   initials). this is the API proxy that you created previously. It 
+   initials). This is the API proxy that you created previously. It 
    includes the VerifyAccessToken policy.
 
 3. In the proxy overview panel, copy the URL for this proxy.
 
   ![image alt text](./media/copy-the-proxy-url.png)
+   
+3. Optionally, you can turn on Tracing for this API Proxy.  
    
 4. In the browser tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/),
    paste in the proxy URL. Also specify:
@@ -346,6 +348,10 @@ authenticates both the client app and the end user of the app.
       * `Authorization` : `Bearer ` **{your access token}**
 
 5. Click **Send**.  You should see a 200 OK response.
+
+5. If you like, modify the token to be some other value, an invalid value. Click **Send** again.  You should see a 401 response.
+
+6. If you started a Tracing session in Apigee Edge, you might want to flip back to that browser tab to examine the transactions. 
 
 
 
