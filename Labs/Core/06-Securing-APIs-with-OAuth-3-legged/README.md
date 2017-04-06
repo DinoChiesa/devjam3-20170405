@@ -242,7 +242,7 @@ authenticates both the client app and the end user of the app.
 
 1. In the Apigee UI, Navigate to Develop...Proxies...
 
-2. Select the API Proxy called oauth2-ac (or similar).
+2. Select the API Proxy called oauth2-ac (or similar).  **Note**: this is not the proxy that you created earlier. This is a proxy that was configured for you; one proxy that is used by everyone.  
 
 3. From the Proxy overview panel, copy the URL for your OAuth API proxy. 
 
@@ -260,7 +260,7 @@ authenticates both the client app and the end user of the app.
 
    * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?
    * append these query params (separated by &):
-       * `client_id`: **{your client_id from above}**
+       * `client_id`: **{your "Consumer Key" from above}**
        * `redirect_uri`: http://dinochiesa.github.io/openid-connect/callback-handler.html
        * `response_type`: code
        * `scope`: A
