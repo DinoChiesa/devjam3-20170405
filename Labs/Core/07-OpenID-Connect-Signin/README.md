@@ -1,6 +1,6 @@
 # Implementing OpenID Connect with Apigee Edge
 
-*Duration : 30 mins*
+*Duration : 8 minutes if you completed 3-legged OAuth exercise. 30 minutes otherwise.*
 
 *Persona : API Team/Security*
 
@@ -228,9 +228,9 @@ Again, you need to do this only if you have not created an App for the
 
 Now, obtain the consumer key and secret for the app, and encode them. 
 
-1. In the apps list, select the app that you just created
+1. In the apps list, select the app that you just created. This is the one called **{your_initials}**-oauth-app .
 
-2. Click on the show button under Consumer Key and Consumer Secret.
+2. Click on the show button under Consumer Key and Consumer Secret. (The Consumer Key is sometimes called the Client ID, client_id) 
 
 3. Copy the values and store them somewhere safe.
 
@@ -262,8 +262,8 @@ authenticates both the client app and the end user of the app.
    * Edge org: **{your organization name}**
    * Edge env: **{your environment name}**, (probably `test`)
    * basepath: the basepath from the copied OIDC OAuth URL, above.
-   * client_id: the client id you saved, previously
-   * client_secret: the client secret you saved, previously
+   * client_id: **{the Consumer Key you saved, previously}**
+   * client_secret: **{the Consumer Secret you saved, previously}**
    * nonce: a nonce, a unique value per request
    * state: anything you like
    * callback URI: `https://dinochiesa.github.io/openid-connect/callback-handler.html`
@@ -291,7 +291,7 @@ authenticates both the client app and the end user of the app.
    Every time a user authorizes a new third-party app, they'll go through the same
    user login-and-consent experience.
 
-8. Authenticate.  The username / password of dino@apigee.com / IloveAPIs should work.
+8. Authenticate.  The username / password of `dino@apigee.com` / `IloveAPIs` should work.
 
 9. You should then see a consent form. It notes the scopes that the app is asking for.
    Agree to give consent.

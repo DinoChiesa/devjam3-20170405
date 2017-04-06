@@ -228,9 +228,9 @@ Again, you need to do this only if you have not created an App for the
 
 Now, obtain the consumer key and secret for the app, and encode them. 
 
-1. In the apps list, select the app that you just created
+1. In the apps list, select the app that you just created.
 
-2. Click on the show button under Consumer Key and Consumer Secret.
+2. Click on the show button under Consumer Key and Consumer Secret. The "Consumer Key" is sometimes referred to as the "Client ID" or client_id. 
 
 3. Copy the values and store them somewhere safe.
 
@@ -321,8 +321,8 @@ authenticates both the client app and the end user of the app.
    * Header parameters: none!
    * Body parameters:
       * `grant_type` : `authorization_code`
-      * `client_id` : **{your client id}**
-      * `client_secret` : **{your client secret}**
+      * `client_id` : **{your "Consumer Key" from above - in clear text}**
+      * `client_secret` : **{your "Consumer Secret" - in clear text}**
       * `code` : **{the code you received after consent}**
       * `redirect_uri` : `http://dinochiesa.github.io/openid-connect/callback-handler.html`
       
@@ -366,7 +366,7 @@ authenticates both the client app and the end user of the app.
 
 5. If you like, modify the token to be some other value, an invalid value. Click **Send** again.  You should see a 401 response.
 
-6. If earlier,you started a Tracing session in Apigee Edge for this API Proxy, you might want to flip back to that browser tab to examine the transactions. 
+6. If earlier, you started a Tracing session in Apigee Edge for this API Proxy, you might want to flip back to that browser tab to examine the transactions. 
 
 
 
