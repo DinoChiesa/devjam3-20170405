@@ -48,7 +48,7 @@ A web browser (we suggest Google Chrome), and an internet connection.
 
 6. Specify the name for the new proxy, using your initials..., and click **Next**
 
-   n![image alt text](./media/use-your-initials-click-next.png)
+   ![image alt text](./media/use-your-initials-click-next.png)
 
 7. then click **Build**
 
