@@ -46,7 +46,7 @@ exercise, you must create those three things now. Do so, like this:
 
 1. First, download [this zip file](./code/apiproxy_xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
 
-2. Go to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
+2. Open a browser tab to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
 3. Select **Develop → API Proxies** in the side navigation menu
 
@@ -411,7 +411,7 @@ In this lab you learned how to secure your API using a three legged OAuth, obtai
 
 * [Search and Revoke tokens](https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html)
 
-# Rate this lab
+# Rate this Exercise
 
-How did you link this lab? Rate [here](https://drive.google.com/open?id=19YS_51mBsilVeb3FUhEGs8E6GaMhtoKJf7dulp0oUq0).
+How did you like this exercise? Rate [here](https://drive.google.com/open?id=19YS_51mBsilVeb3FUhEGs8E6GaMhtoKJf7dulp0oUq0).
 
