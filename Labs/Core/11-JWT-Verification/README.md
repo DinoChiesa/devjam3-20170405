@@ -149,6 +149,11 @@ Because Apigee Edge can verify JWT, you can construct your API Proxies to author
    You should see a successful response.
    Apigee Edge is verifying the JWT that you generated externally. 
 
+5. Modify the key parameter to be something different.  Again, click **Send**
+
+   You should see a 401 response.
+   Apigee Edge is correctly telling you that the JWT could not be verified with that key.
+
 
 # For Extra Credit
 
