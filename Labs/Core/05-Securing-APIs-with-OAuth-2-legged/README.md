@@ -310,7 +310,7 @@ Now, let’s test the deployment using the [Apigee REST Client](https://apigee-r
 
 # Lab Video
 
-If you are lazy and don’t want to implement this use case, it’s OK. You can watch this short video to see how to implement 2 legged OAuth on Apigee Edge [https://youtu.be/0pah5J7yQTQ](https://youtu.be/0pah5J7yQTQ) 
+If you don’t want to implement this use case,  you can watch [this short video](https://youtu.be/0pah5J7yQTQ) to see how to implement 2-legged OAuth on Apigee Edge.
 
 # Earn Extra-points
 
@@ -333,15 +333,15 @@ In this lab you learned how to secure your API using a two legged OAuth by using
 
 # References
 
-* Link to Apigee docs page
+* Apigee documentation
 
-  * OAuth 2.0: Configuring a new API proxy [http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration ](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
+  * [OAuth 2.0: Configuring a new API proxy](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
 
-  * Secure an API with OAuth [http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials](http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials) 
+  * [Secure an API with OAuth](http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials) 
 
-* [Link](https://community.apigee.com/topics/oauth+2.0.html) to Community posts and articles with topic as "OAuth 2.0" 
+* [Community posts and articles](https://community.apigee.com/topics/oauth+2.0.html) with topic as "OAuth 2.0" 
 
-* Search and Revoke tokens - [https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html](https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html)
+* [Search and Revoke tokens](https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html)
 
 # Rate this lab
 
