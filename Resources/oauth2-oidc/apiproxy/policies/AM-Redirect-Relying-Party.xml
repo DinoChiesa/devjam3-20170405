@@ -1,5 +1,4 @@
 <AssignMessage name="AM-Redirect-Relying-Party">
-  <DisplayName>Assign: Redirect to Relying Party</DisplayName>
   <Remove>
     <Payload/>
   </Remove>

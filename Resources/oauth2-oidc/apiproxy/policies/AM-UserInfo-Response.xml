@@ -1,5 +1,4 @@
 <AssignMessage name="AM-UserInfo-Response">
-    <DisplayName>Assign: UserInfo Response</DisplayName>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="true" transport="http" type="response"/>
     <Set>

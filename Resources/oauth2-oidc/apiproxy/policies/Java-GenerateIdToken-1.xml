@@ -1,5 +1,4 @@
 <JavaCallout name='Java-GenerateIdToken-1'>
-  <DisplayName>Java-GenerateIdToken-1</DisplayName>
   <Properties>
     <Property name="algorithm">HS256</Property>
     <!--

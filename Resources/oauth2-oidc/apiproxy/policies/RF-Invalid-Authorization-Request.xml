@@ -1,5 +1,4 @@
 <RaiseFault name="RF-Invalid-Authorization-Request">
-  <DisplayName>Error Response: Authorization Request</DisplayName>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <FaultResponse>
     <Set>

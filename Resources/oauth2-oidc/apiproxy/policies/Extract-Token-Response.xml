@@ -1,6 +1,4 @@
 <ExtractVariables name="Extract-Token-Response">
-  <DisplayName>Extract: Token Response</DisplayName>
-  <Properties/>
   <Source>response</Source>
   <JSONPayload>
     <Variable name="issued_at">

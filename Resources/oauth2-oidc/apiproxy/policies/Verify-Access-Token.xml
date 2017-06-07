@@ -1,5 +1,4 @@
 <OAuthV2 name="Verify-Access-Token">
-    <DisplayName>Security: Verify Access Token</DisplayName>
     <ExternalAuthorization>false</ExternalAuthorization>
     <Operation>VerifyAccessToken</Operation>
     <SupportedGrantTypes/>

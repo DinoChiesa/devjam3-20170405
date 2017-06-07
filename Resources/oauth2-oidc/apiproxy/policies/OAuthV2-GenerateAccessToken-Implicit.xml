@@ -1,5 +1,4 @@
 <OAuthV2 name="OAuthV2-GenerateAccessToken-Implicit">
-  <DisplayName>OAuthV2: Generate Access Token Implicit</DisplayName>
   <ExternalAuthorization>false</ExternalAuthorization>
   <Operation>GenerateAccessTokenImplicitGrant</Operation>
   <SupportedGrantTypes/>

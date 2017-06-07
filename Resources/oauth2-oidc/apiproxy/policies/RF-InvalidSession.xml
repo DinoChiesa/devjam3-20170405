@@ -1,5 +1,4 @@
 <RaiseFault name="RF-InvalidSession">
-  <DisplayName>Error Response: Invalid Session</DisplayName>
   <FaultResponse>
     <Set>
       <Headers>

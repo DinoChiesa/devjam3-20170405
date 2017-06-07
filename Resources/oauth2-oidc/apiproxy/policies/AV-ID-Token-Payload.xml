@@ -1,5 +1,4 @@
 <AssignMessage name="AV-ID-Token-Payload">
-  <DisplayName>Assign: ID Token Payload: authorization_code flow</DisplayName>
   <AssignVariable>
     <Name>aud</Name>
     <Ref>apigee.client_id</Ref>

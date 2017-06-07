@@ -1,5 +1,4 @@
 <RaiseFault name='RF-InvalidRequest'>
-  <DisplayName>RF-InvalidRequest</DisplayName>
   <Description>Invalid Request</Description>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <FaultResponse>

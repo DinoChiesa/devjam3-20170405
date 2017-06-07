@@ -1,5 +1,4 @@
 <AssignMessage name="AV-InvalidNonce">
-  <DisplayName>Assign: Replay Attack Error</DisplayName>
   <AssignVariable>
     <Name>error_type</Name>
     <Value>invalid_nonce</Value>

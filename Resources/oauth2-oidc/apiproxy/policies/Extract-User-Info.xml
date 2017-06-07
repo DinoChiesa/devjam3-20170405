@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ExtractVariables async="false" continueOnError="false" enabled="true" name="Extract-User-Info">
-    <DisplayName>Extract: User Info</DisplayName>
-    <FaultRules/>
-    <Properties/>
+<ExtractVariables name="Extract-User-Info">
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <JSONPayload>
         <Variable name="user_id">
@@ -14,7 +10,7 @@
         <Variable name="given_name">
             <JSONPath>$.entities[0].firstname</JSONPath>
         </Variable>
-      	<Variable name="email">
+        <Variable name="email">
             <JSONPath>$.entities[0].email</JSONPath>
         </Variable>
         <Variable name="family_name">
@@ -23,7 +19,7 @@
         <Variable name="name">
             <JSONPath>$.entities[0].name</JSONPath>
         </Variable>
-      	<Variable name="gender">
+        <Variable name="gender">
             <JSONPath>$.entities[0].gender</JSONPath>
         </Variable>
         <Variable name="picture">

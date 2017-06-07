@@ -1,5 +1,4 @@
 <LookupCache name="CL-AuthorizationSession">
-  <DisplayName>Lookup Cache: Application Session</DisplayName>
   <CacheResource>cache1</CacheResource>
   <Scope>Global</Scope>
   <AssignTo>session.Payload</AssignTo>

@@ -1,5 +1,4 @@
 <AssignMessage name="AM-Redirect-Login-Application">
-  <DisplayName>Redirect to Login Application</DisplayName>
   <Remove>
     <Payload/>
   </Remove>

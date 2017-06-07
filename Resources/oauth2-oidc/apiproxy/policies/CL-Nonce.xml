@@ -1,5 +1,4 @@
 <LookupCache name="CL-Nonce">
-  <DisplayName>Lookup Cache: Nonce Replay Attack</DisplayName>
   <CacheResource>cache1</CacheResource>
   <AssignTo>nonce_cache_value</AssignTo>
   <Scope>Global</Scope>

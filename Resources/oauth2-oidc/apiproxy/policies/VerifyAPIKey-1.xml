@@ -1,5 +1,4 @@
 <VerifyAPIKey name='VerifyAPIKey-1'>
-  <DisplayName>Verify API Key</DisplayName>
   <APIKey ref='request.header.apikey'></APIKey>
   <!--
       Variables populated by this policy: verifyapikey.{policy_name}.

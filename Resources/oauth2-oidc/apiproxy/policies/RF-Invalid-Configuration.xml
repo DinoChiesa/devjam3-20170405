@@ -1,5 +1,4 @@
 <RaiseFault name="RF-Invalid-Configuration">
-  <DisplayName>Error Response: Invalid Configuration</DisplayName>
   <FaultResponse>
     <Set>
       <Headers>

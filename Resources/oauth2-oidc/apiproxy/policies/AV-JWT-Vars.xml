@@ -1,5 +1,4 @@
 <AssignMessage name="AV-JWT-Vars">
-  <DisplayName>Assign: ID Token Payload</DisplayName>
   <AssignVariable>
     <Name>aud</Name>
     <Ref>client_id</Ref>

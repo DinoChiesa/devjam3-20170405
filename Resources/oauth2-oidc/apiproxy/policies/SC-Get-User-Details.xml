@@ -1,6 +1,4 @@
 <ServiceCallout name="SC-Get-User-Details">
-    <DisplayName>SC: Get User Details</DisplayName>
-    <Properties/>
     <Request clearPayload="true">
        <Set>
          <QueryParams>

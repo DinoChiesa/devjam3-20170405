@@ -1,5 +1,4 @@
 <RaiseFault name="RF-Cors-Preflight">
-    <DisplayName>RF-Cors-Preflight</DisplayName>
     <FaultResponse>
         <Set>
             <Headers>
