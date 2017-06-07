@@ -9,8 +9,7 @@ The tokens dispensed here are opaque OAuth 2.0 bearer tokens.
 
 1. Import the proxy into any Apigee Edge organization. You can use any
 script or tool that does that - like [the Powershell module](https://www.powershellgallery.com/packages/PSApigeeEdge)
-or [apigeetool](https://github.com/apigee/apigeetool-node) or [pushapi](https://github.com/carloseberhardt/apiploy), etc. ... Or, you can do it manually: zip the apiproxy directory, 
- then use the mgmt UI to import and deploy the zipped bundle.
+or [apigeetool](https://github.com/apigee/apigeetool-node) or [pushapi](https://github.com/carloseberhardt/apiploy), etc. ... Or, you can do it manually: zip the apiproxy directory, then use the mgmt UI to import and deploy the zipped bundle.
 
 2. Create an API product. The API product normally wraps API proxies with metadata.
 For the purposes of this example, your API product need not contain any API proxies.  (This is because we do not actually _verify_ the token in this example.  We only issue the token.)
