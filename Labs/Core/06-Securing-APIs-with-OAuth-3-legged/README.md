@@ -178,14 +178,14 @@ flow, you do not have to complete this set of steps.
         * Section: API Proxies
 
             * Click the **+API Proxy** button
-            
+
               ![image alt text](./media/add-a-proxy-to-a-product.png)
 
             * Select the API Proxy you just created.
 
 4. Click the blue **Save** button on the bottom right corner of the page, to save the API Product.
-  
-   There is now a new, consumable unit of APIs available to external (consuming) developers. 
+
+   There is now a new, consumable unit of APIs available to external (consuming) developers.
 
    Side note: What is an OAuth scope?  A scope is something you can attach to an OAuth token that
    stipulates or limits the authorization associated to the token.  For example, you could define
@@ -195,7 +195,7 @@ flow, you do not have to complete this set of steps.
    please see [this article](https://www.oauth.com/oauth2-servers/scope/defining-scopes/).
 
    Apigee Edge allows you to define any set of scopes that *can be* attached to a token, and allows
-   users the ability to restrict the set of scopes they grant to an app. 
+   users the ability to restrict the set of scopes they grant to an app.
 
 
 ## Third, Create the App
@@ -226,11 +226,11 @@ Again, you need to do this only if you have not created an App for the
 
 ## Get the client credentials
 
-Now, obtain the consumer key and secret for the app, and encode them. 
+Now, obtain the consumer key and secret for the app, and encode them.
 
 1. In the apps list, select the app that you just created.
 
-2. Click on the show button under Consumer Key and Consumer Secret. The "Consumer Key" is sometimes referred to as the "Client ID" or client_id. 
+2. Click on the show button under Consumer Key and Consumer Secret. The "Consumer Key" is sometimes referred to as the "Client ID" or client_id.
 
 3. Copy the values and store them somewhere safe.
 
@@ -242,9 +242,9 @@ authenticates both the client app and the end user of the app.
 
 1. In the Apigee UI, Navigate to Develop...Proxies...
 
-2. Select the API Proxy called oauth2-ac (or similar).  **Note**: this is not the proxy that you created earlier. This is a proxy that was configured for you; one proxy that is used by everyone.  
+2. Select the API Proxy called oauth2-ac (or similar).  **Note**: this is not the proxy that you created earlier. This is a proxy that was configured for you; one proxy that is used by everyone.
 
-3. From the Proxy overview panel, copy the URL for your OAuth API proxy. 
+3. From the Proxy overview panel, copy the URL for your OAuth API proxy.
 
    ![image alt text](./media/copy-the-oauth2-ac-url.png)
 
@@ -252,7 +252,7 @@ authenticates both the client app and the end user of the app.
    OAuth grant type that this token-dispensing proxy supports.
 
 4. Click the Trace tab. Start a Trace session on the OAuth proxy. Later, you
-   can view this session to see the message exchanges. 
+   can view this session to see the message exchanges.
 
 5. Open a new, empty browser tab.
 
@@ -272,17 +272,16 @@ authenticates both the client app and the end user of the app.
    ```
 
    Paste the resulting URL into the address bar of the empty browser tab.
-   
 
-6. When ytou click return in that address bar, you should see a login screen, like this:
+
+6. When you click return in that address bar, you should see a login screen, like this:
 
    ![image alt text](./media/screenshot-20170404-115414.png)
 
    If you look in the browser address bar, you may notice that it is a different address
    than what you just pasted. This is because Apigee Edge served a 302 and redirected the
    web browser to the configured login-and-consent form.
-   
-   
+
    *In this particular case*, this login screen is actually being served by Apigee
    Edge. In the normal case, the login-and-consent user experience is somethiing the
    API provider exposes independently. It will have branding corresponding to the
@@ -290,7 +289,7 @@ authenticates both the client app and the end user of the app.
    perhaps many, third party apps.  Every time a user authorizes a new third-party
    app, they'll go through the same user login-and-consent experience.
 
-   
+
 6. Authenticate as a user, with one of the username/password pairs given to you
    by your instructor.  `dino@apigee.com` / `IloveAPIs` might work.
 
@@ -308,7 +307,6 @@ authenticates both the client app and the end user of the app.
 7. After you consent, you should then see an authorization code in your browser.
    Copy that code.
 
-
    In the normal flow, the user then provides that code to the app, by pasting it into an app screen.
    We will simulate this by using the [Apigee REST Client](https://apigee-rest-client.appspot.com/) to invoke the appropriate request.
 
@@ -325,17 +323,17 @@ authenticates both the client app and the end user of the app.
       * `client_secret` : **{your "Consumer Secret" - in clear text}**
       * `code` : **{the code you received after consent}**
       * `redirect_uri` : `http://dinochiesa.github.io/openid-connect/callback-handler.html`
-      
+
    ![image alt text](./media/rest-client-post-token.png)
 
    Here, you need to verify that you have CLEARED any Header parameters. There may be
-   some header params still in the web form, from your prior requests. Remove them. 
+   some header params still in the web form, from your prior requests. Remove them.
 
 9. Click **Send**. You should see a response like the following:
 
    ![image alt text](./media/access_token_response.png)
 
-9. Copy the access_token value. 
+9. Copy the access_token value.
 
 9. Flip back to the Apigee UI.  Examine the trace UI, to see the various requests.
    Note: You may see requests from other developers working on the same exercise.

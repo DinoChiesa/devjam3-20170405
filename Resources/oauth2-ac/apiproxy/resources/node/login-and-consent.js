@@ -2,7 +2,7 @@
 // ------------------------------------------------------------------
 //
 // created: Mon Apr  3 21:02:40 2017
-// last saved: <2017-April-04 14:14:12>
+// last saved: <2017-August-30 18:43:50>
 //
 // ------------------------------------------------------------------
 //
@@ -79,7 +79,7 @@ function postAuthFormData(userInfo) {
   return copy;
 }
 
-function postAuthorization (ctx) {
+function requestAuthCode(ctx) {
   var deferred = q.defer(),
       options = {
         uri: ctx.fullUrl.replace('login-and-consent', 'oauth2-ac') +
@@ -92,16 +92,16 @@ function postAuthorization (ctx) {
         form : postAuthFormData(ctx.userInfo)
       };
 
-  console.log('postAuthorization, context:' + JSON.stringify(ctx, null, 2));
-  console.log('postAuthorization, request options:' + JSON.stringify(options, null, 2));
+  console.log('requestAuthCode, context:' + JSON.stringify(ctx, null, 2));
+  console.log('requestAuthCode, request options:' + JSON.stringify(options, null, 2));
 
   request(options, function(error, response, body) {
     if (error) {
-      console.log('Error: ' + error);
+      console.log('Error from /authcode: ' + error);
       deferred.resolve(ctx);
       return;
     }
-    console.log('auth response: ' + response.statusCode);
+    console.log('/authcode response: ' + response.statusCode);
     if (response.statusCode == 302) {
       try {
         ctx.authRedirLoc = response.headers.location;
@@ -112,7 +112,10 @@ function postAuthorization (ctx) {
       }
     }
     else {
+      console.log('Non-302 response from /authcode: ' + response.statusCode);
       console.log('auth, statusCode = ' + response.statusCode);
+      ctx.authStatusCode = response.statusCode;
+      ctx.authResponseBody = (typeof body == "string") ? JSON.parse(body) : body;
     }
     deferred.resolve(ctx);
   });
@@ -261,9 +264,7 @@ app.post('/validate', function (request, response) {
   console.log('BODY: ' + JSON.stringify(request.body));
   if ( ! request.body.redirect_uri) {
     response.status(400);
-    response.render('error', {
-      errorMessage : "Bad request"
-    });
+    response.render('error', { errorMessage : 'Bad request - missing redirect_uri' });
     return;
   }
 
@@ -332,22 +333,22 @@ app.post('/validate', function (request, response) {
 
       // else, a-ok.
       // This app got a 200 ok from the user Authentication service.
-      response.status(200);
-      response.render('consent', {
-        action        : 'Consent',
-        sessionid     : ctx.sessionid,
-        postback_url  : 'grantConsent',
-        client_id     : request.body.client_id,
-        response_type : request.body.response_type,
-        req_scope     : request.body.requestedScopes,
-        redirect_uri  : request.body.redirect_uri,
-        req_state     : request.body.clientState,
-        appName       : request.body.appName,
-        appLogoUrl    : request.body.appLogoUrl || 'http://i.imgur.com/6DidtRS.png',
-        display       : request.body.display,
-        login_hint    : request.body.login_hint,
-        userProfile   : base64Encode(JSON.stringify(ctx.userInfo))
-      });
+      response.status(200)
+        .render('consent', {
+          action        : 'Consent',
+          sessionid     : ctx.sessionid,
+          postback_url  : 'grantConsent',
+          client_id     : request.body.client_id,
+          response_type : request.body.response_type,
+          req_scope     : request.body.requestedScopes,
+          redirect_uri  : request.body.redirect_uri,
+          req_state     : request.body.clientState,
+          appName       : request.body.appName,
+          appLogoUrl    : request.body.appLogoUrl || 'http://i.imgur.com/6DidtRS.png',
+          display       : request.body.display,
+          login_hint    : request.body.login_hint,
+          userProfile   : base64Encode(JSON.stringify(ctx.userInfo))
+        });
 
       return ctx;
     })
@@ -359,8 +360,8 @@ app.post('/validate', function (request, response) {
 app.post('/grantConsent', function (request, response) {
   console.log('BODY: ' + JSON.stringify(request.body));
   if ( ! request.body.redirect_uri) {
-    response.status(400);
-    response.render('error', { errorMessage : 'Bad request' });
+    response.status(400)
+      .render('error', { errorMessage : 'Bad request - missing redirect_uri' });
     return;
   }
 
@@ -368,9 +369,9 @@ app.post('/grantConsent', function (request, response) {
     console.log('user has declined to consent');
     // ! request.body.redirect_uri.startsWith('oob') &&
     // ! request.body.redirect_uri.startsWith('urn:ietf:wg:oauth:2.0:oob')
-    response.status(302);
-    response.header('Location', request.body.redirect_uri + '?error=access_denied');
-    response.end();
+    response.status(302)
+      .header('Location', request.body.redirect_uri + '?error=access_denied')
+      .end();
     return;
   }
 
@@ -380,22 +381,27 @@ app.post('/grantConsent', function (request, response) {
         fullUrl : externalUrl(request)
   };
   q(context)
-    .then(postAuthorization)
+    .then(requestAuthCode)
     .then(function(ctx){
-      response.status(302);
       if (!ctx.authRedirLoc) {
-        // the post did not succeed
-        response.header('Location', request.body.redirect_uri + '?error=server_error');
+        console.log('the request-for-code did not succeed (' + ctx.authStatusCode + ')');
+        response.status(ctx.authStatusCode || 400);
+        //console.log('ctx: ' + JSON.stringify(ctx));
+        response.render('error', {
+           errorMessage : (ctx.authResponseBody && ctx.authResponseBody.Error) ? ctx.authResponseBody.Error :
+            "Bad request - cannot redirect"
+        });
       }
       else {
-        response.header('Location', ctx.authRedirLoc);
+        response.status(302)
+                .header('Location', ctx.authRedirLoc);
       }
+
       response.end();
       return ctx;
     })
     .done(function() {}, logError);
 });
-
 
 
 app.get('/*', function (request, response) {
