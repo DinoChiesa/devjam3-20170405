@@ -21,7 +21,7 @@
 
     <!-- standard claims -->
     <Property name="subject">{sub}</Property>
-    <Property name="issuer">{client.scheme}://{request.header.host}</Property>
+    <Property name="issuer">{client.scheme}://{request.header.host}{proxy.basepath}</Property>
     <Property name="audience">{aud}</Property>
     <Property name="expiresIn">{jwt_expires_in}</Property> <!-- in seconds -->
 
