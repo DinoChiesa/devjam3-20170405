@@ -1,7 +1,7 @@
 <ProxyEndpoint name="userinfo">
     <Description/>
     <HTTPProxyConnection>
-        <BasePath>/devjam3-oidc/userinfo</BasePath>
+        <BasePath>/apijam-oidc/userinfo</BasePath>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <PreFlow name="PreFlow">

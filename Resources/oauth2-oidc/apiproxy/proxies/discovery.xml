@@ -1,6 +1,6 @@
 <ProxyEndpoint name="discovery">
     <HTTPProxyConnection>
-        <BasePath>/devjam3-oidc/.well-known/openid-configuration</BasePath>
+        <BasePath>/apijam-oidc/.well-known/openid-configuration</BasePath>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <Description>OpenID Connect Discovery endpoint</Description>

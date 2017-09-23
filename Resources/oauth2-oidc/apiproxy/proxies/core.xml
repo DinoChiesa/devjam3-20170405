@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="core">
   <HTTPProxyConnection>
-    <BasePath>/devjam3-oidc/oauth2</BasePath>
+    <BasePath>/apijam-oidc/oauth2</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
   <Description/>
@@ -60,7 +60,10 @@
       </Request>
       <Response>
         <Step><Name>Extract-Token-Response</Name></Step>
-        <Step><Name>Get-Application-Attributes</Name></Step>
+        <Step>
+          <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
+          <Name>Get-Application-Attributes</Name>
+        </Step>
 
         <!-- do the following three steps only if we want an id_token -->
         <Step>
@@ -75,6 +78,7 @@
           <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
           <Name>AM-Token-Response</Name>
         </Step>
+        <Step><Name>AM-CORS</Name></Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST")</Condition>
     </Flow>

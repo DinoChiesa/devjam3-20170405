@@ -1,7 +1,7 @@
 <ProxyEndpoint name='session'>
   <Description>OIDC Session Proxy</Description>
   <HTTPProxyConnection>
-    <BasePath>/devjam3-oidc/session</BasePath>
+    <BasePath>/apijam-oidc/session</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
 

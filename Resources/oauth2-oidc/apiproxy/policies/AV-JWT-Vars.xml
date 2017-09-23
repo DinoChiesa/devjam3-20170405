@@ -51,6 +51,10 @@
     <Name>token_type</Name>
     <Value>Bearer</Value>
   </AssignVariable>
+  <AssignVariable>
+    <Name>roles</Name>
+    <Ref>request.formparam.roles</Ref>
+  </AssignVariable>
   <!-- overwrites scope retrieved from session -->
   <AssignVariable>
     <Name>scope</Name>

@@ -3,8 +3,9 @@
     <Property name="algorithm">HS256</Property>
     <!--
 
-     NB: The shared-secret must be at least 256-bits in length = 32 ASCII chars
-     . The client_secret in Edge is typically 16 characters.  Therefore, to reach
+     NB: The shared-secret must be at least 256-bits in length = 32
+     ASCII chars.
+     The client_secret in Edge is typically 16 characters.  Therefore, to reach
      the 32-char limit, we include some fixed text here. NOT RECOMMENDED FOR REAL
      SYSTEMS.  In a real system we recommend that you use RS256, with Public/Private
      key signing.
@@ -26,6 +27,7 @@
 
     <!-- custom claims -->
     <Property name="claim_nonce">{nonce}</Property>
+    <Property name='claim_roles'>{roles}</Property>
 
   </Properties>
 
