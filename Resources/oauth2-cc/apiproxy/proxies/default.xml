@@ -31,7 +31,7 @@
 
           curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
             -u ${client_id}:${client_secret} \
-            'https://nordstrom-eval1-test.apigee.net/v1/oauth2-pwd-cc/token'\
+            'https://ORG-ENV.apigee.net/devjam3/oauth2-cc/token'\
             -d 'grant_type=password&username=tanyap&password=Secret123'
 
           The resulting token will have an expiry, and a set of roles,
