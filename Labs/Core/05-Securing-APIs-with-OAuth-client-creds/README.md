@@ -1,4 +1,4 @@
-# API Security : Securing APIs with OAuth (2-legged) 
+# API Security : Securing APIs with OAuth (2-legged)
 
 *Duration : 30 mins*
 
@@ -6,32 +6,32 @@
 
 # Use case
 
-You have a set of APIs that are consumed by trusted partners. You want to secure those APIs using a two legged OAuth. 
+You have a set of APIs that are consumed by trusted partners. You want to secure those APIs using a two legged OAuth.
 
 # How can Apigee Edge help?
 
 [The OAuth specification](https://tools.ietf.org/html/rfc6749) defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and, when using 3-legged OAuth, to kick off the authorization code flow.
 
-Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. Apigee Edge OAuth policies 
+Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. Apigee Edge OAuth policies
 can be used to implement the standard OAuth endpoints, and lets you easily secure your APIs using a simply policy to verify tokens.
 
 # Background: What's a token?
 
-An OAuth token is a digital analog of an old-school subway token: it's a "ticket to ride". The holder of an OAuth token (a client application) can present it to the token verifier (typically a gateway or a server application), and if the token is valid, then the token verifier will treat the request as valid. 
+An OAuth token is a digital analog of an old-school subway token: it's a "ticket to ride". The holder of an OAuth token (a client application) can present it to the token verifier (typically a gateway or a server application), and if the token is valid, then the token verifier will treat the request as valid.
 
-When you use Apigee Edge OAuth to protect your APIs, Apigee Edge acts as the token issuer and the token verifier. A 2-legged OAuth flow, also known as a client credentials grant type, looks like this: 
+When you use Apigee Edge OAuth to protect your APIs, Apigee Edge acts as the token issuer and the token verifier. The flow for an app that uses the client-credentials grant type (a form of 2-legged OAuth), looks like this:
 
-![image alt text](./media/2-legged_OAuth_flow.png)
+![image alt text](./media/client_credentials_OAuth_flow.png)
 
-Most typically, the client_credentials grant type is used when the app is also the resource owner. For example, an app may need to access a backend cloud-based storage service to store and retrieve data that it uses to perform its work, rather than data specifically owned by the end user. Imagine a mobile app that allows customers to place orders. The client credentials might be used to protect data that is not customer specific - like a query on the product catalog, or even populating an anonymously-held "shopping cart". 
+Most typically, the client_credentials grant type is used when the app itself is also the resource owner, and there is no user authentication required. For example, an app may need to access a backend cloud-based storage service to store and retrieve data that it uses to perform its work, rather than data specifically owned by the end user. Imagine a mobile app that allows customers to place orders. The client credentials might be used to protect data that is not customer specific - like a query on the product catalog, or even populating an anonymously-held "shopping cart".
 
-As the name indicates, a client-credentials grant will verify only the credentials of the client, or the app itself. A Client credentials grant does not verify user credentials. 
+As the name indicates, a client-credentials grant will verify only the credentials of the client, or the app itself. A Client credentials grant does not verify user credentials.
 
-When using the Client credentials grant type, Apigee Edge is the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and proxy authorized requests for protected resources on to the resource server. 
+When using the Client credentials grant type, Apigee Edge is the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and proxy authorized requests for protected resources on to the resource server.
 
 # Pre-requisites
 
-* You have an OAuth API proxy in Apigee Edge. This is API proxy is created by default when you provision an Edge instance on Cloud. If this does not exist, let your instructor know. 
+* You have an OAuth API proxy in Apigee Edge. This is API proxy is created by default when you provision an Edge instance on Cloud. If this does not exist, let your instructor know.
 
 * You have an API Proxy that is not currently secured.  If you do not have an API Proxy available for this lab, revisit the lab *API Design : Create a Reverse Proxy with OpenAPI Specification*.
 
@@ -39,7 +39,7 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
 # Instructions
 
-## Create the API Proxy 
+## Create the API Proxy
 
 1. First, download [this zip file](./code/apiproxy_xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
 
@@ -65,15 +65,15 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
    ![image alt text](./media/click-build.png)
 
-2. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
+2. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor.
 
-2. You should see the proxy **Overview** screen. 
+2. You should see the proxy **Overview** screen.
 
 2. Click the **Develop** tab.
 
    ![image alt text](./media/click-the-develop-tab.png)
 
-   This shows you the contents of the API Proxy definition. This is just a pass-through proxy. There are no logic steps on this proxy, yet. 
+   This shows you the contents of the API Proxy definition. This is just a pass-through proxy. There are no logic steps on this proxy, yet.
 
 3. Select the Proxy name and Update the display name with your initials.
 
@@ -106,7 +106,7 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
    </OAuthV2>
    ```
 
-   It should look like this: 
+   It should look like this:
 
    ![image alt text](./media/should-look-like-this.png)
 
@@ -143,9 +143,9 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 2. Use the Deployment dropdown to deploy it on the **test** environment.
 
    ![image alt text](./media/deploy-on-test.gif)
-  
 
-## Create the API Product 
+
+## Create the API Product
 
 To test the API Proxy, we need to expose that proxy via an API Product, and generate a new developer app. First, the product.
 
@@ -174,14 +174,14 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
         * Section: API Proxies
 
             * Click the **+API Proxy** button
-            
+
               ![image alt text](./media/add-a-proxy-to-a-product.png)
 
             * Select the API Proxy you just created.
 
 4. Click the blue **Save** button on the bottom right corner of the page, to save the API Product.
-  
-   There is now a new, consumable unit of APIs available to external (consuming) developers. 
+
+   There is now a new, consumable unit of APIs available to external (consuming) developers.
 
    Side note: What is an OAuth scope?  A scope is something you can attach to an OAuth token that
    stipulates or limits the authorization associated to the token.  For example, you could define
@@ -191,10 +191,10 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
    please see [this article](https://www.oauth.com/oauth2-servers/scope/defining-scopes/).
 
    Apigee Edge allows you to define any set of scopes that *can be* attached to a token, and allows
-   users the ability to restrict the set of scopes they grant to an app. 
-   
+   users the ability to restrict the set of scopes they grant to an app.
 
-## Create the App 
+
+## Create the App
 
 1. Click **Publish → Apps** in the side navigation
 
@@ -219,7 +219,7 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 
 ## Get the client credentials
 
-Now, obtain the consumer key and secret for the app, and encode them. 
+Now, obtain the consumer key and secret for the app, and encode them.
 
 1. In the apps list, select the app that you just created
 
@@ -235,7 +235,7 @@ Now, obtain the consumer key and secret for the app, and encode them.
    ABCDE:12345
    ```
 
-   There should be no spaces or newlines. 
+   There should be no spaces or newlines.
 
    Mac and Linux users, you can do this from the command prompt. Open **Terminal** and type the following command:
 
@@ -244,8 +244,8 @@ Now, obtain the consumer key and secret for the app, and encode them.
    ```
 
    ...obviously replacing the value of your consumer key and secret as approprpiate.
-   
-   **Note**: For those who like to skim instructions (you know who you are). The -n in the above command is important. You need to include the -n.  Without -n, the echo command will append a newline, and the string that is base64-encoded will be different - the client_secret will include a newline.  So, *don't forget the -n*. 
+
+   **Note**: For those who like to skim instructions (you know who you are). The -n in the above command is important. You need to include the -n.  Without -n, the echo command will append a newline, and the string that is base64-encoded will be different - the client_secret will include a newline.  So, *don't forget the -n*.
 
 5. Save the resulting base64-encoded value. It will look something like this:
 
@@ -261,9 +261,9 @@ Now, let’s test the deployment using the [Apigee REST Client](https://apigee-r
 
 1. In the Apigee UI, Navigate to Develop...Proxies...
 
-2. Select the API Proxy called "oauth2-cc" or similar. This is a proxy that was previously configured for you. Everyone will use this same proxy. (This is not a proxy you configured today). 
+2. Select the API Proxy called "oauth2-cc" or similar. This is a proxy that was previously configured for you. Everyone will use this same proxy. (This is not a proxy you configured today).
 
-3. From the Proxy overview panel, copy the URL for your OAuth API proxy. 
+3. From the Proxy overview panel, copy the URL for your OAuth API proxy.
 
    ![image alt text](./media/copy-the-oauth-proxy-url.png)
 
@@ -277,7 +277,7 @@ Now, let’s test the deployment using the [Apigee REST Client](https://apigee-r
    * method: POST
    * Body: parameter: `grant_type` value: `client_credentials`
    * Header: `Authorization: Basic **{base64 encoded client credentials value}**`
-   
+
    For the value in the header, use the base64 encoded value of consumer key and secret pair that you obtained previously.
 
    ![image alt text](./media/rest-client-token.gif)
@@ -298,13 +298,13 @@ Now, let’s test the deployment using the [Apigee REST Client](https://apigee-r
 
    ![image alt text](./media/image_13.png)
 
-4. Hit **Send** and you should see a response like this below. 
+4. Hit **Send** and you should see a response like this below.
 
    ![image alt text](./media/image_14.png)
 
 4. If you alter the token in the Authorization header (remove a character) and then send another request, you will see a 401 Unauthorized, and a "Invalid Access Token" message.
 
-4. If you remove the Authorization header and send another request, you will see a similar 401 Unauthorized error. 
+4. If you remove the Authorization header and send another request, you will see a similar 401 Unauthorized error.
 
 
 
@@ -337,13 +337,12 @@ In this lab you learned how to secure your API using a two legged OAuth by using
 
   * [OAuth 2.0: Configuring a new API proxy](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
 
-  * [Secure an API with OAuth](http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials) 
+  * [Secure an API with OAuth](http://docs.apigee.com/tutorials/secure-calls-your-api-through-oauth-20-client-credentials)
 
-* [Community posts and articles](https://community.apigee.com/topics/oauth+2.0.html) with topic as "OAuth 2.0" 
+* [Community posts and articles](https://community.apigee.com/topics/oauth+2.0.html) with topic as "OAuth 2.0"
 
 * [Search and Revoke tokens](https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html)
 
 # Rate this Exercise
 
 How did you like this exercise? Rate [here](https://drive.google.com/open?id=1L95jU79wmOP-rHVY2Laba8lApZpS-yztwdONz0nCzWs).
-

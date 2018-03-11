@@ -1,7 +1,7 @@
 <ProxyEndpoint name='default'>
   <Description>the main proxy endpoint</Description>
   <HTTPProxyConnection>
-    <BasePath>/devjam3/oauth2-cc</BasePath>
+    <BasePath>/oauth2-cc</BasePath>
     <Properties/>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
@@ -32,7 +32,7 @@
           curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
             -u ${client_id}:${client_secret} \
             'https://ORG-ENV.apigee.net/devjam3/oauth2-cc/token'\
-            -d 'grant_type=password&username=tanyap&password=Secret123'
+            -d 'grant_type=client_credentials'
 
           The resulting token will have an expiry, and a set of roles,
           as returned by the user authentication service.

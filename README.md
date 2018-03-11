@@ -12,7 +12,7 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 2. [API Development - Create a Reverse Proxy with a Nodejs Target](./Labs/Core/02-Proxy-with-Nodejs-Target)
 3. [API Diagnostics - Trace tool                    ](./Labs/Core/03-Trace-tool)
 4. [API Security - Securing APIs with API Keys      ](./Labs/Core/04-Securing-APIs-with-API-Keys)
-5. [API Security - Securing APIs with OAuth 2-legged](./Labs/Core/05-Securing-APIs-with-OAuth-2-legged)
+5. [API Security - Securing APIs with OAuth client credentials](./Labs/Core/05-Securing-APIs-with-OAuth-client-creds)
 6. [API Security - Securing APIs with OAuth 3-legged](./Labs/Core/06-Securing-APIs-with-OAuth-3-legged)
 7. [OpenID Connect Signin                           ](./Labs/Core/07-OpenID-Connect-Signin)
 8. [Traffic Management - Rate Limit APIs            ](./Labs/Core/08-Rate-Limit-APIs)
@@ -23,5 +23,5 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 
 ### [Appendix Labs](./Labs/Appendix)
 
-You can also browse here for additional topics. 
+You can also browse here for additional topics.
 
