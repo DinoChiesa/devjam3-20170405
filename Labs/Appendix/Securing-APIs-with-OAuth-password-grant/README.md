@@ -6,11 +6,11 @@
 
 # Use case
 
-You have a set of APIs that are consumed by trusted partners. You want to secure those APIs using a two legged OAuth.
+You have a set of APIs that are consumed by a trusted app, on behalf of authenticated users. You want to secure those APIs using a two legged OAuth.
 
 # How can Apigee Edge help?
 
-[The OAuth specification](https://tools.ietf.org/html/rfc6749) defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and, when using 3-legged OAuth, to kick off the authorization code flow.
+[The OAuth specification](https://tools.ietf.org/html/rfc6749) defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and to verify tokens.
 
 Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. Apigee Edge OAuth policies
 can be used to implement the standard OAuth endpoints, and lets you easily secure your APIs using a simply policy to verify tokens.
@@ -19,19 +19,30 @@ can be used to implement the standard OAuth endpoints, and lets you easily secur
 
 An OAuth token is a digital analog of an old-school subway token: it's a "ticket to ride". The holder of an OAuth token (a client application) can present it to the token verifier (typically a gateway or a server application), and if the token is valid, then the token verifier will treat the request as valid.
 
-When you use Apigee Edge OAuth to protect your APIs, Apigee Edge acts as the token issuer and the token verifier. The flow for an app that uses the client-credentials grant type (a form of 2-legged OAuth), looks like this:
+When you use Apigee Edge OAuth to protect your APIs, Apigee Edge acts as the token issuer and the token verifier. The flow for an app that uses the password grant type (a form of 2-legged OAuth), looks like this:
 
-![image alt text](./media/client_credentials_OAuth_flow.png)
+![image alt text](./media/password-grant_OAuth_flow.png)
 
-Most typically, the client_credentials grant type is used when the app itself is also the resource owner, and there is no user authentication required. For example, an app may need to access a backend cloud-based storage service to store and retrieve data that it uses to perform its work, rather than data specifically owned by the end user. Imagine a mobile app that allows customers to place orders. The client credentials might be used to protect data that is not customer specific - like a query on the product catalog, or even populating an anonymously-held "shopping cart".
+The password grant type is used when the app is trusted, and is performing work on
+behalf of an authenticated user. The user is the resource owner. For example, an app may
+need to access a backend cloud-based storage service to store and retrieve items for the
+authenticated user. Different users might authenticate to the app at different times
+(and on different devices).  Imagine a mobile app that allows customers to place
+orders. The client credentials grant might be used to protect data that is not customer
+specific - like a query on the product catalog, or even populating an anonymously-held
+"shopping cart". The password grant would be used to authenticate requests to create
+orders on behalf of a specific person.
 
-As the name indicates, a client-credentials grant will verify only the credentials of the client, or the app itself. A Client credentials grant does not verify user credentials.
+In the password grant, the app handles user credentials, and therefore must be
+trusted. The OAuth server verifies the credentials.
 
-When using the Client credentials grant type, Apigee Edge is the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and proxy authorized requests for protected resources on to the resource server.
+When using the password grant type, Apigee Edge is the OAuth authorization server. Its
+role is to generate access tokens, validate access tokens, and proxy authorized requests
+for protected resources on to the resource server.
 
 # Pre-requisites
 
-* You have [the OAuth Client Credentials-grant API proxy (oauth2-cc)](./../../../Resources/oauth2-cc) deployed into Apigee Edge. If you don't have this in your organization, deploy it.
+* You have [the OAuth Password-grant API proxy (oauth2-pg)](./../../../Resources/oauth2-pg) deployed into Apigee Edge. If you don't have this in your organization, deploy it.
 
 # Instructions
 
@@ -39,7 +50,8 @@ When using the Client credentials grant type, Apigee Edge is the OAuth authoriza
 
 (You can skip this part if you already have a pass-through proxy that verifies OAuth tokens.)
 
-1. First, download [this zip file](./code/apiproxy_xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
+1. First, download [this zip file](./code/apiproxy_xxx_oauth_protected.zip) to your
+   local machine, by clicking the link, and then clicking "Download". Then return here.
 
 2. Open a browser tab to [https://apigee.com/edge](https://apigee.com/edge) and be sure you are logged in.
 
@@ -204,7 +216,7 @@ To test the API Proxy, we need to expose that proxy via an API Product, and gene
 
 3. Populate the following fields
 
-    * Name: **{your_initials}-oauth-app
+    * Name: **{your_initials}-oauth-pg-app
 
     * Developer: (choose any available developer)
 
@@ -238,12 +250,10 @@ Now, obtain the consumer key and secret for the app, and encode them.
    Mac and Linux users, you can do this from the command prompt. Open **Terminal** and type the following command:
 
    ```
-    echo -n ABCDE:12345 | base64
+    printf ABCDE:12345 | base64
    ```
 
    ...obviously replacing the value of your consumer key and secret as approprpiate.
-
-   **Note**: For those who like to skim instructions (you know who you are). The -n in the above command is important. You need to include the -n.  Without -n, the echo command will append a newline, and the string that is base64-encoded will be different - the client_secret will include a newline.  So, *don't forget the -n*.
 
 5. Save the resulting base64-encoded value. It will look something like this:
 
@@ -265,15 +275,17 @@ Now, let’s test the deployment using the [Apigee REST Client](https://apigee-r
 
    ![image alt text](./media/copy-the-oauth-proxy-url.png)
 
-   The url should end with oauth2-cc; we use cc here to imply client credentials.
+   The url should end with oauth2-pg; we use cc here to imply password grant.
 
 2. Open the [Apigee REST Client](https://apigee-rest-client.appspot.com/) in a new browser window.
 
 3. Obtain an access token. Specify these settings:
 
-   * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-cc/token
+   * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-pg/token
    * method: POST
-   * Body: parameter: `grant_type` value: `client_credentials`
+   * Body: parameter: `grant_type` value: `password`
+   * Body: parameter: `username` value: `password`
+   * Body: parameter: `password` value: `password`
    * Header: `Authorization: Basic **{base64 encoded client credentials value}**`
 
    For the value in the header, use the base64 encoded value of consumer key and secret pair that you obtained previously.
