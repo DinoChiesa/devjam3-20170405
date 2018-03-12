@@ -284,9 +284,11 @@ Now, let’s test the deployment using the [Apigee REST Client](https://apigee-r
    * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-pg/token
    * method: POST
    * Body: parameter: `grant_type` value: `password`
-   * Body: parameter: `username` value: `password`
-   * Body: parameter: `password` value: `password`
+   * Body: parameter: `username` value: `albert@einstein.us`
+   * Body: parameter: `password` value: `Relativity`
    * Header: `Authorization: Basic **{base64 encoded client credentials value}**`
+
+   You can find other valid username / password pairs by visiting: [https://devjam3-20170405.appspot.com/auth](https://devjam3-20170405.appspot.com/auth)
 
    For the value in the header, use the base64 encoded value of consumer key and secret pair that you obtained previously.
 
