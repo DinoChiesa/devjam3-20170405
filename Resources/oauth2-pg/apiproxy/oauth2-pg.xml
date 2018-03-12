@@ -1,0 +1,12 @@
+<APIProxy revision='1' name='oauth2-pg'>
+  <ConfigurationVersion minorVersion='0' majorVersion='4'/>
+  <CreatedAt>1458959730864</CreatedAt>
+  <CreatedBy>dino</CreatedBy>
+  <Description>Dispense OAuth v2.0 Bearer tokens for password grant type.</Description>
+  <DisplayName>oauth2-pg</DisplayName>
+  <LastModifiedAt>1464364344438</LastModifiedAt>
+  <LastModifiedBy>orgAdmin</LastModifiedBy>
+  <TargetEndpoints>
+    <TargetEndpoint>default</TargetEndpoint>
+  </TargetEndpoints>
+</APIProxy>

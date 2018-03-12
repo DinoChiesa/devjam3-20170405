@@ -1,0 +1,8 @@
+<Javascript name='JS-RipUserAuthResponse' timeLimit='200' >
+  <Properties>
+    <Property name='prefix'>userauth</Property>
+    <Property name='source'>userAuthResponse</Property>
+  </Properties>
+  <IncludeURL>jsc://walkObj.js</IncludeURL>
+  <ResourceURL>jsc://extractJsonToContextVars.js</ResourceURL>
+</Javascript>

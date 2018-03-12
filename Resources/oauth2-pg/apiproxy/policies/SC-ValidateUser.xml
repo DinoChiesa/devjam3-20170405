@@ -1,0 +1,25 @@
+<ServiceCallout name='SC-ValidateUser'>
+  <Request>
+    <Set>
+      <Headers>
+        <Header name='content-type'>application/x-www-form-urlencoded</Header>
+      </Headers>
+      <FormParams>
+        <FormParam name='username'>{request.formparam.username}</FormParam>
+        <FormParam name='password'>{request.formparam.password}</FormParam>
+      </FormParams>
+      <Verb>POST</Verb>
+    </Set>
+  </Request>
+  <Response>userAuthResponse</Response>
+  <HTTPTargetConnection>
+    <SSLInfo>
+      <Enabled>true</Enabled>
+      <IgnoreValidationErrors>true</IgnoreValidationErrors>
+    </SSLInfo>
+    <Properties>
+      <Property name='success.codes'>2xx, 3xx, 4xx, 5xx</Property>
+    </Properties>
+    <URL>https://devjam3-20170405.appspot.com/auth</URL>
+  </HTTPTargetConnection>
+</ServiceCallout>
