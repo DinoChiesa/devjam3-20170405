@@ -23,5 +23,5 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 
 ### [Appendix Labs](./Labs/Appendix)
 
-You can also browse here for additional topics.
+Browse here for additional topics.
 

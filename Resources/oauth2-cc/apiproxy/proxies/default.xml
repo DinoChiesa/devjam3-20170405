@@ -34,8 +34,7 @@
             'https://ORG-ENV.apigee.net/devjam3/oauth2-cc/token'\
             -d 'grant_type=client_credentials'
 
-          The resulting token will have an expiry, and a set of roles,
-          as returned by the user authentication service.
+          The resulting token will have an expiry, and a set of metadata.
 
       -->
       <Request>
