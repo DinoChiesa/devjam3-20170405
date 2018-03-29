@@ -1,0 +1,15 @@
+Sunday, 11 March 2018, 10:15
+
+x   1. create WSD for password grant type
+
+x   2. embed image in readme
+
+x   3. complete Updates to README and workflow
+
+x   4. update and publish policies
+
+x   5. consider renumbering all the lab exercises
+
+x   6. tell Pradeep on community
+       https://community.apigee.com/questions/54274/backend-authentication-but-have-apigee-mint-and-pr.html
+

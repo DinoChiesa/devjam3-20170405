@@ -23,5 +23,20 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 
 ### [Appendix Labs](./Labs/Appendix)
 
-Browse here for additional topics.
+There is no natural order to these additional exercises.
+
+* [API Analytics - Custom Reports](./Labs/Appendix/API Analytics - Custom Reports)
+* [API Design - Create a Reverse Proxy with OpenAPI specification](./Labs/Appendix/API Design - Create a Reverse Proxy with OpenAPI specification)
+* [API Development - Create a RESTful API from a SOAP service](./Labs/Appendix/API Development - Create a RESTful API from a SOAP service)
+* [API Performance - Caching](./Labs/Appendix/API Performance - Caching)
+* [API Publishing - Developer Portal Customization](./Labs/Appendix/API Publishing - Developer Portal Customization)
+* [API Publishing - Documentation](./Labs/Appendix/API Publishing - Documentation)
+* [API Security - Securing APIs with OAuth password grant](./Labs/Appendix/API Security - Securing APIs with OAuth password grant)
+* [API Security - Threat Protection](./Labs/Appendix/API Security - Threat Protection)
+* [API-Publishing---Packaging-APIs](./Labs/Appendix/API-Publishing---Packaging-APIs)
+* [Consume APIs](./Labs/Appendix/Consume APIs)
+* [Hybrid Deployment - Edge Microgateway](./Labs/Appendix/Hybrid Deployment - Edge Microgateway)
+* [Traffic Management - Throttle APIs](./Labs/Appendix/Traffic Management - Throttle APIs)
+
+
 
