@@ -1,4 +1,4 @@
-# API Security : Securing APIs with OAuth (3-legged) 
+# API Security : Securing APIs with OAuth (3-legged)
 
 *Duration : 30 mins*
 
@@ -12,23 +12,23 @@ You have a set of APIs that are consumed by trusted partners. You want to secure
 
 [The OAuth specification](https://tools.ietf.org/html/rfc6749) defines token endpoints, authorization endpoints, and refresh endpoints. Apps call these endpoints to get access tokens, to refresh access tokens, and, when using 3-legged OAuth, to kick off the authorization code flow.
 
-Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. Apigee Edge OAuth policies 
+Apigee Edge quickly lets you secure your APIs using out of the box OAuth policies. Apigee Edge OAuth policies
 can be used to implement the standard OAuth endpoints, and lets you easily secure your APIs using a simply policy to verify tokens.
 
-Authorization code is one of the most commonly used OAuth 2.0 grant types. The authorization code flow is also sometimes called the "three-legged OAuth" configuration. In this configuration, the user authenticates himself with the resource server and gives the app consent to access his protected resources without divulging username/passwords to the client app. This grant type is intended for apps that are written by third-party developers who should not be trusted to handle the user credentials. For example, developers who register for public API programs should not generally be trusted. With this grant type, the user's credentials on the resource server are never shared with the app. 
+Authorization code is one of the most commonly used OAuth 2.0 grant types. The authorization code flow is also sometimes called the "three-legged OAuth" configuration. In this configuration, the user authenticates himself with the resource server and gives the app consent to access his protected resources without divulging username/passwords to the client app. This grant type is intended for apps that are written by third-party developers who should not be trusted to handle the user credentials. For example, developers who register for public API programs should not generally be trusted. With this grant type, the user's credentials on the resource server are never shared with the app.
 
 # Background: What are the Three Legs?
 
-The "three legs" in the name refer to the User Identity Server, the resource (API) server, and the client app itself. These are three pieces of software that are involved in an exchange. 
+The "three legs" in the name refer to the User Identity Server, the resource (API) server, and the client app itself. These are three pieces of software that are involved in an exchange.
 
-The idea is that the user will authenticate to the Identity Server, which will confirm that with the resource (API) server, which will generate a token and provide it to the app, on behalf of the user. In this way the user never directly provides credentials to the application. The theory is the user can then control which apps have access to resources on his or her behalf. 
+The idea is that the user will authenticate to the Identity Server, which will confirm that with the resource (API) server, which will generate a token and provide it to the app, on behalf of the user. In this way the user never directly provides credentials to the application. The theory is the user can then control which apps have access to resources on his or her behalf.
 
 The flow looks like this:
 
 ![image alt text](./media/screenshot-20170404-124037.png)
 
 
-In a 3-legged flow, Apigee Edge acts as the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and proxy authorized requests for protected resources on to the resource server. Apigee Edge delegates user authentication to the Identity Provider. 
+In a 3-legged flow, Apigee Edge acts as the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and proxy authorized requests for protected resources on to the resource server. Apigee Edge delegates user authentication to the Identity Provider.
 
 
 # Pre-requisites
@@ -40,9 +40,9 @@ In a 3-legged flow, Apigee Edge acts as the OAuth authorization server. Its role
 
 If you have completed the 2-legged OAuth exercise, then, you do not need
 to create a different API Proxy, or API Product, or App. If you **have not** completed that
-exercise, you must create those three things now. Do so, like this: 
+exercise, you must create those three things now. Do so, like this:
 
-## First, Create the API Proxy 
+## First, Create the API Proxy
 
 1. First, download [this zip file](./code/apiproxy_xxx_oauth_protected.zip) to your local machine, by clicking the link, and then clicking "Download". Then return here.
 
@@ -68,15 +68,15 @@ exercise, you must create those three things now. Do so, like this:
 
    ![image alt text](./media/click-build.png)
 
-2. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor. 
+2. Once the API proxy has been built, **click** the link to view your proxy in the proxy editor.
 
-2. You should see the proxy **Overview** screen. 
+2. You should see the proxy **Overview** screen.
 
 2. Click the **Develop** tab.
 
    ![image alt text](./media/click-the-develop-tab.png)
 
-   This shows you the contents of the API Proxy definition. This is just a pass-through proxy. There are no logic steps on this proxy, yet. 
+   This shows you the contents of the API Proxy definition. This is just a pass-through proxy. There are no logic steps on this proxy, yet.
 
 3. Select the Proxy name and Update the display name with your initials.
 
@@ -109,7 +109,7 @@ exercise, you must create those three things now. Do so, like this:
    </OAuthV2>
    ```
 
-   It should look like this: 
+   It should look like this:
 
    ![image alt text](./media/should-look-like-this.png)
 
@@ -151,7 +151,7 @@ exercise, you must create those three things now. Do so, like this:
 ## Second, Create the API Product
 
 Once again, if you have completed the exercise for the OAuth 2-legged
-flow, you do not have to complete this set of steps. 
+flow, you do not have to complete this set of steps.
 
 1. In the Apigee UI, select **Publish → API Products** from the side navigation menu
 
@@ -302,7 +302,7 @@ authenticates both the client app and the end user of the app.
    consent on the same web form.  That's fine, no problem. With Apigee Edge,
    designing and implementing this login-and-consent experience is the
    responsibility of the API provider. Apigee can help, but this needs to be a
-   system the API Provider owns. 
+   system the API Provider owns.
 
 7. After you consent, you should then see an authorization code in your browser.
    Copy that code.
@@ -344,15 +344,15 @@ authenticates both the client app and the end user of the app.
 1. In the Apigee UI, Navigate to Develop...Proxies....
 
 2. Select the API Proxy called *xxx*_oauth_protected (starting with your
-   initials). This is the API proxy that you created previously. It 
+   initials). This is the API proxy that you created previously. It
    includes the VerifyAccessToken policy.
 
 3. In the proxy overview panel, copy the URL for this proxy.
 
   ![image alt text](./media/copy-the-proxy-url.png)
-   
-3. Optionally, you can turn on Tracing for this API Proxy.  
-   
+
+3. Optionally, you can turn on Tracing for this API Proxy.
+
 4. In the browser tab with the [Apigee REST Client](https://apigee-rest-client.appspot.com/),
    paste in the proxy URL. Also specify:
 
@@ -364,13 +364,13 @@ authenticates both the client app and the end user of the app.
 
 5. If you like, modify the token to be some other value, an invalid value. Click **Send** again.  You should see a 401 response.
 
-6. If earlier, you started a Tracing session in Apigee Edge for this API Proxy, you might want to flip back to that browser tab to examine the transactions. 
+6. If earlier, you started a Tracing session in Apigee Edge for this API Proxy, you might want to flip back to that browser tab to examine the transactions.
 
 
 
 # Lab Video
 
-You can watch [this short video to see how to implement 3 legged OAuth on Apigee Edge.](https://youtu.be/vPryGej4ydg) 
+You can watch [this short video to see how to implement 3 legged OAuth on Apigee Edge.](https://youtu.be/vPryGej4ydg)
 
 
 # For Extra Credit
@@ -386,11 +386,11 @@ You can watch [this short video to see how to implement 3 legged OAuth on Apigee
 
 1. At what point in the flow we followed above is the client app authenticated? Before or after the user is authenticated?
 
-2. Why does the 3-legged flow require a Web browser to participate in the flow? Would it be ok for a slick app to use one of the "embedded web browser" controls, for iOS, Android, .NET and so on?  What are the security considerations here? 
+2. Why does the 3-legged flow require a Web browser to participate in the flow? Would it be ok for a slick app to use one of the "embedded web browser" controls, for iOS, Android, .NET and so on?  What are the security considerations here?
 
 2. We saw that tokens can have scopes attached. What scopes are possible? How would an API Proxy evaluate scopes on a token, in order to make authorization decisions? Could an API proxy also evaluate user roles, or groups, some attribute obtained from the Identity Provider (like Active Directory)?
 
-3. Would you ever have the need to use tokens obtained via client credentials grants, as well as tokens obtained via authorization code grants, from within the same application?  If so, under what circumstances? 
+3. Would you ever have the need to use tokens obtained via client credentials grants, as well as tokens obtained via authorization code grants, from within the same application?  If so, under what circumstances?
 
 
 # Summary
@@ -403,13 +403,12 @@ In this lab you learned how to secure your API using a three legged OAuth, obtai
 
     * [OAuth 2.0: Configuring a new API proxy](http://docs.apigee.com/api-services/content/understanding-default-oauth-20-configuration)
 
-    * [Secure an API with OAuth - Authorization Grant Type](http://docs.apigee.com/api-services/content/oauth-v2-policy-authorization-code-grant-type) 
+    * [Secure an API with OAuth - Authorization Grant Type](http://docs.apigee.com/api-services/content/oauth-v2-policy-authorization-code-grant-type)
 
-* [Community posts and articles with topic as "OAuth 2.0"](https://community.apigee.com/topics/oauth+2.0.html) 
+* [Community posts and articles with topic as "OAuth 2.0"](https://community.apigee.com/topics/oauth+2.0.html)
 
 * [Search and Revoke tokens](https://community.apigee.com/articles/1571/how-to-enable-oauth-20-token-search-and-revocation.html)
 
 # Rate this Exercise
 
 How did you like this exercise? Rate [here](https://drive.google.com/open?id=19YS_51mBsilVeb3FUhEGs8E6GaMhtoKJf7dulp0oUq0).
-
