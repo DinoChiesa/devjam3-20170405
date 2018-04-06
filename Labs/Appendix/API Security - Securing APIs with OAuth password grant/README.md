@@ -1,4 +1,4 @@
-# API Security : Securing APIs with OAuth (2-legged)
+# API Security : Securing APIs with OAuth Password Grant
 
 *Duration : 30 mins*
 
@@ -6,7 +6,7 @@
 
 # Use case
 
-You have a set of APIs that are consumed by a trusted app, on behalf of authenticated users. You want to secure those APIs using a two legged OAuth.
+You have a set of APIs that are consumed by a trusted app, on behalf of authenticated users. You want to secure those APIs using a two-legged OAuth. In other words, you want your APIs to authenticate the client apps as well as the users. 
 
 # How can Apigee Edge help?
 
