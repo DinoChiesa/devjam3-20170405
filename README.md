@@ -25,7 +25,7 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 
 There is no natural order to these additional exercises.
 
-* [API Analytics - Custom Reports](./Labs/Appendix/API Analytics - Custom Reports)
+* [API Analytics - Custom Reports](./Labs/Appendix/API%20Analytics%20-%20Custom%20Reports)
 * [API Design - Create a Reverse Proxy with OpenAPI specification](./Labs/Appendix/API Design - Create a Reverse Proxy with OpenAPI specification)
 * [API Development - Create a RESTful API from a SOAP service](./Labs/Appendix/API Development - Create a RESTful API from a SOAP service)
 * [API Performance - Caching](./Labs/Appendix/API Performance - Caching)
