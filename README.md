@@ -26,17 +26,17 @@ All of the material here is released under the [Apache 2.0 License](./LICENSE)
 There is no natural order to these additional exercises.
 
 * [API Analytics - Custom Reports](./Labs/Appendix/API%20Analytics%20-%20Custom%20Reports)
-* [API Design - Create a Reverse Proxy with OpenAPI specification](./Labs/Appendix/API Design - Create a Reverse Proxy with OpenAPI specification)
-* [API Development - Create a RESTful API from a SOAP service](./Labs/Appendix/API Development - Create a RESTful API from a SOAP service)
-* [API Performance - Caching](./Labs/Appendix/API Performance - Caching)
-* [API Publishing - Developer Portal Customization](./Labs/Appendix/API Publishing - Developer Portal Customization)
-* [API Publishing - Documentation](./Labs/Appendix/API Publishing - Documentation)
-* [API Security - Securing APIs with OAuth password grant](./Labs/Appendix/API Security - Securing APIs with OAuth password grant)
-* [API Security - Threat Protection](./Labs/Appendix/API Security - Threat Protection)
+* [API Design - Create a Reverse Proxy with OpenAPI specification](./Labs/Appendix/API%20Design%20-%20Create%20a%20Reverse%20Proxy%20with%20OpenAPI%20specification)
+* [API Development - Create a RESTful API from a SOAP service](./Labs/Appendix/API%20Development%20-%20Create%20a%20RESTful%20API%20from%20a%20SOAP%20service)
+* [API Performance - Caching](./Labs/Appendix/API%20Performance%20-%20Caching)
+* [API Publishing - Developer Portal Customization](./Labs/Appendix/API%20Publishing%20-%20Developer%20Portal%20Customization)
+* [API Publishing - Documentation](./Labs/Appendix/API%20Publishing%20-%20Documentation)
+* [API Security - Securing APIs with OAuth password grant](./Labs/Appendix/API%20Security%20-%20Securing%20APIs%20with%20OAuth%20password%20grant)
+* [API Security - Threat Protection](./Labs/Appendix/API%20Security%20-%20Threat%20Protection)
 * [API-Publishing---Packaging-APIs](./Labs/Appendix/API-Publishing---Packaging-APIs)
-* [Consume APIs](./Labs/Appendix/Consume APIs)
-* [Hybrid Deployment - Edge Microgateway](./Labs/Appendix/Hybrid Deployment - Edge Microgateway)
-* [Traffic Management - Throttle APIs](./Labs/Appendix/Traffic Management - Throttle APIs)
+* [Consume APIs](./Labs/Appendix/Consume%20APIs)
+* [Hybrid Deployment - Edge Microgateway](./Labs/Appendix/Hybrid%20Deployment%20-%20Edge%20Microgateway)
+* [Traffic Management - Throttle APIs](./Labs/Appendix/Traffic%20Management%20-%20Throttle%20APIs)
 
 
 
