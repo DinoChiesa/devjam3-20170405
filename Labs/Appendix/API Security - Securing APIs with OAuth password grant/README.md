@@ -329,7 +329,7 @@ Now, let’s test the deployment using the [Apigee REST Client](https://apigee-r
 
 # Lab Video
 
-If you don’t want to implement this use case,  you can watch [this short video](https://youtu.be/0pah5J7yQTQ) to see how to implement 2-legged OAuth on Apigee Edge.
+If you don’t want to implement this use case,  you can watch [this short video](https://youtu.be/WWWUzSTaIls) to see how to implement Password grant 2-legged OAuth on Apigee Edge.
 
 # Earn Extra-points
 
