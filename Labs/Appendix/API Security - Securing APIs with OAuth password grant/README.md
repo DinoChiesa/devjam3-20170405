@@ -237,7 +237,7 @@ Now, obtain the consumer key and secret for the app, and encode them.
 
 3. Copy the values and store them somewhere safe.
 
-4. To get the encoded value, visit a bas64 encoder site, like [this one](http://base64encode.net/).
+4. To get the encoded value, visit a base64 encoder site, like [this one](http://base64encode.net/).
 
    Paste in the value of the consumer key, followed by a colon, followed by the consumer secret.
    For example if the consumer key is ABCDE and the consumer secret is 12345, you would paste in
@@ -247,13 +247,20 @@ Now, obtain the consumer key and secret for the app, and encode them.
 
    There should be no spaces or newlines.
 
-   Mac and Linux users, you can do this from the command prompt. Open **Terminal** and type the following command:
+   Mac and Linux users, you can alternatively do this from the command prompt. Open **Terminal** and type the following command:
 
    ```
     printf ABCDE:12345 | base64
    ```
 
    ...obviously replacing the value of your consumer key and secret as approprpiate.
+
+   Windows users, you can alternatively use Powershell:
+   ```
+   PS> $b = [System.Text.Encoding]::UTF8.GetBytes("ABCDE:12345")
+   PS> [System.Convert]::ToBase64String($b)
+   ```
+   Again, substitute your client id and secret appropriately.
 
 5. Save the resulting base64-encoded value. It will look something like this:
 
