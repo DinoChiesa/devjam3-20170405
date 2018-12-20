@@ -9,11 +9,12 @@
       2400000 = 40 minutes
       3600000 = 60 minutes
   -->
+  <ExpiresIn>300000</ExpiresIn>
+
   <ClientId>authtx_client_id</ClientId>
   <RedirectUri>authtx_redirect_uri</RedirectUri>
   <ResponseType>request.formparam.response_type</ResponseType>
   <Scope>authtx_req_scope</Scope>
-  <ExpiresIn>300000</ExpiresIn>
 
   <!--
       These attributes get associated to the code+token.

@@ -261,14 +261,14 @@ authenticates both the client app and the end user of the app.
    * url endpoint: https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?
    * append these query params (separated by &):
        * `client_id`: **{your "Consumer Key" from above}**
-       * `redirect_uri`: http://dinochiesa.github.io/openid-connect/callback-handler.html
+       * `redirect_uri`: https://dinochiesa.github.io/openid-connect/callback-handler.html
        * `response_type`: code
        * `scope`: A
    * method: GET
 
    The url should look like this:
    ```
-   https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
+   https://YOURORG-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
    ```
 
    Paste the resulting URL into the address bar of the empty browser tab.
@@ -316,13 +316,12 @@ authenticates both the client app and the end user of the app.
 
    * url endpoint: `https://{YOURORG}-test.apigee.net/devjam3/oauth2-ac/token`
    * method: POST
-   * Header parameters: none!
+   * Header parameters:
+      * `Authorization` : BASE64(client_id : client_secret)
    * Body parameters:
       * `grant_type` : `authorization_code`
-      * `client_id` : **{your "Consumer Key" from above - in clear text}**
-      * `client_secret` : **{your "Consumer Secret" - in clear text}**
       * `code` : **{the code you received after consent}**
-      * `redirect_uri` : `http://dinochiesa.github.io/openid-connect/callback-handler.html`
+      * `redirect_uri` : `https://dinochiesa.github.io/openid-connect/callback-handler.html`
 
    ![image alt text](./media/rest-client-post-token.png)
 

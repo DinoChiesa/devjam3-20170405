@@ -88,27 +88,46 @@
 
     <Flow name="token">
       <!--
-          The app uses this request to exchange the code for a token.
+          The app uses this request to exchange the code for a token,
+          or to refresh a token.
+
           Example:
 
-          POST /devjam3/oauth2-ac/token?sessionid=xxxxxyyyyyyy
+          Authorization: Basic base64(client_id:client_secret)
+          POST /devjam3/oauth2-ac/token
             grant_type=authorization_code
-            &client_id=wlq93FiqTw1si09wsocM7AjOBSbyi4
-            &client_secret=78djdkdjdkjd
             &code=q2oI7b2d
             &redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html
+
+          -or-
+
+          Authorization: Basic base64(client_id:client_secret)
+          POST /devjam3/oauth2-ac/token
+            grant_type=refresh_token&refresh_token=sksious93e93
+
           -->
       <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST")</Condition>
       <Description/>
       <Request>
         <Step>
-          <Name>AM-DeleteForwardedHeaders</Name>
+          <Name>RF-InvalidGrantType</Name>
+          <Condition>NOT (request.formparam.grant_type = "authorization_code" OR request.formparam.grant_type = "refresh_token")</Condition>
         </Step>
+
+      </Request>
+      <Response>
         <Step>
           <Name>OAuthV2-GenerateAccessToken</Name>
+          <Condition>request.formparam.grant_type = "authorization_code"</Condition>
         </Step>
-      </Request>
-      <Response/>
+        <Step>
+          <Name>OAuthV2-RefreshAccessToken</Name>
+          <Condition>request.formparam.grant_type = "refresh_token"</Condition>
+        </Step>
+        <Step>
+          <Name>JS-GroomTokenResponse</Name>
+        </Step>
+      </Response>
     </Flow>
 
     <Flow name='unknown request'>

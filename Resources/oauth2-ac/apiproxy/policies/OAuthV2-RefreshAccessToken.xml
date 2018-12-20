@@ -1,0 +1,31 @@
+<OAuthV2 enabled='true' name='OAuthV2-RefreshAccessToken'>
+  <Operation>RefreshAccessToken</Operation>
+
+  <!--
+      client_id and client_secret are expected in the Authorization Header
+      passed as Basic Auth (concatenated with colon, then base64 encoded).
+  -->
+
+  <ExpiresIn>3600000</ExpiresIn>
+  <RefreshTokenExpiresIn>86400000</RefreshTokenExpiresIn>
+
+  <ExternalAuthorization>false</ExternalAuthorization>
+  <!-- grant_type must be "refresh_token" -->
+  <GrantType>request.formparam.grant_type</GrantType>
+  <RefreshToken>request.formparam.refresh_token</RefreshToken>
+  <SupportedGrantTypes/>
+
+  <GenerateResponse/>
+
+  <!--
+      NB: If <GenerateResponse/> is omitted, then the policy implicitly sets
+      the following variables:
+      oauthv2accesstoken.<PolicyName>.access_token
+      oauthv2accesstoken.<PolicyName>.token_type
+      oauthv2accesstoken.<PolicyName>.expires_in
+      oauthv2accesstoken.<PolicyName>.refresh_token
+      oauthv2accesstoken.<PolicyName>.refresh_token_expires_in
+      oauthv2accesstoken.<PolicyName>.refresh_token_issued_at
+      oauthv2accesstoken.<PolicyName>.refresh_token_status
+  -->
+</OAuthV2>
