@@ -6,13 +6,14 @@ This makes it super easy to demonstrate 3-legged OAuth in Apigee Edge.
 
 ## Setup
 
-You need an API Product, a developer, and a developer app, with its client_id and client_secret.
+You need to deploy this API Proxy.  Then, you need an API Product, a developer, and a developer app, with its client_id and client_secret. The app should have a redirect URI of https://dinochiesa.github.io/openid-connect/callback-handler.html .
+
 The API Product should have scopes: A,B,C
 
 ## To Kick off the flow:
 
 ```
-curl -i -X GET "https://cap500-test.apigee.net/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A"
+curl -i -X GET "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/authorize?client_id=CLIENT_ID_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A"
 ```
 
 This will redirect you to a URL for the login-and-consent app.  You need to open the resulting link in a browser and authenticate.
@@ -25,15 +26,28 @@ The login-and-consent app uses a mock user database, and these are the valid use
 * naimish@example.com / Imagine4
 
 
-Once you authenticate and grant consent, you will receive a code via the redirect_uri. 
+Once you authenticate and grant consent, you will receive a code via the redirect_uri.
 The redirect_uri you pass should be able to display a code. The one shown above works just fine for most purposes.
 
 
 ## To exchange the code for a token:
 
-Copy the code shown in the redirect_uri web page, then paste it into the body like so:
+Copy the code shown in the redirect_uri web page, then paste it into the body in place of `CODE_HERE` like so:
 
 ```
-curl -i -X POST "https://cap500-test.apigee.net/devjam3/oauth2-ac/token" -d 'grant_type=authorization_code&client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&client_secret=7AvozEjhA8ddxD7b&code=q2oI7b2d&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html'
+curl -i -u client_id:client_secret \
+  -X POST "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/token" -d 'grant_type=authorization_code&code=CODE_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html'
+```
+Note: you must also replace the client_id and client_secret in the above.
+
+
+## To refresh the token:
+
+Copy the refresh token that you receive from the above, into the following in place of VALUE_HERE:
+
+```
+curl -i -u client_id:client_secret \
+   -X POST "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/token" -d 'grant_type=refresh_token&refresh_token=VALUE_HERE'
+
 ```
 
