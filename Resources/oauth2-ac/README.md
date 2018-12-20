@@ -12,11 +12,14 @@ The API Product should have scopes: A,B,C
 
 ## To Kick off the flow:
 
+Paste the following into a browser address bar:
+
 ```
-curl -i -X GET "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/authorize?client_id=CLIENT_ID_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A"
+https://ORG-ENV.apigee.net/devjam3/oauth2-ac/authorize?client_id=CLIENT_ID_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
+
 ```
 
-This will redirect you to a URL for the login-and-consent app.  You need to open the resulting link in a browser and authenticate.
+This will redirect you to a URL for the login-and-consent app.  You will need to authenticate.
 
 The login-and-consent app uses a mock user database, and these are the valid username / password pairs:
 * dino@apigee.com / IloveAPIs
@@ -36,7 +39,8 @@ Copy the code shown in the redirect_uri web page, then paste it into the body in
 
 ```
 curl -i -u client_id:client_secret \
-  -X POST "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/token" -d 'grant_type=authorization_code&code=CODE_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html'
+  -X POST "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/token" \
+  -d 'grant_type=authorization_code&code=CODE_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html'
 ```
 Note: you must also replace the client_id and client_secret in the above.
 
@@ -47,7 +51,8 @@ Copy the refresh token that you receive from the above, into the following in pl
 
 ```
 curl -i -u client_id:client_secret \
-   -X POST "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/token" -d 'grant_type=refresh_token&refresh_token=VALUE_HERE'
+   -X POST "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/token" \
+   -d 'grant_type=refresh_token&refresh_token=VALUE_HERE'
 
 ```
 
