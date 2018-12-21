@@ -6,9 +6,22 @@ This makes it super easy to demonstrate 3-legged OAuth in Apigee Edge.
 
 ## Setup
 
-You need to deploy this API Proxy.  Then, you need an API Product, a developer, and a developer app, with its client_id and client_secret. The app should have a redirect URI of https://dinochiesa.github.io/openid-connect/callback-handler.html .
+If you are using this proxy as part of an Apigee-led hands-on workshop, the proxy has already been deployed for you, and you probably don't need to perform this setup.  If you are using this proxy on your own, you will need to perform the following setup steps.
 
-The API Product should have scopes: A,B,C
+
+1. Using the Apigee Edge Administrative UI, create the cache called "cache1" in the environment in which you will deploy the proxy.
+
+2. Deploy the API Proxy. You can use the UI, or a command-line tool.
+
+3. Again, using the Apigee Edge Admin UI, Create the following assets:
+
+   - an API Product. It should have scopes: A,B,C
+   - a developer
+   - a developer app. The app should have a redirect URI of https://dinochiesa.github.io/openid-connect/callback-handler.html .
+
+   You need to then note the  client_id and client_secret (consumer key and consumer secret) of the developer app.
+
+
 
 ## To Kick off the flow:
 
@@ -55,4 +68,3 @@ curl -i -u client_id:client_secret \
    -d 'grant_type=refresh_token&refresh_token=VALUE_HERE'
 
 ```
-
