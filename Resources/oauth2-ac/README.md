@@ -8,6 +8,17 @@ This makes it super easy to demonstrate 3-legged OAuth in Apigee Edge.
 
 If you are using this proxy as part of an Apigee-led hands-on workshop, the proxy has already been deployed for you, and you probably don't need to perform this setup.  If you are using this proxy on your own, you will need to perform the following setup steps.
 
+### Using the Script
+
+```
+cd tools
+npm install
+node ./provision -v -u apigeeadmin@example.org -o ORG -e ENV
+```
+
+### Manually
+
+Alternatively, you can perform all the steps the script performs, manually.
 
 1. Using the Apigee Edge Administrative UI, create the cache called "cache1" in the environment in which you will deploy the proxy.
 
@@ -19,8 +30,9 @@ If you are using this proxy as part of an Apigee-led hands-on workshop, the prox
    - a developer
    - a developer app. The app should have a redirect URI of https://dinochiesa.github.io/openid-connect/callback-handler.html .
 
-   You need to then note the  client_id and client_secret (consumer key and consumer secret) of the developer app.
 
+Whether you use the provision script or configure things manually,
+you need to note the  client_id and client_secret (consumer key and consumer secret) of the developer app.
 
 
 ## To Kick off the flow:
@@ -67,4 +79,17 @@ curl -i -u client_id:client_secret \
    -X POST "https://ORG-ENV.apigee.net/devjam3/oauth2-ac/token" \
    -d 'grant_type=refresh_token&refresh_token=VALUE_HERE'
 
+```
+
+## Teardown
+
+If you are using this proxy as part of an Apigee-led hands-on workshop, leave the proxy and the assets.
+If you are using this proxy on your own, you may want to tear down (remove) all the configuration.
+
+To do so:
+
+```
+cd tools
+npm install
+node ./provision -v -u apigeeadmin@example.org -o ORG -e ENV -R
 ```
