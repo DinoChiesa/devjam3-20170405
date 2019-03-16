@@ -51,7 +51,6 @@ For the purposes of this example, your API product need not contain any API prox
    }
    ```
 
-
 ## Commentary
 
 This API proxy dispenses opaque oauth tokens. The attributes associated to the dispensed tokens are stored in the key-management database within Apigee Edge. The API publisher has the ability to curate or adjust the response to requests for tokens. You could, for example, deliver a JSON payload with only the token and the expiry. The current example provides lots of additional information in the response.

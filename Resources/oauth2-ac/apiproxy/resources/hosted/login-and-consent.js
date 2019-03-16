@@ -2,7 +2,7 @@
 // ------------------------------------------------------------------
 //
 // created: Mon Apr  3 21:02:40 2017
-// last saved: <2017-August-30 18:43:50>
+// last saved: <2019-March-15 17:45:10>
 //
 // ------------------------------------------------------------------
 //
@@ -23,8 +23,6 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     querystring = require('querystring'),
-    //dateFormat = require('./lib/dateFormat.js').dateFormat,
-    apigee = require('apigee-access'),
     morgan = require('morgan'), // a logger
     q = require('q'), // promises
     request = require('request'),
@@ -127,9 +125,9 @@ function requestAuthCode(ctx) {
 
 function externalUrl(req) {
   return url.format({
-    protocol: apigee.getVariable(req, 'client.scheme'),
+    protocol: req.get('x-client-scheme'),
     host: req.get('host'),
-    pathname: apigee.getVariable(req, 'proxy.basepath'),
+    pathname: req.get('x-proxy-basepath')
   });
 }
 

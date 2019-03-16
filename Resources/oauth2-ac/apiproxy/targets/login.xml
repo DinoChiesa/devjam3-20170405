@@ -3,7 +3,9 @@
     <Description/>
     <FaultRules/>
     <PreFlow name="PreFlow">
-        <Request/>
+      <Request>
+        <Step><Name>JS-PropagateSchemeAndBasepath</Name></Step>
+      </Request>
         <Response/>
     </PreFlow>
     <PostFlow name="PostFlow">
@@ -12,14 +14,6 @@
     </PostFlow>
     <Flows/>
 
-  <ScriptTarget>
-      <ResourceURL>node://login-and-consent.js</ResourceURL>
-      <EnvironmentVariables>
-          <EnvironmentVariable name="NAME">VALUE</EnvironmentVariable>
-      </EnvironmentVariables>
-      <Arguments>
-          <Argument>ARG</Argument>
-      </Arguments>
-  </ScriptTarget>
+    <HostedTarget/>
 
 </TargetEndpoint>

@@ -1,0 +1,8 @@
+<Javascript name='JS-PropagateSchemeAndBasepath' timeLimit='200' >
+  <Source>
+    var s = context.getVariable('client.scheme');
+    context.setVariable('request.header.x-client-scheme', s);
+    var bp = context.getVariable('proxy.basepath');
+    context.setVariable('request.header.x-proxy-basepath', bp);
+  </Source>
+</Javascript>
