@@ -10,6 +10,7 @@
     <Response>authenticationResponse</Response>
     <HTTPTargetConnection>
       <Properties/>
+      <!-- this is not going to work ! usergrid.com is gone.  -->
       <URL>https://api.usergrid.com/etelco/sandbox/users/{accesstoken.sub}</URL>
     </HTTPTargetConnection>
 </ServiceCallout>

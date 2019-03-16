@@ -1,0 +1,22 @@
+<AssignMessage name='AV-JWT-Variables'>
+  <AssignVariable>
+    <!--
+
+     NB: The shared-secret for JWT must be at least 256-bits in length,
+     or 32 ASCII chars.
+
+     The client_secret in Edge is typically 16 characters.
+     In a real system we recommend that you use RS256, with Public/Private
+     key signing.
+
+    -->
+    <Name>private.secretkey</Name>
+    <Template>At-Apigee-We-Love-APIs{secret}</Template>
+  </AssignVariable>
+
+  <AssignVariable>
+    <Name>jwt_issuer</Name>
+    <Template>{client.scheme}://{request.header.host}{proxy.basepath}</Template>
+  </AssignVariable>
+
+</AssignMessage>
