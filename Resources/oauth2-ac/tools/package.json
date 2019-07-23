@@ -1,6 +1,6 @@
 {
   "name": "oauthv2-ac-provisioning-tool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "tools for OAuthV2 Authorization Code Example",
   "main": "provision.js",
   "scripts": {
@@ -10,11 +10,11 @@
   "license": "Apache-2.0",
   "dependencies": {
     "crypto-js": "^3.1.9-1",
-    "apigee-edge-js": "^0.4.3",
+    "apigee-edge-js": "^0.4.10",
     "sprintf-js": "^1.1.1",
-    "node-getopt": "^0.3.1"
+    "node-getopt": ">=0.3.2"
   },
   "engines": {
-    "node": ">6.2.0"
+    "node": ">=10.15.1"
   }
 }
