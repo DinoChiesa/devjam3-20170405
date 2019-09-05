@@ -2,7 +2,7 @@
 // ------------------------------------------------------------------
 //
 // created: Mon Apr  3 21:02:40 2017
-// last saved: <2019-March-15 17:45:10>
+// last saved: <2019-September-05 13:13:45>
 //
 // ------------------------------------------------------------------
 //
@@ -19,19 +19,22 @@
 // GET https://ORGNAME-ENVNAME-test.apigee.net/PROXYBASEPATH/oauth2/authorize?client_id=VALID_CLIENT_ID_HERE&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=id_token&scope=openid%20profile&nonce=A12345&state=ABCDEFG
 //
 // ------------------------------------------------------------------
+/* jshint esversion: 9, node: true */
+/* global Buffer process*/
 
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    querystring = require('querystring'),
-    morgan = require('morgan'), // a logger
-    q = require('q'), // promises
-    request = require('request'),
-    path = require('path'),
-    url = require('url'),
-    app = express(),
-    config = require('./config/config.json'),
-    userAuth = require('./lib/userAuthentication.js'),
-    httpPort;
+const express = require('express'),
+      bodyParser = require('body-parser'),
+      querystring = require('querystring'),
+      morgan = require('morgan'), // a logger
+      q = require('q'), // promises
+      request = require('request'),
+      path = require('path'),
+      url = require('url'),
+      app = express(),
+      config = require('./config/config.json'),
+      userAuth = require('./lib/userAuthentication.js');
+
+let httpPort;
 
 userAuth.config(config);
 
@@ -126,15 +129,15 @@ function requestAuthCode(ctx) {
 function externalUrl(req) {
   return url.format({
     protocol: req.get('x-client-scheme'),
-    host: req.get('host'),
+    host: req.get('x-original-host'),
     pathname: req.get('x-proxy-basepath')
   });
 }
 
-function inquireOidcSessionId(ctx){
-    var deferred = q.defer(),
-      // send a query to Edge to ask about the oauth session
-      query = { sessionid : ctx.sessionid },
+function inquireOidcSessionId(ctx) {
+    let deferred = q.defer(),
+        // send a query to Edge to ask about the oauth session
+        query = { sessionid : ctx.sessionid },
         endpoint = ctx.fullUrl.replace('login-and-consent', 'oauth2-session'),
       options = {
         uri: endpoint + '/info?' + querystring.stringify(query),
@@ -149,6 +152,7 @@ function inquireOidcSessionId(ctx){
 
   request(options, function(error, response, body) {
     if (error) {
+      console.log('inquireOidcSessionId error: ' + error);
       ctx.error = error;
       return deferred.resolve(ctx);
     }

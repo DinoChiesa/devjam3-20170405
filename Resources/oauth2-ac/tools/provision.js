@@ -8,7 +8,7 @@
 // Copyright 2017-2019 Google LLC.
 //
 
-/* jshint esversion: 6, strict:false */
+/* jshint esversion: 9, strict:false */
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// last saved: <2019-January-09 11:01:27>
+// last saved: <2019-September-05 12:50:06>
 
 const edgejs     = require('apigee-edge-js'),
       common     = edgejs.utility,
