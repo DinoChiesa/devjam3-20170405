@@ -5,8 +5,8 @@
  * 3. Validate scope
  * 4. Check for empty redirect_uri parameter
  * 5. Check for empty state parameter
- * validate-request-1.0.js (c) 2010-2015 @Apigee
  */
+/* global context */
 
 var verb = context.getVariable("request.verb");
 var params = {
@@ -24,8 +24,9 @@ var requiredParams = ['response_type',
                       'client_id',
                       'redirect_url',
                       'state',
-                      'scope',
-                      'nonce'];
+                      'scope'
+                      //'nonce'
+                     ];
 var cvPrefix = {
       POST : 'formparam',
       GET  : 'queryparam'
@@ -109,6 +110,7 @@ context.setVariable("error_response_symbol",'?');
 
 Object.keys(params).forEach(function(key){
   params[key] = context.getVariable("request." + cvPrefix + "." + key);
+  context.setVariable("oidc_" + key, params[key]);
 });
 
 if ( ! requiredParams.some(isMissingParam) ) {
@@ -119,10 +121,5 @@ if ( ! requiredParams.some(isMissingParam) ) {
   else if (parseResponseType(params.response_type)){
     context.setVariable("error_type", "unsupported_response_type");
     context.setVariable("error_description", "The authorization server does not support: response_type");
-  }
-  else {
-    Object.keys(params).forEach(function(key){
-      context.setVariable("oidc_" + key, params[key]);
-    });
   }
 }

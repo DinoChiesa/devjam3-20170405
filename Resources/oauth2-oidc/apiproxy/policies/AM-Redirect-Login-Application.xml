@@ -5,7 +5,7 @@
   <Set>
     <StatusCode>302</StatusCode>
     <Headers>
-      <Header name="Location">https://oidc-login.herokuapp.com/login?sessionid={messageid}&amp;scope={oidc_scope}&amp;oidcserver={client.scheme}://{request.header.host}{request.path}</Header>
+      <Header name="Location">https://oidc-login.herokuapp.com/login?sessionid={messageid}&amp;scope={oidc_scope}&amp;oidcroot={client.scheme}://{request.header.host}{rootPath}</Header>
       <Header name="Access-Control-Allow-Origin">*</Header>
       <Header name='Access-Control-Allow-Methods'>POST, GET, OPTIONS</Header>
       <Header name='Access-Control-Allow-Headers'>Accept, Content-Type, connection, content-length, Authorization, Location</Header>

@@ -1,0 +1,6 @@
+<Javascript name="JS-GroomTokenResponse">
+  <Properties>
+    <Property name='wantHumanReadableTimes'>true</Property>
+  </Properties>
+  <ResourceURL>jsc://groomTokenResponse.js</ResourceURL>
+</Javascript>

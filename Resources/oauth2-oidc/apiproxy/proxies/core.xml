@@ -7,15 +7,26 @@
   <Description/>
   <PreFlow name="PreFlow">
     <Request>
-      <Step>
-        <Condition>request.verb = "OPTIONS"</Condition>
-        <Name>RF-Cors-Preflight</Name>
-      </Step>
     </Request>
     <Response/>
   </PreFlow>
 
   <Flows>
+    <Flow name="CORS-preflight">
+      <Request>
+        <Step>
+          <Condition>(request.header.Access-Control-Request-Method = null) OR (request.header.origin = null)</Condition>
+          <Name>RF-Bad-CORS-Request</Name>
+        </Step>
+      </Request>
+      <Response>
+      <Step>
+        <Name>AM-CORS-Preflight</Name>
+      </Step>
+      </Response>
+      <Condition>request.verb = "OPTIONS"</Condition>
+    </Flow>
+
     <Flow name="authorization">
       <Description>request to launch OIDC flow (From client app)</Description>
       <Request>
@@ -47,19 +58,46 @@
         <Step><Name>CP-AuthorizationSession</Name></Step>
       </Request>
       <Response>
+        <Step><Name>JS-FigurePaths</Name></Step>
         <Step><Name>AM-Redirect-Login-Application</Name></Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/authorize") and (request.verb = "GET")</Condition>
     </Flow>
 
-
     <Flow name="token">
-      <Description>The client app invokes this to exchange an authz code for a token</Description>
+      <Description>The client app invokes this to exchange an authz code for a token, or to refresh a token</Description>
       <Request>
-        <Step><Name>OAuthV2-GenerateAccessToken-AuthCode</Name></Step>
+        <Step>
+          <Name>OAuthV2-GetOAuthInfo-FormParam</Name>
+          <Condition>request.header.authorization = null</Condition>
+        </Step>
+        <Step>
+          <Name>AE-DeveloperApp-FormParam</Name>
+          <Condition>request.header.authorization = null</Condition>
+        </Step>
+        <Step>
+          <Name>Extract-ConsumerSecret</Name>
+          <Condition>request.header.authorization = null</Condition>
+        </Step>
+        <Step>
+          <Name>BA-ClientCredentials</Name>
+          <Condition>request.header.authorization = null</Condition>
+        </Step>
       </Request>
+
       <Response>
-        <Step><Name>Extract-Token-Response</Name></Step>
+        <Step>
+          <Condition>request.formparam.grant_type = "refresh_token"</Condition>
+          <Name>OAuthV2-RefreshAccessToken</Name>
+        </Step>
+        <Step>
+          <Condition>request.formparam.grant_type != "refresh_token"</Condition>
+          <Name>OAuthV2-GenerateAccessToken-AuthCode</Name>
+        </Step>
+        <Step>
+          <Condition>request.formparam.grant_type != "refresh_token"</Condition>
+          <Name>Extract-Token-Response</Name>
+        </Step>
         <Step>
           <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
           <Name>Get-Application-Attributes</Name>
@@ -67,23 +105,30 @@
 
         <!-- do the following three steps only if we want an id_token -->
         <Step>
-          <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
+          <Condition>(request.formparam.grant_type != "refresh_token") AND (token_scope ~~ ".*\bid_token\b.*")</Condition>
           <Name>AV-ID-Token-Payload</Name>
         </Step>
 
         <Step>
+          <Condition>(request.formparam.grant_type != "refresh_token") AND (token_scope ~~ ".*\bid_token\b.*")</Condition>
           <Name>AV-JWT-Variables</Name>
         </Step>
 
         <Step>
-          <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
+          <Condition>(request.formparam.grant_type != "refresh_token") AND (token_scope ~~ ".*\bid_token\b.*")</Condition>
           <Name>GenerateJWT-1</Name>
         </Step>
         <Step>
-          <Condition>(token_scope ~~ ".*\bid_token\b.*")</Condition>
+          <Condition>(request.formparam.grant_type != "refresh_token") AND (token_scope ~~ ".*\bid_token\b.*")</Condition>
           <Name>AM-Token-Response</Name>
         </Step>
-        <Step><Name>AM-CORS</Name></Step>
+        <Step>
+          <Condition>(request.formparam.grant_type = "refresh_token") OR NOT (token_scope ~~ ".*\bid_token\b.*")</Condition>
+          <Name>JS-GroomTokenResponse</Name>
+        </Step>
+        <Step>
+          <Name>AM-CORS</Name>
+        </Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST")</Condition>
     </Flow>
@@ -150,6 +195,24 @@
         <Step><Name>AM-Redirect-Relying-Party</Name></Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/auth") and (request.verb = "POST")</Condition>
+    </Flow>
+
+
+    <Flow name="logout">
+      <!-- https:///foo/basepath/logout?post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A8100%2Fimplicit%2Flogout&state=Z8DhwtkjxY -->
+      <Request>
+      </Request>
+      <Response>
+        <Step>
+          <Condition>request.queryparam.post_logout_redirect_uri != null</Condition>
+          <Name>AM-Redirect-to-Logout</Name>
+        </Step>
+        <Step>
+          <Condition>request.queryparam.post_logout_redirect_uri = null</Condition>
+          <Name>AM-NoContent</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/logout") and (request.verb = "GET")</Condition>
     </Flow>
 
     <Flow name="DefaultFlow">

@@ -1,0 +1,4 @@
+<AccessEntity name='AE-DeveloperApp-FormParam'>
+  <EntityType value='app' />
+  <EntityIdentifier type='consumerkey' ref='request.formparam.client_id' />
+</AccessEntity>

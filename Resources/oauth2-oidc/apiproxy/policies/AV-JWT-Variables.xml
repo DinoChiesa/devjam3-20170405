@@ -11,7 +11,7 @@
 
     -->
     <Name>private.secretkey</Name>
-    <Template>At-Apigee-We-Love-APIs{secret}</Template>
+    <Template>At-Apigee-We-Love-APIs{client_id}</Template>
   </AssignVariable>
 
   <AssignVariable>

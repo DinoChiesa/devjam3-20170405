@@ -1,0 +1,12 @@
+<Javascript name="JS-FigurePaths">
+  <Source>
+    var proxyBasePath = context.getVariable('proxy.basepath');
+    var parts = proxyBasePath.split('/');
+    var rootPath = parts.slice(0,-1).join('/');
+    context.setVariable('rootPath',rootPath);
+    context.setVariable('corePath',rootPath + '/oauth2');
+    context.setVariable('sessionPath',rootPath + '/session');
+    context.setVariable('userinfoPath',rootPath + '/userinfo');
+    context.setVariable('configPath',rootPath + '/.well-known/configuration');
+  </Source>
+</Javascript>

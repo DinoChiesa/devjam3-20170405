@@ -12,6 +12,8 @@
     <Attribute name="scope" ref="req_scope" display="true"/>
     <Attribute name="roles" ref="roles" display="true"/>
     <Attribute name="subject" ref="sub" display="true"/>
+    <Attribute name="given_name" ref="given_name" display="true"/>
+    <Attribute name="family_name" ref="family_name" display="true"/>
   </Attributes>
   <UserName>sub</UserName>
   <Tokens/>

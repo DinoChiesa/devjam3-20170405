@@ -1,0 +1,13 @@
+<AssignMessage name="AM-Redirect-to-Logout">
+  <Remove>
+    <Payload/>
+    <Headers/>
+  </Remove>
+  <Set>
+    <StatusCode>302</StatusCode>
+    <Headers>
+      <Header name="Location">{request.queryparam.post_logout_redirect_uri}</Header>
+    </Headers>
+  </Set>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>
