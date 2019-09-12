@@ -22,17 +22,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// last saved: <2019-September-05 12:50:06>
+// last saved: <2019-September-05 14:32:28>
+
+const constants = {
+        cacheName      : 'cache1',
+        proxyName      : 'oauth2-ac',
+        proxySource    : require('path').join(__dirname, '..'),
+        productName    : 'AuthCode-Example-Product',
+        developerEmail : 'AuthCode-Example-Developer@example.com',
+        appName        : 'AuthCode-Example-App-1',
+        note           : 'created '+ (new Date()).toISOString() + ' for Authorization Code Token-granting Example',
+        callbackUrl    : 'https://dinochiesa.github.io/openid-connect/callback-handler.html',
+        scopes         : ['A', 'B', 'C'],
+        appExpiry      : '180d'
+      };
 
 const edgejs     = require('apigee-edge-js'),
       common     = edgejs.utility,
       apigeeEdge = edgejs.edge,
       sprintf    = require('sprintf-js').sprintf,
-      path       = require('path'),
       Getopt     = require('node-getopt'),
       version    = '20190109-0937',
       getopt     = new Getopt(common.commonOptions.concat([
         ['R' , 'reset', 'Optional. Reset, delete all the assets previously created by this script'],
+        ['U' , 'callbackUrl', 'Optional. specify a callback URL. default: ' + constants.callbackUrl],
         ['e' , 'env=ARG', 'the Edge environment(s) to use for this demonstration. ']
       ])).bindHelp();
 
@@ -46,19 +59,7 @@ common.logWrite('start');
 var opt = getopt.parse(process.argv.slice(2));
 common.verifyCommonRequiredParameters(opt.options, getopt);
 
-const constants = {
-        cacheName      : 'cache1',
-        proxyName      : 'oauth2-ac',
-        proxySource    : path.join(__dirname, '..'),
-        productName    : 'AuthCode-Example-Product',
-        developerEmail : 'AuthCode-Example-Developer@example.com',
-        appName        : 'AuthCode-Example-App-1',
-        note           : 'created '+ (new Date()).toISOString() + ' for Authorization Code Token-granting Example',
-        callbackUrl    : 'https://dinochiesa.github.io/openid-connect/callback-handler.html',
-        scopes         : ['A', 'B', 'C'],
-        appExpiry      : '180d'
-      },
-      connectOptions = {
+const connectOptions = {
         mgmtServer : opt.options.mgmtserver,
         org        : opt.options.org,
         user       : opt.options.username,
@@ -66,7 +67,6 @@ const constants = {
         no_token   : opt.options.notoken,
         verbosity  : opt.options.verbose || 0
       };
-
 
 apigeeEdge.connect(connectOptions)
   .then( (org) => {
@@ -111,7 +111,7 @@ apigeeEdge.connect(connectOptions)
             developerEmail : constants.developerEmail,
             appName        : constants.appName,
             apiProduct     : constants.productName,
-            callbackUrl    : constants.callbackUrl,
+            callbackUrl    : opt.options.callbackUrl || constants.callbackUrl,
             expiry         : constants.appExpiry,
             attributes     : { note: constants.note }
           },
