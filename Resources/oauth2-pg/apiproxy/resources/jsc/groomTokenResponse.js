@@ -1,65 +1,48 @@
 // groomTokenResponse.js
 // ------------------------------------------------------------------
-//
-// Tweaks the generated OAuth token response.
-//
-// last saved: <2016-June-09 15:12:29>
+// last updated: <2019-October-30 09:08:37>
+/* jshint esversion:6, node:false, strict:implied */
+/* global response, context, properties */
 
-var b1 = JSON.parse(response.content),
-    propertiesToRemove = ['status', 'refresh_token_status',
-                          'token_type', 'organization_name', 'developer.email',
-                          'scope', 'refresh_count',
-                          'application_name'],
-    dateFormatString = "Y-M-d\\TH:i:s.uP",
-    d;
+var origResponse = JSON.parse(response.content);
+if (origResponse.access_token) {
+  var newResponse = {
+        token_type : 'Bearer'
+      },
+      toKeep = properties.keep;
 
-function convertIssuedAt(prop) {
-  if (b1[prop]) {
-    var shortName = prop.substring(0, prop.length - 3);
-    b1[prop] = parseInt(b1[prop], 10);
-    var d = new Date(b1[prop]);
-    b1[shortName] = dateFormat(d,dateFormatString);
+  if ( !toKeep ) {
+    toKeep = 'access_token, refresh_token, scope, grant_type';
   }
-}
 
-if (b1.access_token) {
-  propertiesToRemove.forEach(function(item){
-    delete b1[item];
+  toKeep = toKeep.split(new RegExp('[, ]+'));
+  toKeep.forEach(function(key) {
+      if (origResponse[key]) {
+        newResponse[key] = origResponse[key];
+      }
   });
 
-  // if there is no refresh token, which is the case for a
-  // client_credentials token, don't keep properties related to it:
-  if( ! b1.refresh_token ) {
-    delete b1.refresh_token_expires_in;
-    delete b1.refresh_count;
+  // Only if there is a refresh token, keep properties related to it:
+  if (origResponse.refresh_token) {
+    newResponse.refresh_token_expires_in = origResponse.refresh_token_expires_in;
+    newResponse.refresh_count = origResponse.refresh_count;
   }
 
-  // application_name is actually the application ID (a guid)
-  // get the actual app name
-  var appName = context.getVariable('apigee.developer.app.name');
-  if (appName) { b1.application_name = appName;}
+  // convert String(ms-since-epoch) to Number(seconds-since-epoch)
+  ['issued_at', 'refresh_token_issued_at'].forEach(function convertIssuedAt(prop) {
+    if (origResponse[prop]) {
+      newResponse[prop] = Math.floor(parseInt(origResponse[prop], 10) / 1000);
+    }
+  });
 
-
-  // convert *_issued_at to a number, and
-  // add a property with an equivalent human-readable time strings.
-  ['issued_at', 'refresh_token_issued_at'].forEach(convertIssuedAt);
-
-  // the expiry value is given as a string; let's make it a number.
-  if (b1.expires_in) {
-    b1.expires_in = parseInt(b1.expires_in, 10);
-    // and format the expiry value as a human-readable time
-    d = new Date(b1.issued_at + b1.expires_in *1000);
-    b1.expires = dateFormat(d,dateFormatString);
-  }
-
-  // the expiry value is given as a string; let's make it a number.
-  if (b1.refresh_token_expires_in) {
-    b1.refresh_token_expires_in = parseInt(b1.refresh_token_expires_in, 10);
-    d = new Date(b1.issued_at + b1.refresh_token_expires_in *1000);
-    b1.refresh_token_expires = dateFormat(d,dateFormatString);
-  }
-
-  b1.note = 'All this metadata is attached to the token in the token store within Edge.';
-  // pretty-print JSON
-  context.setVariable('response.content', JSON.stringify(b1, null, 2));
+  // convert expires_in to Number(expires_in)
+  ['expires_in', 'refresh_token_expires_in', 'refresh_count'].forEach(function convertExpires(prop){
+    if (origResponse[prop]) {
+        var intValue = parseInt(origResponse[prop], 10);
+        if (intValue>0) {
+          newResponse[prop] = intValue;
+        }
+    }
+  });
+  context.setVariable('response.content', JSON.stringify(newResponse, null, 2));
 }

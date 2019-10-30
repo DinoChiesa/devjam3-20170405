@@ -1,5 +1,5 @@
-<OAuthV2 name='OAuthV2-GenerateAccessToken-PG'>
-  <Operation>GenerateAccessToken</Operation>
+<OAuthV2 name='OAuthV2-RefreshAccessToken'>
+  <Operation>RefreshAccessToken</Operation>
   <!--
       ExpiresIn, in milliseconds. The ref is optional. The explicitly specified
       value is the default, when the variable reference cannot be resolved.
@@ -19,38 +19,8 @@
   -->
   <RefreshTokenExpiresIn>28800000</RefreshTokenExpiresIn>
 
-  <SupportedGrantTypes>
-    <!--
-        for a password grant type, the client_id and client_secret must be
-        passed in , in the Basic Auth header, as per the
-        specification.
-    -->
-    <GrantType>password</GrantType>
-  </SupportedGrantTypes>
-
   <!-- variable that specifies the requested grant type -->
   <GrantType>request.formparam.grant_type</GrantType>
-
-  <!-- variable that specifies the scopes to use. -->
-  <!-- Note: make sure that the API product has the scopes configured properly. -->
-  <!-- <Scope>userauth.user.groups</Scope> -->
-
-  <!--
-      Optional: these attributes get associated to the token.
-      They will be available to the API proxy whenever the token is
-      subsequently validated.
-  -->
-  <Attributes>
-    <Attribute name='authenticated_user'
-               ref='userauth.user.email'
-               display='true'>UNDEFINED</Attribute>
-    <Attribute name='grant_type'
-               ref='request.formparam.grant_type'
-               display='true'>UNDEFINED</Attribute>
-    <Attribute name='user_groups'
-               ref='userauth.user.groups'
-               display='true'>[]</Attribute>
-  </Attributes>
 
   <GenerateResponse enabled='true'/>
   <!--
@@ -82,13 +52,13 @@
       If you omit GenerateResponse or have enabled='false', then
       these flow variables are set on success:
 
-      oauthv2accesstoken.OAuthV2-GenerateAccessToken-PG.access_token
-      oauthv2accesstoken.OAuthV2-GenerateAccessToken-PG.token_type
-      oauthv2accesstoken.OAuthV2-GenerateAccessToken-PG.expires_in
-      oauthv2accesstoken.OAuthV2-GenerateAccessToken-PG.refresh_token
-      oauthv2accesstoken.OAuthV2-GenerateAccessToken-PG.refresh_token_expires_in
-      oauthv2accesstoken.OAuthV2-GenerateAccessToken-PG.refresh_token_issued_at
-      oauthv2accesstoken.OAuthV2-GenerateAccessToken-PG.refresh_token_status
+      oauthv2accesstoken.POLICYNAME.access_token
+      oauthv2accesstoken.POLICYNAME.token_type
+      oauthv2accesstoken.POLICYNAME.expires_in
+      oauthv2accesstoken.POLICYNAME.refresh_token
+      oauthv2accesstoken.POLICYNAME.refresh_token_expires_in
+      oauthv2accesstoken.POLICYNAME.refresh_token_issued_at
+      oauthv2accesstoken.POLICYNAME.refresh_token_status
   -->
 
 </OAuthV2>
