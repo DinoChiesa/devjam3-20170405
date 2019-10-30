@@ -1,4 +1,3 @@
 <Javascript name='JS-GroomTokenResponse' timeLimit='200' >
-  <IncludeURL>jsc://dateFormat.js</IncludeURL>
   <ResourceURL>jsc://groomTokenResponse.js</ResourceURL>
 </Javascript>
