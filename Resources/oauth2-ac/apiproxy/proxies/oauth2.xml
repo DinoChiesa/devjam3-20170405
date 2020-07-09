@@ -21,6 +21,21 @@
 
   <Flows>
 
+    <Flow name="CORS-preflight">
+      <Request>
+        <Step>
+          <Condition>(request.header.Access-Control-Request-Method = null) OR (request.header.origin = null)</Condition>
+          <Name>RF-Bad-CORS-Request</Name>
+        </Step>
+      </Request>
+      <Response>
+      <Step>
+        <Name>AM-CORS-Headers</Name>
+      </Step>
+      </Response>
+      <Condition>request.verb = "OPTIONS"</Condition>
+    </Flow>
+
     <Flow name="authorize_app">
       <!--
 
@@ -126,6 +141,9 @@
         </Step>
         <Step>
           <Name>JS-GroomTokenResponse</Name>
+        </Step>
+        <Step>
+          <Name>AM-CORS-Headers</Name>
         </Step>
       </Response>
     </Flow>

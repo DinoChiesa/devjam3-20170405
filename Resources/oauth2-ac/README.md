@@ -15,12 +15,18 @@ The flow looks like this:
 ![image alt text](./media/screenshot-20170404-124037.png)
 
 
-In a 3-legged flow, Apigee Edge acts as the OAuth authorization server. Its role is to generate access tokens, validate access tokens, and proxy authorized requests for protected resources on to the resource server. Apigee Edge delegates user authentication to the Identity Provider.
+In a 3-legged flow, Apigee Edge acts as the OAuth authorization server. Its role
+is to generate access tokens, validate access tokens, and proxy authorized
+requests for protected resources on to the resource server. Apigee Edge
+delegates user authentication to the Identity Provider.
 
 
 ## Setup
 
-If you are using this proxy as part of an Apigee-led hands-on workshop, the proxy has already been deployed for you, and you probably don't need to perform this setup.  If you are using this proxy on your own, you will need to perform the following setup steps.
+If you are using this proxy as part of an Apigee-led hands-on workshop, the
+proxy has already been deployed for you, and you probably don't need to perform
+this setup.  If you are using this proxy on your own, you will need to perform
+the following setup steps.
 
 ### Using the Script
 
@@ -72,7 +78,7 @@ Once you authenticate and grant consent, you will receive a code via the redirec
 The redirect_uri you pass should be able to display a code. The one shown above works just fine for most purposes.
 
 
-## To exchange the code for a token:
+## To exchange the code for a token
 
 Copy the code shown in the redirect_uri web page, then paste it into the body in place of `CODE_HERE` like so:
 
@@ -94,6 +100,12 @@ curl -i -u client_id:client_secret \
    -d 'grant_type=refresh_token&refresh_token=VALUE_HERE'
 
 ```
+
+## Web form help
+
+You can also use [this web form](https://dinochiesa.github.io/openid-connect/link-builder2.html) to guide you through constructing the kickoff URL, and redeeming the code for a token. 
+
+
 
 ## Teardown
 

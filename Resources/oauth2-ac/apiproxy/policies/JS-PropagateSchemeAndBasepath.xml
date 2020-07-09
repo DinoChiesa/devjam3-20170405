@@ -4,7 +4,7 @@
     context.setVariable('request.header.x-client-scheme', s);
     var bp = context.getVariable('proxy.basepath');
     context.setVariable('request.header.x-proxy-basepath', bp);
-    var h = context.getVariable('request.headers.host');
+    var h = context.getVariable('request.header.host');
     context.setVariable('request.header.x-original-host', h);
   </Source>
 </Javascript>
