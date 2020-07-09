@@ -1,6 +1,6 @@
 // groomTokenResponse.js
 // ------------------------------------------------------------------
-// last updated: <2019-October-30 09:08:18>
+// last updated: <2020-April-06 16:21:53>
 /* jshint esversion:6, node:false, strict:implied */
 /* global response, context, properties */
 
@@ -9,9 +9,9 @@ if (origResponse.access_token) {
   var newResponse = {
         token_type : 'Bearer'
       },
-      toKeep = properties.keep;
-
-  if ( !toKeep ) {
+      toKeep = String(properties.keep).trim();
+  //print('keep: ' + toKeep);
+  if ( !toKeep || toKeep == 'undefined') {
     toKeep = 'access_token, refresh_token, scope, grant_type';
   }
 

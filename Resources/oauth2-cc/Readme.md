@@ -1,7 +1,7 @@
 # OAuth v2.0 Token Dispensing Proxy - Client Credentials
 
-This is an example Apigee Edge proxy that illustrates how to use Apigee Edge to dispense tokens,
-for the "client credentials" grant type.
+This is an example Apigee Edge proxy that illustrates how to use Apigee
+Edge to dispense tokens, for the "client credentials" grant type.
 
 The tokens dispensed here are opaque OAuth 2.0 bearer tokens.
 
@@ -11,10 +11,10 @@ The tokens dispensed here are opaque OAuth 2.0 bearer tokens.
 script or tool that does that. Some examples are:
   * [the Powershell module](https://www.powershellgallery.com/packages/PSApigeeEdge)
   * [apigeetool](https://github.com/apigee/apigeetool-node)
-  * [pushapi](https://github.com/carloseberhardt/apiploy)
   * [importAndDeploy.js](https://github.com/DinoChiesa/apigee-edge-js/blob/master/examples/importAndDeploy.js)
 
-Or, you can do it manually: zip the apiproxy directory, then use the mgmt UI to import and deploy the zipped bundle.
+Or, you can do it manually: zip the apiproxy directory, then use the
+mgmt UI to import and deploy the zipped bundle.
 
 2. Create an API product. The API product normally wraps API proxies with metadata.
 For the purposes of this example, your API product need not contain any API proxies.  (This is because we do not actually _verify_ the token in this example.  We only issue the token.)
@@ -31,7 +31,7 @@ For the purposes of this example, your API product need not contain any API prox
    curl -i -X POST \
      -H 'content-type: application/x-www-form-urlencoded' \
      -H 'Authorization: Basic BASE64_BLOB_HERE' \
-     'https://vhost-ip:vhost-port/devjam3/oauth2-cc/token' \
+     'https://vhost-ip:vhost-port/oauth2-cc/token' \
      -d 'grant_type=client_credentials'
    ```
    In the above, you need to correctly format the

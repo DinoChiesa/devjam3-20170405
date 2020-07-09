@@ -25,13 +25,13 @@
 
   <Flows>
     <Flow name='OAuth2.0 token dispenser'>
-      <Description>dispense tokens for OAuth2.0, for password grant and Client credentials</Description>
+      <Description>dispense tokens for OAuth2.0, for Client credentials</Description>
       <!--
           An example request is like this:
 
           curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
             -u ${client_id}:${client_secret} \
-            'https://ORG-ENV.apigee.net/devjam3/oauth2-cc/token'\
+            'https://ORG-ENV.apigee.net/oauth2-cc/token'\
             -d 'grant_type=client_credentials'
 
           The resulting token will have an expiry, and a set of metadata.
