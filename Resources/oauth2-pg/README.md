@@ -30,7 +30,7 @@ For the purposes of this example, your API product need not contain any API prox
    curl -i -X POST \
      -H content-type:application/x-www-form-urlencoded \
      -H 'Authorization: Basic BASE64_BLOB_HERE' \
-     'https://vhost-ip:vhost-port/devjam3/oauth2-pg/token' \
+     'https://vhost-ip:vhost-port/oauth2-pg/token' \
      -d 'grant_type=password&username=dino@apigee.com&password=IloveAPIs'
    ```
    In the above, you need to correctly format the
@@ -41,7 +41,7 @@ For the purposes of this example, your API product need not contain any API prox
    curl -i -X POST \
      -H content-type:application/x-www-form-urlencoded \
      -u ${client_id}:${client_secret} \
-     'https://vhost-ip:vhost-port/devjam3/oauth2-pg/token' \
+     'https://vhost-ip:vhost-port/oauth2-pg/token' \
      -d 'grant_type=password&username=dino@apigee.com&password=IloveAPIs'
    ```
 
@@ -65,7 +65,7 @@ For the purposes of this example, your API product need not contain any API prox
    curl -i -X POST \
      -H content-type:application/x-www-form-urlencoded \
      -H 'Authorization: Basic BASE64_BLOB_HERE' \
-     'https://vhost-ip:vhost-port/devjam3/oauth2-pg/token' \
+     'https://vhost-ip:vhost-port/oauth2-pg/token' \
      -d 'grant_type=refresh_token&refresh_token=REFRESH_TOKEN_HERE'
    ```
    The response you see should be similar.

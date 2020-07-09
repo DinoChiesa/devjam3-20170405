@@ -31,7 +31,7 @@
 
           curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
             -u ${client_id}:${client_secret} \
-            'https://ORG-ENV.apigee.net/devjam3/oauth2-pg/token'\
+            'https://ORG-ENV.apigee.net/oauth2-pg/token'\
             -d 'grant_type=password&username=XXX&password=XXXX'
 
           The resulting token will have an expiry, and a set of roles,
@@ -41,7 +41,7 @@
 
           curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
             -u ${client_id}:${client_secret} \
-            'https://ORG-ENV.apigee.net/devjam3/oauth2-pg/token'\
+            'https://ORG-ENV.apigee.net/oauth2-pg/token'\
             -d 'grant_type=refresh_token&refresh_token=xxxx'
 
       -->
