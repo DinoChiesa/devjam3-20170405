@@ -14,11 +14,13 @@ B. Run it locally, and use ngrok to expose that to the internet
 After you get it running, you need to do 2 things:
 
 1. configure the oauth2-ac API proxy to redirect to the endpoint for the
-   login-and-consent experience.
-
+   login-and-consent experience. The result should be something like this:
+   
+   ```
    <AssignMessage name="AM-RedirectToLoginApp">
        <AssignVariable>
            <Name>login_endpoint</Name>
+           <!-- the beginning of this URL will be different for you. Also the tenant id.  -->
            <Template>https://7b5ce6bbb530.ngrok.io/tenants/test1/login?sessionid={messageid}</Template>
        </AssignVariable>
        <Set>
@@ -31,7 +33,8 @@ After you get it running, you need to do 2 things:
        </Set>
        <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
    </AssignMessage>
-
+   ```
+   
 2. Register that API Proxy as a "tenant" in the login-and-consent experience.
    Choose a distinct id (make it up), and specify the base_uri.
 
