@@ -28,7 +28,17 @@ proxy has already been deployed for you, and you probably don't need to perform
 this setup.  If you are using this proxy on your own, you will need to perform
 the following setup steps.
 
-### Using the Script
+### Deploy the User Authentication Web UI
+
+The login and consent experience is [here](../appengine).
+
+To demonstrate Authorization Code or OpenID Connect logins,
+the login experience needs to be available "in the cloud".
+
+Check the README there to get it running.
+Modify the `AM-RedirectToLoginApp` policy with the right URL for that login experience.
+
+### Set up the API Proxy Using the Script
 
 ```
 cd tools
@@ -36,7 +46,7 @@ npm install
 node ./provision -v -u apigeeadmin@example.org -o $ORG -e $ENV
 ```
 
-### Manually
+### Manually setting up the API Proxy
 
 Alternatively, you can perform all the steps the script performs, manually.
 
@@ -52,7 +62,7 @@ Alternatively, you can perform all the steps the script performs, manually.
 
 
 Whether you use the provision script or configure things manually,
-you need to note the  client_id and client_secret (consumer key and consumer secret) of the developer app.
+you need to note the  `client_id` and `client_secret` (consumer key and consumer secret) of the developer app.
 
 
 ## To Kick off the flow:
@@ -103,7 +113,7 @@ curl -i -u client_id:client_secret \
 
 ## Web form help
 
-You can also use [this web form](https://dinochiesa.github.io/openid-connect/link-builder2.html) to guide you through constructing the kickoff URL, and redeeming the code for a token. 
+You can also use [this web form](https://dinochiesa.github.io/openid-connect/link-builder2.html) to guide you through constructing the kickoff URL, and redeeming the code for a token.
 
 
 

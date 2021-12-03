@@ -23,8 +23,9 @@
 //
 //
 // created: Wed Sep  9 16:35:07 2015
-// last saved: <2017-April-04 10:42:44>
+// last saved: <2021-March-09 10:32:03>
 //
+/* global properties, context */
 
 function flatten(target, opts) {
   opts = opts || {};

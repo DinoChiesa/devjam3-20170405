@@ -2,10 +2,10 @@
 // ------------------------------------------------------------------
 //
 // created: Sun Feb 28 13:04:06 2016
-// last saved: <2016-February-28 13:25:11>
+// last saved: <2021-March-09 14:10:18>
+/* global localStorage */
+/* jshint browser:true, esversion:9 */
 
-(function(){
-  'use strict';
 
   function getStorageItem(key) {
     var html5AppId = '10F85B4A-4ED2-4359-A488-492BCB6C8790';
@@ -92,6 +92,3 @@
     // Load profile if it exits
     loadProfile();
   });
-
-
-}());

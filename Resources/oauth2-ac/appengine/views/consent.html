@@ -2,13 +2,14 @@
 <html>
   <head>
     <title>Consent</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
- 
-    <link rel='stylesheet' type='text/css' media='screen' href='css/login-base.css'>
-    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script type='text/javascript' src='js/loginpage.js'>
-    </script>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel='stylesheet' type='text/css' media='screen' href='/css/login-base.css'>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='/js/loginpage.js'></script>
   </head>
 
   <!-- ======================================================= -->
@@ -27,7 +28,7 @@
 
           <div class="control-group" style='margin-bottom: 20px;'>
             <label class='control-label' for='scopes'>Requested scopes:</label>
-             <% 
+             <%
              var rScopeList = req_scope.trim().split(' ');
              rScopeList.forEach(function(s){ %>
               <div class='data'><input name='check_<%= s %>' type='checkbox' disabled='disabled' checked> <%= s %></div>
@@ -52,14 +53,14 @@
           <button class="btn btn-lg btn-primary btn-block btn-cancel" type="submit"
                   name='submit' value='no'>Decline</button>
 
-          <!-- 
+          <!--
           <a href="/cancel" title='cancel'>
-            <button class="btn btn-lg btn-block btn-cancel" 
+            <button class="btn btn-lg btn-block btn-cancel"
                     name='submit' type='button' value='no'><span>Decline</span></button>
           </a>
           -->
         </form>
-        <!-- 
+        <!--
         <a href="#" class="forgot-password">Forgot the password?</a>
         -->
       </div>

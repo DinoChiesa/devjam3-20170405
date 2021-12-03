@@ -22,7 +22,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// last saved: <2019-September-05 14:32:28>
+// last saved: <2021-December-02 18:07:21>
 
 const constants = {
         cacheName      : 'cache1',
@@ -37,12 +37,12 @@ const constants = {
         appExpiry      : '180d'
       };
 
-const edgejs     = require('apigee-edge-js'),
-      common     = edgejs.utility,
-      apigeeEdge = edgejs.edge,
+const apigeejs   = require('apigee-edge-js'),
+      common     = apigeejs.utility,
+      apigee     = apigeejs.apigee,
       sprintf    = require('sprintf-js').sprintf,
       Getopt     = require('node-getopt'),
-      version    = '20190109-0937',
+      version    = '20211202-1738',
       getopt     = new Getopt(common.commonOptions.concat([
         ['R' , 'reset', 'Optional. Reset, delete all the assets previously created by this script'],
         ['U' , 'callbackUrl', 'Optional. specify a callback URL. default: ' + constants.callbackUrl],
@@ -51,9 +51,15 @@ const edgejs     = require('apigee-edge-js'),
 
 // ========================================================
 
+function isGaambo(org) {
+  console.log('urlbase: ' + org.conn.urlBase);
+  return org.conn.urlBase.startsWith('https://apigee.googleapis.com');
+}
+
+
 console.log(
-  'Apigee Edge AC Proxy Provisioning tool, version: ' + version + '\n' +
-    'Node.js ' + process.version + '\n');
+  `Apigee AC Proxy Provisioning tool, version: ${version}\n` +
+    `Node.js ${process.version}\n`);
 
 common.logWrite('start');
 var opt = getopt.parse(process.argv.slice(2));
@@ -68,11 +74,12 @@ const connectOptions = {
         verbosity  : opt.options.verbose || 0
       };
 
-apigeeEdge.connect(connectOptions)
-  .then( (org) => {
+apigee
+  .connect(common.optToOptions(opt))
+  .then( org => {
     common.logWrite('connected');
     if (opt.options.reset) {
-      let opts ={
+      let opts = {
             delApp: { appName: constants.appName, developerEmail: constants.developerEmail },
             delDeveloper:  { developerEmail: constants.developerEmail },
             delProduct : { productName: constants.productName },
@@ -81,14 +88,14 @@ apigeeEdge.connect(connectOptions)
             delCache: { cacheName : constants.cacheName, environment : opt.options.env }
           };
 
-      return org.proxies.undeploy(opts.undeployProxy)
-        .then( (result) => org.proxies.del(opts.delProxy) )
-        .then( (result) => org.caches.del(opts.delCache) )
-        .then( (result) => org.developerapps.del(opts.delApp) )
-        .then( (result) => org.developers.del(opts.delDeveloper) )
-        .then( (result) => org.products.del(opts.delProduct) )
-        .then( (result) => common.logWrite(sprintf('ok. demo assets have been deleted')) )
-        .catch( (e) => console.log(e.stack) );
+      return org.proxies.undeploy(opts.undeployProxy).catch(e => ({}))
+        .then( result => org.proxies.del(opts.delProxy) ).catch(e => ({}))
+        .then( result => org.caches.del(opts.delCache) )
+        .then( result => org.developerapps.del(opts.delApp) ).catch(e => ({}))
+        .then( result => org.developers.del(opts.delDeveloper) ).catch(e => ({}))
+        .then( result => org.products.del(opts.delProduct) ).catch(e => ({}))
+        .then( result => common.logWrite(sprintf('ok. demo assets have been deleted')) )
+        .catch( e => console.log(e.stack) );
     }
 
     let opts = {
@@ -125,13 +132,14 @@ apigeeEdge.connect(connectOptions)
           }
         };
 
-    return org.caches.create(opts.createCache)
-      .then( (result) => org.proxies.import(opts.importProxy) )
-      .then( (result) => org.proxies.deploy(Object.assign(opts.deployProxy, {revision:result.revision}) ) )
-      .then( (result) => org.products.create(opts.createProduct) )
-      .then( (result) => org.developers.create(opts.createDeveloper) )
-      .then( (result) => org.developerapps.create(opts.createApp) )
-      .then( (result) => {
+    let p = isGaambo(org) ? Promise.resolve({}) : org.caches.create(opts.createCache);
+    return p
+      .then( result => org.proxies.import(opts.importProxy) )
+      .then( result => org.proxies.deploy(Object.assign(opts.deployProxy, {revision:result.revision}) ) )
+      .then( result => org.products.create(opts.createProduct) )
+      .then( result => org.developers.create(opts.createDeveloper) )
+      .then( result => org.developerapps.create(opts.createApp) )
+      .then( result => {
         common.logWrite(sprintf('created app. name: %s', result.name));
         console.log(sprintf('\n\nORG=%s', opt.options.org));
         console.log(sprintf('ENV=%s', opt.options.env));
