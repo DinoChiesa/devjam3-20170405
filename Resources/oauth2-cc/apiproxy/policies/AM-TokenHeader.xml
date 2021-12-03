@@ -1,0 +1,8 @@
+<AssignMessage name="AM-TokenHeader">
+    <Set>
+        <Headers>
+            <Header name="token">access_token={apigee.access_token}</Header>
+        </Headers>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

@@ -7,20 +7,32 @@
   </HTTPProxyConnection>
 
   <FaultRules/>
+  <DefaultFaultRule name="fault-rule">
+    <Step>
+      <Name>AM-InjectProxyVersionHeader</Name>
+    </Step>
+    <AlwaysEnforce>true</AlwaysEnforce>
+  </DefaultFaultRule>
 
   <PreFlow name='PreFlow'>
-      <Request/>
-      <Response/>
+    <Request/>
+    <Response/>
   </PreFlow>
   <PostFlow name='PostFlow'>
-      <Request/>
-      <Response>
-        <Step><Name>AM-CleanResponseHeaders</Name></Step>
-        <Step>
-          <Name>JS-GroomTokenResponse</Name>
-          <Condition>request.formparam.grant_type = "client_credentials"</Condition>
-        </Step>
-      </Response>
+    <Request/>
+    <Response>
+      <Step><Name>AM-CleanResponseHeaders</Name></Step>
+      <Step>
+        <Name>JS-GroomTokenResponse</Name>
+        <Condition>request.formparam.grant_type = "client_credentials"</Condition>
+      </Step>
+      <Step>
+        <Name>AM-InjectProxyVersionHeader</Name>
+      </Step>
+      <Step>
+        <Name>AM-TokenHeader</Name>
+      </Step>
+    </Response>
   </PostFlow>
 
   <Flows>
@@ -31,7 +43,7 @@
 
           curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
             -u ${client_id}:${client_secret} \
-            'https://ORG-ENV.apigee.net/oauth2-cc/token'\
+            "https://$ORG-$ENV.apigee.net/oauth2-cc/token" \
             -d 'grant_type=client_credentials'
 
           The resulting token will have an expiry, and a set of metadata.
