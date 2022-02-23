@@ -4,7 +4,7 @@
 // A toy module to do user authentication.
 //
 // created: Wed Jun 15 14:13:56 2016
-// last saved: <2021-March-09 14:37:24>
+// last saved: <2022-February-22 20:31:57>
 /* jshint esversion:9, node:true */
 
 let localUserDb;
@@ -69,8 +69,21 @@ function authn(ctx) {
   return ctx;
 }
 
+function list() {
+  if ( !localUserDb) {
+    throw new Error("localUserDb is null.");
+  }
+
+  return Object.keys(localUserDb)
+    .map(key => ({
+      user: key,
+      password: localUserDb[key].hash
+    }));
+}
+
 
 module.exports = {
   config,
-  authn
+  authn,
+  list
 };

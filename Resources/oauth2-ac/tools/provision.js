@@ -22,7 +22,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// last saved: <2021-December-02 18:07:21>
+// last saved: <2022-February-22 20:06:49>
 
 const constants = {
         cacheName      : 'cache1',
@@ -42,7 +42,7 @@ const apigeejs   = require('apigee-edge-js'),
       apigee     = apigeejs.apigee,
       sprintf    = require('sprintf-js').sprintf,
       Getopt     = require('node-getopt'),
-      version    = '20211202-1738',
+      version    = '20220222-2006',
       getopt     = new Getopt(common.commonOptions.concat([
         ['R' , 'reset', 'Optional. Reset, delete all the assets previously created by this script'],
         ['U' , 'callbackUrl', 'Optional. specify a callback URL. default: ' + constants.callbackUrl],
@@ -56,7 +56,6 @@ function isGaambo(org) {
   return org.conn.urlBase.startsWith('https://apigee.googleapis.com');
 }
 
-
 console.log(
   `Apigee AC Proxy Provisioning tool, version: ${version}\n` +
     `Node.js ${process.version}\n`);
@@ -64,15 +63,6 @@ console.log(
 common.logWrite('start');
 var opt = getopt.parse(process.argv.slice(2));
 common.verifyCommonRequiredParameters(opt.options, getopt);
-
-const connectOptions = {
-        mgmtServer : opt.options.mgmtserver,
-        org        : opt.options.org,
-        user       : opt.options.username,
-        password   : opt.options.password,
-        no_token   : opt.options.notoken,
-        verbosity  : opt.options.verbose || 0
-      };
 
 apigee
   .connect(common.optToOptions(opt))

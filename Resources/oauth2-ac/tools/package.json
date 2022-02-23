@@ -9,7 +9,7 @@
   "author": "Dino Chiesa <dchiesa@google.com>",
   "license": "Apache-2.0",
   "dependencies": {
-    "apigee-edge-js": ">=0.4.28",
+    "apigee-edge-js": ">=0.4.30",
     "crypto-js": "^3.1.9-1",
     "node-getopt": ">=0.3.2",
     "sprintf-js": "^1.1.1"

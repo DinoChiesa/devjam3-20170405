@@ -2,7 +2,7 @@
 // ------------------------------------------------------------------
 //
 // created: Mon Apr  3 21:02:40 2017
-// last saved: <2021-March-10 15:51:19>
+// last saved: <2022-February-22 20:34:39>
 //
 // ------------------------------------------------------------------
 //
@@ -16,7 +16,7 @@
 //     node ./login-and-consent.js
 //
 // To pop the login page:
-// GET https://ORGNAME-ENVNAME-test.apigee.net/PROXYBASEPATH/oauth2/authorize?client_id=VALID_CLIENT_ID_HERE&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=id_token&scope=openid%20profile&nonce=A12345&state=ABCDEFG
+// GET https://apiproxy-endpoint.net/PROXYBASEPATH/oauth2/authorize?client_id=VALID_CLIENT_ID_HERE&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=id_token&scope=openid%20profile&nonce=A12345&state=ABCDEFG
 //
 // ------------------------------------------------------------------
 /* jshint esversion:9, node:true */
@@ -284,7 +284,7 @@ app.post('/tenants/:tenant/validate', (request, response) => {
     return;
   }
 
-  var context = {
+  let context = {
         credentials : {
           username: request.body.username,
           password: request.body.password
@@ -401,15 +401,16 @@ app.post('/tenants/:tenant/grantConsent',  (request, response) => {
 
 // ====================================================================
 // API
-const deRegisterTenant = (tenant) => () => {
+function deRegisterTenant(tenant) {
+  return () => {
         if (registeredTenants[tenant] && registeredTenants[tenant].timeout) {
           clearTimeout(registeredTenants[tenant].timeout);
         }
         delete registeredTenants[tenant];
-      };
+  };
+}
 
-const validateTenant =
-  (request, response) => {
+function validateTenant  (request, response) {
     let tenant = registeredTenants[request.params.tenant];
     if (!tenant) {
       response
@@ -435,7 +436,7 @@ const validateTenant =
     tenant.timeout = setTimeout(deRegisterTenant(tenant.id), ONE_HOUR_IN_MS);
     tenant.lastActive = Date.now();
     return true;
-  };
+}
 
 
 // [API] register a tenant
@@ -479,6 +480,16 @@ app.delete('/tenants/:tenant', (request, response) => {
   if ( ! validateTenant(request, response)) { return; }
   deRegisterTenant(request.params.tenant);
   response.status(204);
+});
+
+// [API] list users known at a tenant
+app.get('/tenants/:tenant/users', (request, response) => {
+  if ( ! validateTenant(request, response)) { return; }
+
+  response
+    .header('Content-Type', 'application/json')
+    .status(200)
+    .send(JSON.stringify(userAuth.list(), null, 2) + "\n");
 });
 
 // [API] list tenants
