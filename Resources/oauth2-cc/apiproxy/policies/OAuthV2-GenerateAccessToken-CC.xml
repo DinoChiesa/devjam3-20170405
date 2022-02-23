@@ -1,5 +1,4 @@
 <OAuthV2 name='OAuthV2-GenerateAccessToken-CC'>
-  <!-- created at 2016-03-26T02:50:38+0000 -->
   <Operation>GenerateAccessToken</Operation>
   <!--
       ExpiresIn, in milliseconds. The ref is optional. The explicitly specified
