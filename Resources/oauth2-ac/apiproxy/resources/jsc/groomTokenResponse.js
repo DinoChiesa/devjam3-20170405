@@ -3,12 +3,13 @@
 //
 // Tweaks the generated OAuth token response.
 //
-// last saved: <2018-December-19 16:15:32>
+// last saved: <2022-April-07 09:54:56>
+/* global response, dateFormat, context */
 
 var b1 = JSON.parse(response.content),
     propertiesToRemove = ['status', 'refresh_token_status',
                           'token_type', 'organization_name', 'developer.email',
-                          'scope',
+                          //'scope',
                           'application_name'],
     dateFormatString = "Y-M-d\\TH:i:s.uP",
     d;
@@ -59,7 +60,7 @@ if (b1.access_token) {
     b1.refresh_token_expires = dateFormat(d,dateFormatString);
   }
 
-  b1.note = 'All this metadata is attached to the token in the token store within Edge.';
+  b1.note = 'All this metadata is attached to the token in the token store within Apigee.';
   // pretty-print JSON
   context.setVariable('response.content', JSON.stringify(b1, null, 2));
 }

@@ -3,7 +3,7 @@
 This is an API Proxy that implements the OAuth2.0 3-legged (authorization code) flow.
 The login-and-consent app is bundled with the API Proxy.
 This makes it super easy to demonstrate 3-legged OAuth in Apigee.
-This works with Apigee Edge, X, or hybrid. 
+This works with Apigee Edge, X, or hybrid.
 
 # Background: What are the Three Legs?
 
@@ -18,7 +18,7 @@ The flow looks like this:
 
 In a 3-legged flow, Apigee acts as the OAuth authorization server. Its role
 is to generate access tokens, validate access tokens, and proxy authorized
-requests for protected resources on to the resource server. Apigee 
+requests for protected resources on to the resource server. Apigee
 delegates user authentication to the Identity Provider.
 
 
