@@ -2,7 +2,7 @@
 // ------------------------------------------------------------------
 //
 // created: Mon Apr  3 21:02:40 2017
-// last saved: <2022-February-22 20:34:39>
+// last saved: <2022-June-06 15:52:49>
 //
 // ------------------------------------------------------------------
 //
@@ -26,7 +26,7 @@ const express     = require('express'),
       bodyParser  = require('body-parser'),
       querystring = require('querystring'),
       morgan      = require('morgan'), // a logger
-      request     = require('request'),
+      https       = require('https'),
       path        = require('path'),
       url         = require('url'),
       app         = express(),
@@ -36,6 +36,42 @@ const express     = require('express'),
 const ONE_HOUR_IN_MS = 3600 * 1000;
 
 let registeredTenants = {};
+
+function httpRequest(req) {
+  // eg, req = {
+  //       url: obj.token_uri,
+  //       method: 'post',
+  //       body : querystring.stringify({
+  //         grant_type : 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+  //         assertion: token
+  //       }),
+  //       headers : {
+  //         'content-type': 'application/x-www-form-urlencoded'
+  //       }
+  //     };
+
+  console.log('%s %s', req.method.toUpperCase(), req.url);
+  return new Promise((resolve, reject) => {
+    let parsed = url.parse(req.url),
+        options = {
+          host: parsed.host,
+          path: parsed.path,
+          method : req.method,
+          headers : req.headers
+        },
+        request = https.request(options, function(res) {
+          var payload = '';
+          res.on('data', chunk => payload += chunk);
+          res.on('end', () => resolve({payload:JSON.parse(payload), statusCode:res.statusCode, headers:res.headers}));
+          res.on('error', e => reject(e));
+        });
+    if (req.body) {
+      request.write(req.body);
+    }
+    request.end();
+  });
+}
+
 
 userAuth.config(config);
 
@@ -59,96 +95,74 @@ function postAuthFormData(userInfo) {
 }
 
 function requestAuthCode(ctx) {
-  return new Promise( (resolve, reject) => {
-    console.log('requestAuthCode, context:' + JSON.stringify(ctx, null, 2));
-    let tenant = registeredTenants[ctx.tenant],
-        options = {
-          uri: tenant.base_uri + '/oauth2-ac/authcode?' + querystring.stringify({ sessionid : ctx.sessionid }),
-          method: 'POST',
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            Accept: 'application/json'
-          },
-          form : postAuthFormData(ctx.userInfo)
-        };
 
-    console.log('requestAuthCode, request options:' + JSON.stringify(options, null, 2));
+  console.log('requestAuthCode, context:' + JSON.stringify(ctx, null, 2));
+  let tenant = registeredTenants[ctx.tenant],
+      options = {
+        url: tenant.base_uri + '/oauth2-ac/authcode?' + querystring.stringify({ sessionid : ctx.sessionid }),
+        method: 'POST',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json'
+        },
+        body : postAuthFormData(ctx.userInfo)
+      };
 
-    request(options, function(error, response, body) {
-      if (error) {
-        console.log('Error from /authcode: ' + error);
-        resolve(ctx);
-        return;
-      }
-      console.log('/authcode response: ' + response.statusCode);
-      if (response.statusCode == 302) {
-        try {
-          ctx.authRedirLoc = response.headers.location;
-        }
-        catch (exc1) {
-          console.log('auth exception: ' + exc1.message);
-          console.log(exc1.stack);
-          reject(new Error(exc1));
-          return;
-        }
+  console.log('requestAuthCode, request options:' + JSON.stringify(options, null, 2));
+
+  return httpRequest(options)
+    .then(({payload, statusCode, headers}) => {
+      console.log('/authcode response: ' + statusCode);
+      if (statusCode == 302) {
+        ctx.authRedirLoc = headers.location;
       }
       else {
-        console.log('Non-302 response from /authcode: ' + response.statusCode);
-        console.log('auth, statusCode = ' + response.statusCode);
-        ctx.authStatusCode = response.statusCode;
-        ctx.authResponseBody = (typeof body == 'string') ? JSON.parse(body) : body;
+        console.log('Non-302 response from /authcode: ' + statusCode);
+        console.log('auth, statusCode = ' + statusCode);
+        ctx.authStatusCode = statusCode;
+        ctx.authResponseBody = payload;
       }
-      resolve(ctx);
+      return ctx;
+    })
+    .catch(e => {
+      console.log('Error from /authcode: ' + e);
     });
-  });
+
 }
 
 function inquireOauthSessionId(ctx) {
   // send a query to Edge to ask about the oauth session
-  return new Promise( (resolve, reject) => {
-    let query = { sessionid : ctx.sessionid },
-        tenant = registeredTenants[ctx.tenant],
-        options = {
-          uri: tenant.base_uri + '/oauth2-session/info?' + querystring.stringify(query),
-          method: 'GET',
-          headers: {
-            apikey: config.sessionApi.apikey,
-            Accept: 'application/json'
-          }
-        };
 
-    console.log('inquireOauthSessionId request: ' + JSON.stringify(options, null, 2));
+  let query = { sessionid : ctx.sessionid },
+      tenant = registeredTenants[ctx.tenant],
+      options = {
+        uri: tenant.base_uri + '/oauth2-session/info?' + querystring.stringify(query),
+        method: 'GET',
+        headers: {
+          apikey: config.sessionApi.apikey,
+          Accept: 'application/json'
+        }
+      };
 
-    request(options, (error, response, body) => {
-      if (error) {
-        console.log('inquireOauthSessionId error: ' + error);
-        ctx.error = error;
-        return resolve(ctx);
-      }
-      console.log('inquireOauthSessionId response: ' + body);
-      if (response) {
-        if (response.statusCode == 200) {
-          try {
-            body = JSON.parse(body);
-            // Edge knows about the session and has returned information about it.
-            ctx.sessionInfo = body;
-          }
-          catch (exc1) {
-            console.log('inquireOauthSessionId exception: ' + exc1.message);
-          }
-          resolve(ctx);
-        }
-        else {
-          console.log('inquireOauthSessionId, statusCode = ' + response.statusCode);
-          resolve(ctx);
-        }
+  console.log('inquireOauthSessionId request: ' + JSON.stringify(options, null, 2));
+
+  return httpRequest(options)
+    .then(({payload, statusCode, headers}) => {
+      console.log('inquireOauthSessionId response: ' + JSON.stringify(payload));
+      if (statusCode == 200) {
+        ctx.sessionInfo = payload;
       }
       else {
-        console.log('inquireOauthSessionId, no response');
-        reject(ctx);
+        console.log('inquireOauthSessionId, statusCode = ' + statusCode);
       }
+      return ctx;
+    })
+    .catch( e => {
+      console.log('inquireOauthSessionId, exception: ' + e);
+      ctx.error = e;
+      return ctx;
     });
-  });
+
 }
 
 app.use(morgan('combined')); // logger
