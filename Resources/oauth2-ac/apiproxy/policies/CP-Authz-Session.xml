@@ -1,5 +1,4 @@
-<PopulateCache name="CP-AuthorizationSession">
-  <DisplayName>Cache Populate: Authorization Session</DisplayName>
+<PopulateCache name="CP-Authz-Session">
   <CacheResource>cache1</CacheResource>
   <Scope>Global</Scope>
   <Source>session.request.content</Source>

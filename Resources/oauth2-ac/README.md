@@ -31,15 +31,10 @@ the following setup steps.
 
 ### Deploy the User Authentication Web UI
 
-The login and consent experience is [here](./appengine).
+OLD: The login and consent experience is [here](./appengine).
 
 To demonstrate Authorization Code or OpenID Connect logins,
 the login experience needs to be available "in the cloud".
-
-Check the README there to get it running.
-You will need to modify the `AM-RedirectToLoginApp` policy in this proxy with
-the right domain to reach your login experience. (This is described in the
-README above.)
 
 ### Set up the API Proxy Using the Script
 
@@ -155,7 +150,7 @@ curl -i -u client_id:client_secret \
 
 ## Web form help
 
-You can also use [this web form](https://dinochiesa.github.io/openid-connect/link-builder2.html) to guide you through constructing the kickoff URL, and redeeming the code for a token.
+You can also use [this web form](https://dinochiesa.github.io/openid-connect/link-builder3.html) to guide you through constructing the kickoff URL, and redeeming the code for a token.
 
 
 

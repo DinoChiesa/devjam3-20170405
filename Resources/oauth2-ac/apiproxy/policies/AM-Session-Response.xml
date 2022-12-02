@@ -1,4 +1,4 @@
-<AssignMessage name='AM-SessionResponse'>
+<AssignMessage name='AM-Session-Response'>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <Set>
     <Payload contentType='application/json'>{authtx}</Payload>

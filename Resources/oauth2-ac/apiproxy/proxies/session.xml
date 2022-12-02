@@ -1,7 +1,7 @@
 <ProxyEndpoint name='session'>
   <Description>Proxy Endpoint to handle OAuth 2.0 session info</Description>
   <HTTPProxyConnection>
-    <BasePath>/devjam3/oauth2-session</BasePath>
+    <BasePath>/oauth2-session</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
 
@@ -26,7 +26,9 @@
   <PostFlow name='PostFlow'>
       <Request/>
       <Response>
-        <Step><Name>AM-CleanResponseHeaders</Name></Step>
+        <Step>
+          <Name>AM-Clean-Response-Headers</Name>
+        </Step>
       </Response>
   </PostFlow>
 
@@ -45,18 +47,20 @@
       <Description>Retrieve info regarding an existing authorization session</Description>
       <Request>
         <Step>
-          <Name>RF-InvalidRequest</Name>
+          <Name>RF-Invalid-Request</Name>
           <Condition>request.queryparam.sessionid = null</Condition>
         </Step>
-        <Step><Name>CL-GetAuthzSession</Name></Step>
+        <Step>
+          <Name>CL-Get-Authz-Session</Name>
+        </Step>
       </Request>
       <Response>
         <Step>
-          <Name>AM-SessionResponse</Name>
+          <Name>AM-Session-Response</Name>
           <Condition>authtx != null</Condition>
         </Step>
         <Step>
-          <Name>AM-NoResponse</Name>
+          <Name>AM-No-Response</Name>
           <Condition>authtx = null</Condition>
         </Step>
       </Response>
@@ -65,7 +69,9 @@
 
     <Flow name='unknown request'>
       <Request>
-        <Step><Name>RF-UnknownRequest</Name></Step>
+        <Step>
+          <Name>RF-Unknown-Request</Name>
+        </Step>
       </Request>
       <Response/>
     </Flow>

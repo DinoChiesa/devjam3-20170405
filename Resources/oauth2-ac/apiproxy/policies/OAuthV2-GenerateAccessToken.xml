@@ -1,8 +1,0 @@
-<OAuthV2 name="OAuthV2-GenerateAccessToken">
-    <ExpiresIn>3600000</ExpiresIn>
-    <RefreshTokenExpiresIn>86400000</RefreshTokenExpiresIn>
-    <SupportedGrantTypes>
-      <GrantType>authorization_code</GrantType>
-    </SupportedGrantTypes>
-    <GenerateResponse/>
-</OAuthV2>

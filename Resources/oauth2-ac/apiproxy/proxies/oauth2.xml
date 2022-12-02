@@ -2,7 +2,7 @@
 <ProxyEndpoint name="oauth2">
   <Description>Proxy Endpoint to handle OAuth 2.0 Authorization Code flow</Description>
   <HTTPProxyConnection>
-    <BasePath>/devjam3/oauth2-ac</BasePath>
+    <BasePath>/oauth2-ac</BasePath>
     <Properties/>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
@@ -10,11 +10,12 @@
   <FaultRules/>
 
   <PreFlow name="PreFlow">
-    <Request/>
-    <Response>
+    <Request>
       <Step>
-        <Name>AM-CORS-Headers</Name>
+        <Name>CORS-1</Name>
       </Step>
+    </Request>
+    <Response>
     </Response>
   </PreFlow>
 
@@ -24,21 +25,6 @@
   </PostFlow>
 
   <Flows>
-
-    <Flow name="CORS-preflight">
-      <Request>
-        <Step>
-          <Condition>(request.header.Access-Control-Request-Method = null) OR (request.header.origin = null)</Condition>
-          <Name>RF-Bad-CORS-Request</Name>
-        </Step>
-      </Request>
-      <Response>
-      <Step>
-        <Name>AM-CORS-Headers</Name>
-      </Step>
-      </Response>
-      <Condition>request.verb = "OPTIONS"</Condition>
-    </Flow>
 
     <Flow name="authorize_app">
       <!--
@@ -57,13 +43,19 @@
       <Condition>(proxy.pathsuffix MatchesPath "/authorize") and (request.verb = "GET")</Condition>
       <Description/>
       <Request>
-        <Step><Name>OAuthV2-GetInfo</Name></Step>
-        <Step><Name>AM-AuthorizationSession</Name></Step>
-        <Step><Name>CP-AuthorizationSession</Name></Step>
+        <Step>
+          <Name>OAuthV2-GetInfo</Name>
+        </Step>
+        <Step>
+          <Name>AM-Authz-Session</Name>
+        </Step>
+        <Step>
+          <Name>CP-Authz-Session</Name>
+        </Step>
       </Request>
       <Response>
         <Step>
-          <Name>AM-RedirectToLoginApp</Name>
+          <Name>AM-Redirect-To-Login-App</Name>
         </Step>
       </Response>
     </Flow>
@@ -88,17 +80,17 @@
       <Description/>
       <Request>
         <Step>
-          <Name>CL-GetAuthzSession</Name>
+          <Name>CL-Get-Authz-Session</Name>
         </Step>
         <Step>
-          <Name>RF-BadSession</Name>
+          <Name>RF-Bad-Session</Name>
           <Condition>authtx = null</Condition>
         </Step>
         <Step>
-          <Name>JS-ImportJsonToContext</Name>
+          <Name>JS-Import-Json-To-Context</Name>
         </Step>
         <Step>
-          <Name>OAuthV2-GenerateAuthorizationCode</Name>
+          <Name>OAuthV2-Generate-Authorization-Code</Name>
         </Step>
       </Request>
       <Response/>
@@ -129,32 +121,31 @@
       <Description/>
       <Request>
         <Step>
-          <Name>RF-InvalidGrantType</Name>
+          <Name>RF-Invalid-Grant-Type</Name>
           <Condition>NOT (request.formparam.grant_type = "authorization_code" OR request.formparam.grant_type = "refresh_token")</Condition>
         </Step>
 
       </Request>
       <Response>
         <Step>
-          <Name>OAuthV2-GenerateAccessToken</Name>
+          <Name>OAuthV2-Generate-Access-Token</Name>
           <Condition>request.formparam.grant_type = "authorization_code"</Condition>
         </Step>
         <Step>
-          <Name>OAuthV2-RefreshAccessToken</Name>
+          <Name>OAuthV2-Refresh-Access-Token</Name>
           <Condition>request.formparam.grant_type = "refresh_token"</Condition>
         </Step>
         <Step>
-          <Name>JS-GroomTokenResponse</Name>
-        </Step>
-        <Step>
-          <Name>AM-CORS-Headers</Name>
+          <Name>JS-Groom-Token-Response</Name>
         </Step>
       </Response>
     </Flow>
 
     <Flow name='unknown request'>
       <Request>
-        <Step><Name>RF-UnknownRequest</Name></Step>
+        <Step>
+          <Name>RF-Unknown-Request</Name>
+        </Step>
       </Request>
       <Response/>
     </Flow>

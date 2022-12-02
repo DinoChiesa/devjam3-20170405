@@ -1,15 +1,7 @@
-<AssignMessage name="AM-RedirectToLoginApp">
-  <AssignVariable>
-    <Name>domain-for-login-endpoint</Name>
-    <Value>09a0-50-35-230-49.ngrok.io</Value>
-  </AssignVariable>
-  <AssignVariable>
-    <Name>tenant-id</Name>
-    <Value>5gdev</Value>
-  </AssignVariable>
+<AssignMessage name="AM-Redirect-To-Login-App">
   <AssignVariable>
     <Name>login_endpoint</Name>
-    <Template>https://{domain-for-login-endpoint}/tenants/{tenant-id}/login?sessionid={messageid}</Template>
+    <Template>https://{propertyset.settings.domain-for-login-endpoint}/tenants/{propertyset.settings.tenant-id}/login?sessionid={messageid}</Template>
   </AssignVariable>
   <Set>
     <Headers>

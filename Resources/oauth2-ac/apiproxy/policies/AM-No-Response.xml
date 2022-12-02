@@ -1,12 +1,11 @@
-<AssignMessage name='AM-NoResponse'>
-  <DisplayName>AM-NoResponse</DisplayName>
+<AssignMessage name='AM-No-Response'>
   <Description>Authorization Tx not found</Description>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <Set>
-    <Payload contentType='application/json'
-             variablePrefix='%' variableSuffix='#'>{
+    <Payload contentType='application/json'>{
   "message" : "Transaction not found"
-}</Payload>
+}
+</Payload>
     <StatusCode>404</StatusCode>
     <ReasonPhrase>Not Found</ReasonPhrase>
   </Set>

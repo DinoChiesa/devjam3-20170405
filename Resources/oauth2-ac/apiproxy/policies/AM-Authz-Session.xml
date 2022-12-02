@@ -1,4 +1,4 @@
-<AssignMessage name="AM-AuthorizationSession">
+<AssignMessage name="AM-Authz-Session">
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <AssignTo createNew="true" transport="http" type="request">session.request</AssignTo>
   <Set>

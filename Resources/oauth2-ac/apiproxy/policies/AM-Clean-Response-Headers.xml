@@ -1,4 +1,4 @@
-<AssignMessage name='AM-CleanResponseHeaders'>
+<AssignMessage name='AM-Clean-Response-Headers'>
   <Remove>
     <Headers>
       <Header name='Accept'/>
@@ -15,5 +15,4 @@
     </Headers>
   </Remove>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-  <AssignTo createNew='false' transport='http' type='response'/>
 </AssignMessage>

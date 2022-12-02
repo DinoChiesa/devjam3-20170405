@@ -1,6 +1,4 @@
-<OAuthV2 enabled='true' name='OAuthV2-RefreshAccessToken'>
-  <Operation>RefreshAccessToken</Operation>
-
+<OAuthV2 enabled='true' name='OAuthV2-Refresh-Access-Token'>
   <!--
       client_id and client_secret are expected in the Authorization Header
       passed as Basic Auth (concatenated with colon, then base64 encoded).

@@ -1,4 +1,4 @@
-<RaiseFault name='RF-UnknownRequest'>
+<RaiseFault name='RF-Unknown-Request'>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <FaultResponse>
     <Set>

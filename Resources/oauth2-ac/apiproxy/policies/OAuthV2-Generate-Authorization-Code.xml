@@ -1,5 +1,4 @@
-<OAuthV2 name="OAuthV2-GenerateAuthorizationCode">
-  <Operation>GenerateAuthorizationCode</Operation>
+<OAuthV2 name="OAuthV2-Generate-Authorization-Code">
   <!--
       ExpiresIn, in milliseconds. The ref is optional. The explicitly specified
       value is the default, when the variable reference cannot be resolved.
