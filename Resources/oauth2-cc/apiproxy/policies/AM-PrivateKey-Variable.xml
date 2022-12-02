@@ -1,0 +1,6 @@
+<AssignMessage name="AM-PrivateKey-Variable">
+    <AssignVariable>
+        <Name>private.rsa-privatekey-1</Name>
+        <Ref>propertyset.secrets.rsa-privatekey-1</Ref>
+    </AssignVariable>
+</AssignMessage>

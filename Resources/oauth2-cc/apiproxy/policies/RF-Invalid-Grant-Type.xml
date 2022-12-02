@@ -1,5 +1,4 @@
-<RaiseFault name='RF-InvalidGrantType'>
-  <DisplayName>RaiseFault InvalidGrantType</DisplayName>
+<RaiseFault name='RF-Invalid-Grant-Type'>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <FaultResponse>
     <Set>

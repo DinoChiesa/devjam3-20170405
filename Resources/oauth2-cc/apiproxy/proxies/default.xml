@@ -1,5 +1,7 @@
-<ProxyEndpoint name='default'>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
   <Description>the main proxy endpoint</Description>
+
   <HTTPProxyConnection>
     <BasePath>/oauth2-cc</BasePath>
     <Properties/>
@@ -7,43 +9,47 @@
   </HTTPProxyConnection>
 
   <FaultRules/>
+
   <DefaultFaultRule name="fault-rule">
     <Step>
-      <Name>AM-InjectProxyVersionHeader</Name>
+      <Name>AM-Inject-Proxy-Revision-Header</Name>
     </Step>
     <AlwaysEnforce>true</AlwaysEnforce>
   </DefaultFaultRule>
 
-  <PreFlow name='PreFlow'>
+  <PreFlow name="PreFlow">
     <Request/>
     <Response/>
   </PreFlow>
-  <PostFlow name='PostFlow'>
+
+  <PostFlow name="PostFlow">
     <Request/>
     <Response>
-      <Step><Name>AM-CleanResponseHeaders</Name></Step>
       <Step>
-        <Name>JS-GroomTokenResponse</Name>
+        <Name>AM-Clean-Response-Headers</Name>
+      </Step>
+      <Step>
+        <Name>JS-Groom-Token-Response</Name>
         <Condition>request.formparam.grant_type = "client_credentials"</Condition>
       </Step>
       <Step>
-        <Name>AM-InjectProxyVersionHeader</Name>
+        <Name>AM-Inject-Proxy-Revision-Header</Name>
       </Step>
       <Step>
         <Name>AM-TokenHeader</Name>
+        <Condition>apigee.access_token != null</Condition>
       </Step>
     </Response>
   </PostFlow>
-
   <Flows>
-    <Flow name='OAuth2.0 token dispenser'>
-      <Description>dispense tokens for OAuth2.0, for Client credentials</Description>
+    <Flow name="opaque token">
+      <Description>dispense opaque tokens for OAuth2.0, for Client credentials</Description>
       <!--
           An example request is like this:
 
           curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
             -u ${client_id}:${client_secret} \
-            "https://$ORG-$ENV.apigee.net/oauth2-cc/token" \
+            "$endpoint/oauth2-cc/token" \
             -d 'grant_type=client_credentials'
 
           The resulting token will have an expiry, and a set of metadata.
@@ -52,7 +58,7 @@
       <Request>
         <Step>
           <!-- basic validation of the inbound request. Is it well formed? -->
-          <Name>RF-InvalidGrantType</Name>
+          <Name>RF-Invalid-Grant-Type</Name>
           <Condition>request.formparam.grant_type != "client_credentials"</Condition>
         </Step>
         <Step>
@@ -60,24 +66,53 @@
           <Name>OAuthV2-GenerateAccessToken-CC</Name>
         </Step>
       </Request>
-
       <Response/>
-
       <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST")</Condition>
     </Flow>
 
-    <Flow name='unknown request'>
+    <Flow name="JWT token">
+      <Description>dispense JWT for OAuth2.0, for Client credentials</Description>
+      <!--
+          An example request is like this:
+
+          curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
+            -u ${client_id}:${client_secret} \
+            "$endpoint/oauth2-cc/jwt" \
+            -d 'grant_type=client_credentials'
+
+          The resulting token will have an expiry, and a set of metadata.
+
+      -->
       <Request>
-        <Step><Name>RF-UnknownRequest</Name></Step>
+        <Step>
+          <!-- basic validation of the inbound request. Is it well formed? -->
+          <Name>RF-Invalid-Grant-Type</Name>
+          <Condition>request.formparam.grant_type != "client_credentials"</Condition>
+        </Step>
+        <Step>
+          <Name>AM-PrivateKey-Variable</Name>
+        </Step>
+        <Step>
+          <!-- this policy generates a payload -->
+          <Name>OAuthV2-GenerateJWT-AT-CC</Name>
+        </Step>
+      </Request>
+      <Response/>
+      <Condition>(proxy.pathsuffix MatchesPath "/jwt") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name="unknown request">
+      <Request>
+        <Step>
+          <Name>RF-Unknown-Request</Name>
+        </Step>
       </Request>
       <Response/>
     </Flow>
-
   </Flows>
 
   <!-- There is no backend target. Responses for oauth token generation and
        refresh are direct from this API proxy.
   -->
-  <RouteRule name='NoRouteRule'/>
-
+  <RouteRule name="NoRouteRule"/>
 </ProxyEndpoint>

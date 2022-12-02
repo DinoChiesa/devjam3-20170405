@@ -1,5 +1,5 @@
-<OAuthV2 name='OAuthV2-GenerateAccessToken-CC'>
-  <Operation>GenerateAccessToken</Operation>
+<OAuthV2 name="OAuthV2-GenerateJWT-AT-CC">
+  <Operation>GenerateJWTAccessToken</Operation>
   <!--
       ExpiresIn, in milliseconds. The ref is optional. The explicitly specified
       value is the default, when the variable reference cannot be resolved.
@@ -7,8 +7,7 @@
       2400000 = 40 minutes
       3600000 = 60 minutes
   -->
-  <ExpiresIn ref="request.queryparam.lifetimems">1800000</ExpiresIn>
-
+  <ExpiresIn ref="flow.variable">1800000</ExpiresIn>
   <!--
       RefreshTokenExpiresIn, in milliseconds. Optional; if it is not
       specified, the default value will be used which is -1 (no expiration).
@@ -16,30 +15,26 @@
       2592000000 = 30 days
   -->
   <RefreshTokenExpiresIn>691200000</RefreshTokenExpiresIn>
-
   <SupportedGrantTypes>
     <!--
-        for client_credentials, the client_id and client_secret must be
-        passed in , in the Basic Auth header, as per the
-        specification.
+      for client_credentials, the client_id and client_secret must be
+      passed in , in the Basic Auth header, as per the
+      specification.
     -->
-
     <GrantType>client_credentials</GrantType>
   </SupportedGrantTypes>
 
   <!-- variable that specifies the requested grant type -->
   <GrantType>request.formparam.grant_type</GrantType>
 
-  <!-- variable that specifies the requested scope -->
-  <Scope>request.formparam.scope</Scope>
-
   <Attributes>
-    <Attribute name='grant_type'
-               ref='request.formparam.grant_type'
-               display='true'>UNDEFINED</Attribute>
+    <Attribute name="grant_type" ref="request.formparam.grant_type" display="true">UNDEFINED</Attribute>
   </Attributes>
-
-  <GenerateResponse enabled='true'/>
+  <GenerateResponse enabled="true"/>
+  <Algorithm>RS256</Algorithm>
+  <PrivateKey>
+    <Value ref="private.rsa-privatekey-1"/>
+  </PrivateKey>
   <!--
 
       If you include GenerateResponse and have enabled='true', then
