@@ -1,5 +1,6 @@
-# Apigee DevJam
-This is the supporting material for a one-day hands-on workshop that introduces developers to Apigee Edge. We call it a "**Apigee DevJam**".
+# Apigee API Study Jam
+
+This is the supporting material for a one-day hands-on workshop that introduces developers to Apigee. We call it a "**Apigee API Study Jam**".
 
 All of the material here is released under the [Apache 2.0 License](./LICENSE)
 
