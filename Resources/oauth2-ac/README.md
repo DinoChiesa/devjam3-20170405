@@ -31,10 +31,11 @@ the following setup steps.
 
 ### Deploy the User Authentication Web UI
 
-OLD: The login and consent experience is [here](./appengine).
-
 To demonstrate Authorization Code or OpenID Connect logins,
-the login experience needs to be available "in the cloud".
+the login experience needs to be running as a web app.
+
+Follow the README for [the login and consent experience](./login-and-consent) to set it up.
+
 
 ### Set up the API Proxy Using the Script
 
@@ -43,28 +44,35 @@ cd tools
 npm install
 ORG=my-apigee-organization
 ENV=test-env
+apigee=my-apigee-endpoint.com
+TENANT=cymbalgroup
+LOGIN=localhost:5150
 
 # for Apigee Edge
-node ./provision -v -u apigeeadmin@example.org -o $ORG -e $ENV
+node ./provision -v -u apigeeadmin@example.org -o $ORG -e $ENV  --logindomain $LOGIN --apidomain $apigee --tenantid $TENANT
 
 # for Apigee X or hybrid
 TOKEN=$(gcloud auth print-access-token)
-node ./provision -v --token $TOKEN --apigeex -o $ORG -e $ENV
+node ./provision -v --token $TOKEN --apigeex -o $ORG -e $ENV --logindomain $LOGIN --apidomain $apigee --tenantid $TENANT
 ```
 
 The output of the provision script will display the client\_id and
-client\_secret.
+client\_secret, as well as the long URI that you can use to kick off the flow.
 ```
 ORG=my-apigee-org
 ENV=test1
-client_id=LInxm05djhdieoelksp02092
+client_id=vLInxm05djhdieoelksp02092
 client_secret=e0oLV3vzdNAX34duG5aukd9rr0llkskawo
+
+To kick off the flow, wait for the proxy to be deployed, then open this link in your browser:
+  https://your-apigee-endpoint.com/apigee-examples/oauth2-ac/authorize?client_id=vLInxm05djhdieoelksp02092&redirect_uri=https%3A%2F%2Fdinochiesa.github.io%2Fopenid-connect%2Fcallback-handler.html&response_type=code&scope=A
+
 ```
 
 You should copy/paste those statements in the terminal to set
 shell variables.
 ```
-$ client_id=LInxm05djhdieoelksp02092
+$ client_id=vLInxm05djhdieoelksp02092
 $ client_secret=e0oLV3vzdNAX34duG5aukd9rr0llkskawo
 ```
 
@@ -75,7 +83,7 @@ You will need these later.
 
 Alternatively, you can perform all the steps the script performs, manually.
 
-1. Using the Apigee Administrative UI, create the cache called "cache1" in the environment in which you will deploy the proxy.
+1. If using Apigee Edge, using the Apigee Administrative UI, create the cache called "cache1" in the environment in which you will deploy the proxy.
 
 2. Deploy the API Proxy. You can use the UI, or a command-line tool.
 
@@ -95,13 +103,13 @@ you need to note the  `client_id` and `client_secret` (consumer key and consumer
 To kick off, you need to open a link in your browser. For Apigee Edge, paste the following into your browser address bar:
 
 ```
-https://$ORG-$ENV.apigee.net/devjam3/oauth2-ac/authorize?client_id=CLIENT_ID_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
+https://$ORG-$ENV.apigee.net/apigee-examples/oauth2-ac/authorize?client_id=CLIENT_ID_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
 ```
 
 For Apigee X or hybrid, the url is basically the same, except you should replace the domain with your own API endpoint.
 
 ```
-https://my-api-endpoint.net/devjam3/oauth2-ac/authorize?client_id=CLIENT_ID_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
+https://my-api-endpoint.net/apigee-examples/oauth2-ac/authorize?client_id=CLIENT_ID_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A
 
 ```
 
@@ -114,9 +122,8 @@ The login-and-consent app uses a mock user database, and these are the valid use
 * greg@example.com / Memento4Quiet
 * naimish@example.com / Imagine4
 
-
-Once you authenticate and grant consent, you will receive a code via the redirect_uri.
-The redirect_uri you pass should be able to display a code. The one shown above works just fine for most purposes.
+Once you authenticate and grant consent, you will receive a code via the redirect\_uri.
+The redirect\_uri you pass should be able to display a code. The one shown above works just fine for most purposes.
 
 
 ## To exchange the code for a token
@@ -129,12 +136,12 @@ endpoint=https://$ORG-$ENV.apigee.net
 
 # for Apigee X or hybrid
 endpoint=https://my-api-endpoint.net
-
+code=m8r6V4qA
 curl -i -u $client_id:$client_secret \
-  -X POST "$endpoint/devjam3/oauth2-ac/token" \
-  -d 'grant_type=authorization_code&code=CODE_HERE&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html'
+  -X POST "$endpoint/apigee-examples/oauth2-ac/token" \
+  -d "grant_type=authorization_code&code=${code}&redirect_uri=https://dinochiesa.github.io/openid-connect/callback-handler.html"
 ```
-Note: you must also replace the client_id and client_secret in the above.
+Note: you must also replace the client\_id and client\_secret in the above.
 
 
 ## To refresh the token:
@@ -142,8 +149,8 @@ Note: you must also replace the client_id and client_secret in the above.
 Copy the refresh token that you receive from the above, into the following in place of VALUE_HERE:
 
 ```
-curl -i -u client_id:client_secret \
-   -X POST "$endpoint/devjam3/oauth2-ac/token" \
+curl -i -u $client_id:$client_secret \
+   -X POST "$endpoint/apigee-examples/oauth2-ac/token" \
    -d 'grant_type=refresh_token&refresh_token=VALUE_HERE'
 
 ```
@@ -151,7 +158,6 @@ curl -i -u client_id:client_secret \
 ## Web form help
 
 You can also use [this web form](https://dinochiesa.github.io/openid-connect/link-builder3.html) to guide you through constructing the kickoff URL, and redeeming the code for a token.
-
 
 
 ## Teardown
@@ -166,9 +172,9 @@ cd tools
 npm install
 
 # for Apigee Edge
-node ./provision -v -u apigeeadmin@example.org -o $ORG -e $ENV -R
+node ./provision -v -u apigeeadmin@example.org -o $ORG -e $ENV --reset
 
 # for Apigee X or hybrid
 TOKEN=$(gcloud auth print-access-token)
-node ./provision -v --token $TOKEN --apigeex -o $ORG -e $ENV -R
+node ./provision -v --token $TOKEN --apigeex -o $ORG -e $ENV --reset
 ```

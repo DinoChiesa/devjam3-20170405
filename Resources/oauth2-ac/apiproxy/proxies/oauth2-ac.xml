@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ProxyEndpoint name="oauth2">
+<ProxyEndpoint name="oauth2-ac">
   <Description>Proxy Endpoint to handle OAuth 2.0 Authorization Code flow</Description>
   <HTTPProxyConnection>
-    <BasePath>/oauth2-ac</BasePath>
-    <Properties/>
+    <BasePath>/apigee-examples/oauth2-ac</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
 
@@ -32,7 +31,7 @@
         The app uses this inbound request to kick off the flow.
         Example:
 
-        GET "/devjam3/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A"
+        GET "/apigee-examples/oauth2-ac/authorize?client_id=lq93FiqTw1si09wsocM7AjOBSbyi45iA&redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html&response_type=code&scope=A"
 
         The response is a 302 redirect to the login-and-consent app. The
         login-and-consent app is handled by a different proxy endpoint in
@@ -65,7 +64,7 @@
           This request is sent by the login-and-consent app to generate
           an authorization code onn behalf of an authentic user. Example:
 
-          POST /devjam3/oauth2-ac/authcode?sessionid=rrt-006f23e80e7ff6f73-c-ea-25068-1170519-1
+          POST /apigee-examples/oauth2-ac/authcode?sessionid=rrt-006f23e80e7ff6f73-c-ea-25068-1170519-1
 
             uuid=EA1BA8EB-0A83-46BE-8B05-4C2E827F25B3
             &motto=If%20this%20isn%27t%20nice%2C%20I%20don%27t%20know%20what%20is.
@@ -105,7 +104,7 @@
           Example:
 
           Authorization: Basic base64(client_id:client_secret)
-          POST /devjam3/oauth2-ac/token
+          POST /apigee-examples/oauth2-ac/token
             grant_type=authorization_code
             &code=q2oI7b2d
             &redirect_uri=http://dinochiesa.github.io/openid-connect/callback-handler.html
@@ -113,7 +112,7 @@
           -or-
 
           Authorization: Basic base64(client_id:client_secret)
-          POST /devjam3/oauth2-ac/token
+          POST /apigee-examples/oauth2-ac/token
             grant_type=refresh_token&refresh_token=sksious93e93
 
           -->

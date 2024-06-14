@@ -1,7 +1,7 @@
-<ProxyEndpoint name='session'>
+<ProxyEndpoint name='oauth2-ac-session'>
   <Description>Proxy Endpoint to handle OAuth 2.0 session info</Description>
   <HTTPProxyConnection>
-    <BasePath>/oauth2-session</BasePath>
+    <BasePath>/apigee-examples/oauth2-ac/session</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
 

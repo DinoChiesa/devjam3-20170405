@@ -7,6 +7,6 @@
     <KeyFragment ref="messageid"/>
   </CacheKey>
   <ExpirySettings>
-    <TimeoutInSec>600</TimeoutInSec> <!-- 600 = 10 minutes -->
+    <TimeoutInSeconds>600</TimeoutInSeconds> <!-- 600 = 10 minutes -->
   </ExpirySettings>
 </PopulateCache>
