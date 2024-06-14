@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-Inject-Proxy-Revision-Header">
+  <Set>
+    <Headers>
+      <Header name="apiproxy">{apiproxy.name} r{apiproxy.revision}</Header>
+    </Headers>
+  </Set>
+</AssignMessage>

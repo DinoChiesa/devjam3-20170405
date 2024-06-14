@@ -1,16 +1,16 @@
-<RaiseFault name='RF-UserAuthenticationFailed'>
+<RaiseFault name='RF-Invalid-Grant-Type'>
   <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
   <FaultResponse>
     <Set>
       <Payload contentType='application/json'>{
   "error" : {
-    "code" : 401.02,
-    "message" : "authentication failed"
+    "code" : 400.03,
+    "message" : "invalid grant type"
   }
 }
 </Payload>
-      <StatusCode>401</StatusCode>
-      <ReasonPhrase>Unauthorized</ReasonPhrase>
+      <StatusCode>400</StatusCode>
+      <ReasonPhrase>Bad Request</ReasonPhrase>
     </Set>
   </FaultResponse>
 </RaiseFault>

@@ -52,6 +52,7 @@
                display='true'>[]</Attribute>
   </Attributes>
 
+  <RFCCompliantRequestResponse>true</RFCCompliantRequestResponse>
   <GenerateResponse enabled='true'/>
   <!--
 

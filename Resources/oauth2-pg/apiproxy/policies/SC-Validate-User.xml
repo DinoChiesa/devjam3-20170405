@@ -1,4 +1,4 @@
-<ServiceCallout name='SC-ValidateUser'>
+<ServiceCallout name='SC-Validate-User'>
   <Request>
     <Set>
       <Headers>
@@ -20,6 +20,6 @@
     <Properties>
       <Property name='success.codes'>2xx, 3xx, 4xx, 5xx</Property>
     </Properties>
-    <URL>https://devjam3-20170405.appspot.com/auth</URL>
+    <URL>https://user-service-lwy4scuauq-uw.a.run.app/auth</URL>
   </HTTPTargetConnection>
 </ServiceCallout>

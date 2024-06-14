@@ -1,0 +1,138 @@
+<ProxyEndpoint name='dispensary'>
+  <Description>the inbound proxy endpoint, for dispensing tokens</Description>
+  <HTTPProxyConnection>
+    <BasePath>/oauth2-pg</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <DefaultFaultRule name="fault-rule">
+    <Step>
+      <Name>AM-Inject-Proxy-Revision-Header</Name>
+    </Step>
+    <AlwaysEnforce>true</AlwaysEnforce>
+  </DefaultFaultRule>
+
+  <PreFlow name='PreFlow'>
+    <Request>
+
+      <!-- basic validation of the inbound request. Is it well formed? -->
+      <Step>
+        <Name>RF-Invalid-Grant-Type</Name>
+        <Condition>(request.formparam.grant_type != "password") AND (request.formparam.grant_type != "refresh_token")</Condition>
+      </Step>
+    </Request>
+
+    <Response/>
+  </PreFlow>
+
+  <PostFlow name='PostFlow'>
+    <Request/>
+    <Response>
+      <Step>
+        <Name>AM-Clean-Response-Headers</Name>
+      </Step>
+
+      <Step>
+        <Name>JS-Groom-Token-Response</Name>
+        <Condition>apigee.access_token != null</Condition>
+      </Step>
+      <Step>
+        <Name>AM-Inject-Proxy-Revision-Header</Name>
+      </Step>
+      <Step>
+        <Name>AM-Token-Header</Name>
+        <Condition>apigee.access_token != null</Condition>
+      </Step>
+    </Response>
+  </PostFlow>
+
+  <Flows>
+    <Flow name='OAuth2.0 token dispenser - password grant'>
+      <Description>dispense tokens for OAuth2.0, for password grant_type</Description>
+      <!--
+          An example request is like this:
+
+          curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
+            -u ${client_id}:${client_secret} \
+            'https://endpoint/oauth2-pg-custom-attribute/token'\
+            -d 'grant_type=password&username=XXX&password=XXXX'
+
+          The resulting token will have an expiry, and a set of roles,
+          as returned by the user authentication service.
+      -->
+      <Request>
+
+        <!-- basic validation of the inbound request. Is it well formed? -->
+        <Step>
+          <Name>RF-Invalid-Authentication</Name>
+          <Condition>(request.formparam.username = null) OR (request.formparam.password = null)</Condition>
+        </Step>
+
+        <Step>
+          <Name>SC-Validate-User</Name>
+        </Step>
+        <Step>
+          <Name>RF-User-Authentication-Failed</Name>
+          <Condition>(userAuthResponse is null) or NOT (userAuthResponse.status.code = 200)</Condition>
+        </Step>
+        <Step>
+          <Name>JS-Rip-User-Auth-Response</Name>
+        </Step>
+        <Step>
+          <!-- this policy generates a payload -->
+          <Name>OAuthV2-GenerateAccessToken-PG</Name>
+        </Step>
+      </Request>
+
+      <Response/>
+
+      <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST") and (request.formparam.grant_type = "password")</Condition>
+    </Flow>
+
+    <Flow name='OAuth2.0 token dispenser - refresh'>
+      <Description>dispense tokens for OAuth2.0, for refresh_token grant_type</Description>
+      <!--
+          An example request is like this:
+
+          curl -i -X POST -H 'content-type: application/x-www-form-urlencoded' \
+            -u ${client_id}:${client_secret} \
+            'https://ORG-ENV.apigee.net/oauth2-pg/token'\
+            -d 'grant_type=refresh_token&refresh_token=xxxx'
+      -->
+      <Request>
+        <Step>
+          <Name>RF-Invalid-Request</Name>
+          <Condition>request.formparam.refresh_token = null</Condition>
+        </Step>
+
+        <Step>
+          <!-- this policy generates a payload -->
+          <Name>OAuthV2-RefreshAccessToken</Name>
+        </Step>
+      </Request>
+
+      <Response/>
+
+      <Condition>(proxy.pathsuffix MatchesPath "/token") and (request.verb = "POST") and (request.formparam.grant_type = "refresh_token")</Condition>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step>
+          <Name>RF-Unknown-Request</Name>
+        </Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <!-- There is no backend target. Responses for oauth token generation and
+       refresh are direct from this API proxy.
+  -->
+  <RouteRule name='NoRouteRule'/>
+
+</ProxyEndpoint>

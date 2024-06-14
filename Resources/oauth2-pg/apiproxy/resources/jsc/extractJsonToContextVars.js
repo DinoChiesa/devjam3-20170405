@@ -4,60 +4,43 @@
 // For a JSON payload, set context vars for all fields.
 //
 // created: Tue Mar  7 16:32:14 2017
-// last saved: <2018-March-12 13:00:14>
-
+// last saved: <2023-October-02 12:41:11>
 
 function isValidMessage(sourceMsg) {
-  var verb = context.getVariable(sourceMsg + '.verb');
+  var verb = context.getVariable(sourceMsg + ".verb");
   if (verb) return true;
-  // else a response message, check the status code
-  var statusCode = context.getVariable(sourceMsg + '.status.code') + '';
-  return (statusCode == '200');
+  // else it is a response message, check the status code
+  var statusCode = context.getVariable(sourceMsg + ".status.code") + "";
+  return statusCode == "200";
 }
 
-var sourceMsg = properties.source || 'message';
+var sourceMsg = properties.source || "message";
 if (isValidMessage(sourceMsg)) {
-  var ctype = context.getVariable(sourceMsg + '.header.content-type');
+  var ctype = context.getVariable(sourceMsg + ".header.content-type");
   if (ctype.indexOf("application/json") === 0) {
-    walkObj(JSON.parse(context.getVariable(sourceMsg + '.content')),
-            properties.prefix || 'json',
-            function(name, value, isArray) {
-              if (isArray) {
-                if (value.length>0) {
-                  if (typeof value[0] == 'string') {
-                    // "\"readers\",\"editors\",\"apigee\""
-                    //context.setVariable(name, value.map(function(x) { return JSON.stringify(x);}).join(','));
-
-                    // "[\"readers\",\"editors\",\"apigee\"]"
-                    //context.setVariable(name, JSON.stringify(value));
-
-                    // "[readers,editors]"
-                    //context.setVariable(name, '[' + value.toString() + ']');
-
-                    // readers,editors
-                    context.setVariable(name, value.toString() );
-                  }
-                  else {
-                    context.setVariable(name, '??');
-                  }
-                }
-                else {
-                  context.setVariable(name, '[]');
-                }
-              }
-              else {
-                context.setVariable(name, value);
-              }
-            });
+    walkObj(
+      JSON.parse(context.getVariable(sourceMsg + ".content")),
+      properties.prefix || "json",
+      function (name, value, isArray) {
+        if (isArray) {
+          context.setVariable(name, value.toString());
+        } else {
+          context.setVariable(name, value);
+        }
+      }
+    );
+  } else {
+    context.setVariable(
+      (properties.prefix || "json") + "." + sourceMsg + ".error",
+      "not json content"
+    );
   }
-  else {
-    context.setVariable((properties.prefix || 'json') + '.' + sourceMsg + '.error', "not json content");
-  }
+} else {
+  context.setVariable(
+    (properties.prefix || "json") + "." + sourceMsg + ".error",
+    "bad inbound message"
+  );
 }
-else {
-  context.setVariable((properties.prefix || 'json') + '.' + sourceMsg + '.error', "bad inbound message");
-}
-
 
 // example inbound payload:
 //

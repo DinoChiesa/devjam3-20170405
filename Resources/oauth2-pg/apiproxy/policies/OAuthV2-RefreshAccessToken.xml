@@ -22,6 +22,7 @@
   <!-- variable that specifies the requested grant type -->
   <GrantType>request.formparam.grant_type</GrantType>
 
+  <RFCCompliantRequestResponse>true</RFCCompliantRequestResponse>
   <GenerateResponse enabled='true'/>
   <!--
 

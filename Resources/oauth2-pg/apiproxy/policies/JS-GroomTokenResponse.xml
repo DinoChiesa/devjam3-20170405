@@ -1,6 +1,0 @@
-<Javascript name='JS-GroomTokenResponse' timeLimit='200' >
-  <Properties>
-    <Property name='keep'>access_token, refresh_token, scope, grant_type, authenticated_user, user_groups</Property>
-  </Properties>
-  <ResourceURL>jsc://groomTokenResponse.js</ResourceURL>
-</Javascript>
